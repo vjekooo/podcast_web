@@ -5,11 +5,11 @@ import axios from 'axios'
 
 import { Player } from './Player'
 
-const PodcastTitle = styled.div`
+const TitleStyle = styled.div`
     padding: .5rem 0;
 `
 
-const PodcastList = styled.div`
+const ListStyle = styled.div`
     ul {
 		list-style-type: none;
 		padding-left: 0;
@@ -95,13 +95,13 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 
 	return (
 		<div>
-			<PodcastTitle>
+			<TitleStyle>
 				{
 					isLoading
 						? 'Loading episodes'
 						: `${currentPodcast.title} episodes`
 				}
-			</PodcastTitle>
+			</TitleStyle>
 			{
 				isPlayerVisible &&
 					<Player
@@ -109,7 +109,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 						currentEpisode={currentEpisode}
 					/>
 			}
-			<PodcastList>
+			<ListStyle>
 				<ul>
 					{
 						podcastList.map((item: Episode, index): JSX.Element => (
@@ -124,7 +124,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 						))
 					}
 				</ul>
-			</PodcastList>
+			</ListStyle>
 		</div>
 	)
 }

@@ -3,19 +3,23 @@ import React from 'react'
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
 
-const Nav = styled.nav`
+const NavStyle = styled.nav`
 	display: flex;
 	padding: .5rem 0 0 0;
 	a {
 		margin-right: .5rem;
 	}
+	.link-active {
+		color: red;
+	}
 `
 
 export const Header: React.FC = () => (
 	<header>
-		<Nav>
+		<NavStyle>
 			<NavLink
 				to="/"
+				exact
 				activeClassName="link-active"
 			>
 				Home
@@ -32,6 +36,6 @@ export const Header: React.FC = () => (
 			>
 				Account
 			</NavLink>
-		</Nav>
+		</NavStyle>
 	</header >
 )

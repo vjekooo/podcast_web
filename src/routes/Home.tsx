@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-const Input = styled.input`
+const InputStyle = styled.input`
 	width: 100%;
 	min-height: 20px;
 	text-transform: uppercase;
@@ -56,7 +56,7 @@ export const Home: React.FC = () => {
 				}
 			</div>
 			<div>
-				<Input
+				<InputStyle
 					type="text"
 					value={searchQuery}
 					onChange={(ev): void => setSearchQuery(ev.target.value)}
