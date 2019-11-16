@@ -11,7 +11,7 @@ export interface Episode {
 }
 
 interface EpisodeState {
-	data: Episode[] | null;
+	data: Episode[];
 	isLoading: boolean;
 }
 
@@ -19,7 +19,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 	const { feedUrl } = props.location.state
 
 	const [{ data, isLoading }, setData] = useState<EpisodeState>({
-		data: null,
+		data: [],
 		isLoading: true
 	})
 	const [isPlayerVisible, setPlayerState] = useState<boolean>(false)
@@ -81,17 +81,16 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 			<div>
 				<ul>
 					{
-						data &&
-							data.map((item: Episode, index): JSX.Element => (
-								<li
-									key={index}
-									onClick={(): void => handleClickEvent(item)}
-								>
-									{
-										item.title
-									}
-								</li>
-							))
+						data.map((item: Episode, index): JSX.Element => (
+							<li
+								key={index}
+								onClick={(): void => handleClickEvent(item)}
+							>
+								{
+									item.title
+								}
+							</li>
+						))
 					}
 				</ul>
 			</div>
