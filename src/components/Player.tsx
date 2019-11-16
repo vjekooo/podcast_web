@@ -4,17 +4,29 @@ import styled from 'styled-components'
 import { Episode } from './Podcast'
 
 const PlayerWindow = styled.div`
-    position: fixed;
-    top: 20px;
-    margin: 5% auto;
-    left: 0;
-    right: 0;
-    width: 90%;
-    min-height: 400px;
+    width: 100%;
     background-color: whitesmoke;
     display: flex;
     flex-direction: column;
     align-items: center;
+	padding: .5rem;
+`
+
+const PlayerHeader = styled.div`
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+`
+
+const PlayerContent = styled.div`
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	audio {
+		width: 100%;
+	}
 `
 
 interface Props {
@@ -25,15 +37,15 @@ interface Props {
 export const Player: React.FC<Props> = ({ handlePlayer, currentEpisode }) => {
 	return (
 		<PlayerWindow>
-			<div className="player__header">
+			<PlayerHeader>
 				<button
 					type="button"
 					onClick={handlePlayer}
 				>
 				x
 				</button>
-			</div>
-			<div className="player__content">
+			</PlayerHeader>
+			<PlayerContent>
 				<h3>
 					{
 						currentEpisode &&
@@ -45,7 +57,7 @@ export const Player: React.FC<Props> = ({ handlePlayer, currentEpisode }) => {
 				>
 					<source src={currentEpisode ? currentEpisode.url : ''} />
 				</audio>
-			</div>
+			</PlayerContent>
 		</PlayerWindow>
 	)
 }

@@ -1,12 +1,41 @@
 
 import React, { useState, useEffect } from 'react'
+import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-export const Hello: React.FC = () => {
+const Input = styled.input`
+	width: 100%;
+	min-height: 20px;
+	text-transform: uppercase;
+	padding: .5rem;
+	&:focus {
+		outline: none;
+	}
+`
+
+interface State {
+	data: Podcast[];
+	isLoading: boolean;
+}
+
+interface Podcast {
+	feedUrl: string;
+	collectionId: string;
+	artworkUrl100: string;
+}
+
+export const Home: React.FC = () => {
 	const [searchQuery, setSearchQuery] = useState('')
-	const [{ data, isLoading }, setData] = useState({ data: [], isLoading: true })
+	const [{ data, isLoading }, setData] = useState<State>({
+		data: [],
+		isLoading: false
+	})
 
 	useEffect(() => {
+		setData({
+			data: [],
+			isLoading: true
+		})
 		window.fetch(`https://itunes.apple.com/search?term=${searchQuery}&entity=podcast`)
 			.then(x => x.json())
 			.then(y => {
@@ -20,15 +49,14 @@ export const Hello: React.FC = () => {
 	return (
 		<div>
 			<div>
-				Hello
-			</div>
-			<div>
 				{
-					isLoading && '...loading'
+					isLoading
+						? 'Searching...'
+						: 'Search'
 				}
 			</div>
 			<div>
-				<input
+				<Input
 					type="text"
 					value={searchQuery}
 					onChange={(ev): void => setSearchQuery(ev.target.value)}
@@ -37,7 +65,7 @@ export const Hello: React.FC = () => {
 			<div>
 				<ul>
 					{
-						data.map((item: any): JSX.Element => (
+						data.map((item: Podcast): JSX.Element => (
 							<Link
 								to={{
 									pathname: '/podcast',

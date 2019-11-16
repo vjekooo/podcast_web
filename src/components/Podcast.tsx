@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { RouteComponentProps } from 'react-router'
+import styled from 'styled-components'
 import axios from 'axios'
 
 import { Player } from './Player'
+
+const PodcastList = styled.div`
+    ul {
+		list-style-type: none;
+		padding-left: 0;
+	}
+`
 
 export interface Episode {
 	title: string;
@@ -78,7 +86,14 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 						: 'Episodes'
 				}
 			</div>
-			<div>
+			{
+				isPlayerVisible &&
+					<Player
+						handlePlayer={handlePlayer}
+						currentEpisode={currentEpisode}
+					/>
+			}
+			<PodcastList>
 				<ul>
 					{
 						data.map((item: Episode, index): JSX.Element => (
@@ -93,14 +108,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 						))
 					}
 				</ul>
-			</div>
-			{
-				isPlayerVisible &&
-					<Player
-						handlePlayer={handlePlayer}
-						currentEpisode={currentEpisode}
-					/>
-			}
+			</PodcastList>
 		</div>
 	)
 }

@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
 
 import { Header } from './components/Header'
-import { Hello } from './routes/Hello'
+import { Home } from './routes/Home'
 import { World } from './routes/World'
 import { Podcast } from './components/Podcast'
 
@@ -41,8 +41,9 @@ const App: React.FC = (): JSX.Element => (
 			<Router>
 				<Header />
 				<Switch>
-					<Route exact path="/" component={Hello} />
-					<Route exact path="/world" component={World} />
+					<Route exact path="/" component={Home} />
+					<Route exact path="/favorites" component={World} />
+					<Route exact path="/account" component={World} />
 					<Route exact path="/podcast" component={Podcast} />
 					<Route component={(): JSX.Element => <div>404</div>} />
 				</Switch>
