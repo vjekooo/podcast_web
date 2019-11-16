@@ -42,7 +42,7 @@ module.exports = env => ({
 		port: port,
 		overlay: {
 			errors: true,
-			warnings: true
+			warnings: false
 		}
 	},
 	plugins: [
