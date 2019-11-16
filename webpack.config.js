@@ -85,8 +85,8 @@ module.exports = ({ mode, presets } = { mode: 'production', presets: [] }) => {
 			plugins: [
 				new HtmlWebpackPlugin({
 					title: 'Noice',
-					template: `public/index.html`,
-					favicon: `public/favicon.ico`
+					template: 'public/index.html',
+					favicon: 'public/favicon.ico'
 				}),
 				new webpack.ProgressPlugin()
 			]

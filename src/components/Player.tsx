@@ -1,6 +1,21 @@
 
 import React from 'react'
+import styled from 'styled-components'
 import { Episode } from './Podcast'
+
+const PlayerWindow = styled.div`
+    position: fixed;
+    top: 20px;
+    margin: 5% auto;
+    left: 0;
+    right: 0;
+    width: 90%;
+    min-height: 400px;
+    background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
 
 interface Props {
 	handlePlayer: (() => void);
@@ -9,7 +24,7 @@ interface Props {
 
 export const Player: React.FC<Props> = ({ handlePlayer, currentEpisode }) => {
 	return (
-		<div className="player">
+		<PlayerWindow>
 			<div className="player__header">
 				<button
 					type="button"
@@ -31,6 +46,6 @@ export const Player: React.FC<Props> = ({ handlePlayer, currentEpisode }) => {
 					<source src={currentEpisode ? currentEpisode.url : ''} />
 				</audio>
 			</div>
-		</div>
+		</PlayerWindow>
 	)
 }

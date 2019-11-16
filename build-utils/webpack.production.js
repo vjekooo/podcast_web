@@ -13,22 +13,7 @@ module.exports = env => ({
 		filename: 'js/[name].[chunkhash:8].js'
 	},
 	module: {
-		rules: [
-			{
-				test: /\.(s*)css$/,
-				use: [
-					{
-						loader: MiniCssExtractPlugin.loader,
-						options: {
-							publicPath: '../'
-						}
-					},
-					'css-loader',
-					'postcss-loader',
-					'sass-loader'
-				]
-			}
-		]
+		rules: []
 	},
 	devtool: 'source-map',
 	optimization: {
@@ -40,19 +25,5 @@ module.exports = env => ({
 			})
 		]
 	},
-	plugins: [
-		new MiniCssExtractPlugin({
-			filename: 'style/[name]-[contenthash].css'
-		}),
-		new OptimizeCSSAssetsPlugin({
-			assetNameRegExp: /\.optimize\.css$/g,
-			cssProcessor: require('cssnano'),
-			cssProcessorPluginOptions: {
-				preset: [
-					'default',
-					{ discardComments: { removeAll: true } }
-				]
-			}
-		})
-	]
+	plugins: []
 })

@@ -20,17 +20,7 @@ module.exports = env => ({
 		publicPath: '/'
 	},
 	module: {
-		rules: [
-			{
-				test: /\.(s*)css$/,
-				use: [
-					'style-loader',
-					'css-loader',
-					'postcss-loader',
-					'sass-loader'
-				]
-			}
-		]
+		rules: []
 	},
 	devtool: 'inline-source-map',
 	devServer: {
