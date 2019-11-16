@@ -5,6 +5,10 @@ import axios from 'axios'
 
 import { Player } from './Player'
 
+const PodcastTitle = styled.div`
+    padding: .5rem 0;
+`
+
 const PodcastList = styled.div`
     ul {
 		list-style-type: none;
@@ -19,22 +23,34 @@ export interface Episode {
 }
 
 interface EpisodeState {
-	data: Episode[];
+	podcastList: Episode[];
 	isLoading: boolean;
+}
+
+interface PodcastState {
+	title: string;
 }
 
 export const Podcast: React.FC<RouteComponentProps> = (props) => {
 	const { feedUrl } = props.location.state
 
-	const [{ data, isLoading }, setData] = useState<EpisodeState>({
-		data: [],
+	const [{ podcastList, isLoading }, setPodcastList] = useState<EpisodeState>({
+		podcastList: [],
 		isLoading: true
 	})
 	const [isPlayerVisible, setPlayerState] = useState<boolean>(false)
-	const [currentEpisode, setcurrentEpisode] = useState<Episode | null>(null)
+	const [currentEpisode, setCurrentEpisode] = useState<Episode | null>(null)
+	const [currentPodcast, setCurrentPodcast] = useState<PodcastState>({
+		title: ''
+	})
 
 	const handleXml = (xml: any): void => {
 		const items = xml.getElementsByTagName('item')
+		const title = xml.getElementsByTagName('title')
+
+		setCurrentPodcast({
+			title: title[0].childNodes[0].nodeValue
+		})
 
 		const list: Episode[] = []
 
@@ -54,7 +70,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 			}
 		}
 
-		setData({ data: list, isLoading: false })
+		setPodcastList({ podcastList: list, isLoading: false })
 	}
 
 	const handlePlayer = (): void => {
@@ -64,7 +80,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 	}
 
 	const handleClickEvent = (currentEpisode: Episode): void => {
-		setcurrentEpisode(currentEpisode)
+		setCurrentEpisode(currentEpisode)
 		handlePlayer()
 	}
 
@@ -79,13 +95,13 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 
 	return (
 		<div>
-			<div>
+			<PodcastTitle>
 				{
 					isLoading
 						? 'Loading episodes'
-						: 'Episodes'
+						: `${currentPodcast.title} episodes`
 				}
-			</div>
+			</PodcastTitle>
 			{
 				isPlayerVisible &&
 					<Player
@@ -96,7 +112,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 			<PodcastList>
 				<ul>
 					{
-						data.map((item: Episode, index): JSX.Element => (
+						podcastList.map((item: Episode, index): JSX.Element => (
 							<li
 								key={index}
 								onClick={(): void => handleClickEvent(item)}

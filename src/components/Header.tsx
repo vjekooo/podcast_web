@@ -1,10 +1,11 @@
 
 import React from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 const Nav = styled.nav`
 	display: flex;
+	padding: .5rem 0 0 0;
 	a {
 		margin-right: .5rem;
 	}
@@ -13,9 +14,24 @@ const Nav = styled.nav`
 export const Header: React.FC = () => (
 	<header>
 		<Nav>
-			<Link to="/">Home</Link>
-			<Link to="/favorites">Favorites</Link>
-			<Link to="/account">Account</Link>
+			<NavLink
+				to="/"
+				activeClassName="link-active"
+			>
+				Home
+			</NavLink>
+			<NavLink
+				to="/favorites"
+				activeClassName="link-active"
+			>
+				Favorites
+			</NavLink>
+			<NavLink
+				to="/account"
+				activeClassName="link-active"
+			>
+				Account
+			</NavLink>
 		</Nav>
 	</header >
 )
