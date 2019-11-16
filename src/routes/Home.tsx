@@ -3,13 +3,35 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-const InputStyle = styled.input`
+const TitleStyle = styled.div`
+	padding: .5rem 0%;
+`
+
+const SearchStyle = styled.div`
+	margin-bottom: 1rem;
+	input {
+		width: 100%;
+		min-height: 20px;
+		text-transform: uppercase;
+		padding: .5rem;
+		&:focus {
+			outline: none;
+		}
+	}
+`
+
+const ListStyle = styled.div`
 	width: 100%;
-	min-height: 20px;
-	text-transform: uppercase;
-	padding: .5rem;
-	&:focus {
-		outline: none;
+	padding-left: 0;
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	a {
+		width: 18%;
+		padding-bottom: .2rem;
+	}
+	img {
+		width: 100%;
 	}
 `
 
@@ -48,39 +70,37 @@ export const Home: React.FC = () => {
 
 	return (
 		<div>
-			<div>
+			<TitleStyle>
 				{
 					isLoading
 						? 'Searching...'
 						: 'Search'
 				}
-			</div>
-			<div>
-				<InputStyle
+			</TitleStyle>
+			<SearchStyle>
+				<input
 					type="text"
 					value={searchQuery}
 					onChange={(ev): void => setSearchQuery(ev.target.value)}
 				/>
-			</div>
-			<div>
-				<ul>
-					{
-						data.map((item: Podcast): JSX.Element => (
-							<Link
-								to={{
-									pathname: '/podcast',
-									state: {
-										feedUrl: item.feedUrl
-									}
-								}}
-								key={item.collectionId}
-							>
-								<img src={item.artworkUrl100} />
-							</Link>
-						))
-					}
-				</ul>
-			</div>
+			</SearchStyle>
+			<ListStyle>
+				{
+					data.map((item: Podcast): JSX.Element => (
+						<Link
+							to={{
+								pathname: '/podcast',
+								state: {
+									feedUrl: item.feedUrl
+								}
+							}}
+							key={item.collectionId}
+						>
+							<img src={item.artworkUrl100} />
+						</Link>
+					))
+				}
+			</ListStyle>
 		</div>
 	)
 }
