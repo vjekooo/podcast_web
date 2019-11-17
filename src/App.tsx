@@ -1,14 +1,9 @@
 
-import React from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
 
-import { Header } from './components/Header'
-import { Home } from './routes/Home'
-import { World } from './routes/World'
-import { Podcast } from './components/Podcast'
-
 import { hot } from 'react-hot-loader/root'
+import { Routes } from './Routes'
 
 const GlobalStyle = createGlobalStyle`	
 	* {
@@ -35,22 +30,31 @@ const Wrapper = styled.div`
   background-color: ${(props): string => props.theme.bg};
 `
 
-const App: React.FC = (): JSX.Element => (
-	<ThemeProvider theme={theme}>
-		<Wrapper>
-			<Router>
-				<Header />
-				<Switch>
-					<Route exact path="/" component={Home} />
-					<Route exact path="/favorites" component={World} />
-					<Route exact path="/account" component={World} />
-					<Route exact path="/podcast" component={Podcast} />
-					<Route component={(): JSX.Element => <div>404</div>} />
-				</Switch>
-			</Router>
-		</Wrapper>
-		<GlobalStyle />
-	</ThemeProvider>
-)
+const App: React.FC = (): JSX.Element => {
+	const [loading, setLoading] = useState(true)
+
+	useEffect(() => {
+		window.fetch('http://localhost:4000/refresh_token', {
+			method: 'POST',
+			credentials: 'include'
+		}).then(async (res) => {
+			const data = await res.json()
+			console.log(data)
+			setLoading(false)
+		})
+	}, [])
+
+	return (
+		<ThemeProvider theme={theme}>
+			<Wrapper>
+				<Routes />
+				{
+					loading && <div>...loading</div>
+				}
+			</Wrapper>
+			<GlobalStyle />
+		</ThemeProvider>
+	)
+}
 
 export default hot(App)

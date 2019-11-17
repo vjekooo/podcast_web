@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
@@ -69,38 +69,40 @@ export const Home: React.FC = () => {
 	}, [searchQuery])
 
 	return (
-		<div>
-			<TitleStyle>
-				{
-					isLoading
-						? 'Searching...'
-						: 'Search'
-				}
-			</TitleStyle>
-			<SearchStyle>
-				<input
-					type="text"
-					value={searchQuery}
-					onChange={(ev): void => setSearchQuery(ev.target.value)}
-				/>
-			</SearchStyle>
-			<ListStyle>
-				{
-					data.map((item: Podcast): JSX.Element => (
-						<Link
-							to={{
-								pathname: '/podcast',
-								state: {
-									feedUrl: item.feedUrl
-								}
-							}}
-							key={item.collectionId}
-						>
-							<img src={item.artworkUrl100} />
-						</Link>
-					))
-				}
-			</ListStyle>
-		</div>
+		<Fragment>
+			<div>
+				<TitleStyle>
+					{
+						isLoading
+							? 'Searching...'
+							: 'Search'
+					}
+				</TitleStyle>
+				<SearchStyle>
+					<input
+						type="text"
+						value={searchQuery}
+						onChange={(ev): void => setSearchQuery(ev.target.value)}
+					/>
+				</SearchStyle>
+				<ListStyle>
+					{
+						data.map((item: Podcast): JSX.Element => (
+							<Link
+								to={{
+									pathname: '/podcast',
+									state: {
+										feedUrl: item.feedUrl
+									}
+								}}
+								key={item.collectionId}
+							>
+								<img src={item.artworkUrl100} />
+							</Link>
+						))
+					}
+				</ListStyle>
+			</div>
+		</Fragment>
 	)
 }
