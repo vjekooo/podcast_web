@@ -1,12 +1,28 @@
 import React, { useState, useEffect } from 'react'
 import { RouteComponentProps } from 'react-router'
+import { useMutation } from '@apollo/react-hooks'
 import styled from 'styled-components'
 import axios from 'axios'
 
 import { Player } from './Player'
+import { gql } from 'apollo-boost'
 
 const TitleStyle = styled.div`
     padding: .5rem 0;
+`
+
+const InfoStyle = styled.div`
+    padding: .5rem 0;
+	img {
+		width: 150px;
+		margin-right: 1rem;
+	}
+	.info-header {
+		display: flex;
+	}
+	h3 {
+		margin-top: 0;
+	}
 `
 
 const ListStyle = styled.div`
@@ -29,7 +45,15 @@ interface EpisodeState {
 
 interface PodcastState {
 	title: string;
+	description: string;
+	image: string;
 }
+
+const SUBSCRIBE = gql`
+	mutation Subscribe($url: String, $userId: String) {
+		subscribe(url: $url, userId: $userId)
+	}
+`
 
 export const Podcast: React.FC<RouteComponentProps> = (props) => {
 	const { feedUrl } = props.location.state
@@ -41,15 +65,22 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 	const [isPlayerVisible, setPlayerState] = useState<boolean>(false)
 	const [currentEpisode, setCurrentEpisode] = useState<Episode | null>(null)
 	const [currentPodcast, setCurrentPodcast] = useState<PodcastState>({
-		title: ''
+		title: '',
+		description: '',
+		image: ''
 	})
+	const [subscribe] = useMutation(SUBSCRIBE)
 
 	const handleXml = (xml: any): void => {
 		const items = xml.getElementsByTagName('item')
 		const title = xml.getElementsByTagName('title')
+		const description = xml.getElementsByTagName('description')
+		const image = xml.getElementsByTagName('itunes:image')
 
 		setCurrentPodcast({
-			title: title[0].childNodes[0].nodeValue
+			title: title[0].childNodes[0].nodeValue,
+			description: description[0].childNodes[0].nodeValue,
+			image: image[0].getAttribute('href')
 		})
 
 		const list: Episode[] = []
@@ -84,6 +115,10 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 		handlePlayer()
 	}
 
+	const subscribeToPodacast = (): void => {
+		subscribe()
+	}
+
 	useEffect(() => {
 		axios.get(feedUrl)
 			.then(response => {
@@ -97,11 +132,31 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 		<div>
 			<TitleStyle>
 				{
-					isLoading
-						? 'Loading episodes'
-						: `${currentPodcast.title} episodes`
+					isLoading &&
+						'Loading episodes'
 				}
 			</TitleStyle>
+			<InfoStyle>
+				<div className="info-header">
+					<img src={currentPodcast.image} />
+					<div>
+						<h3>
+							{currentPodcast.title}
+						</h3>
+						<button
+							type="button"
+							onClick={subscribeToPodacast}
+						>
+							subscribe
+						</button>
+					</div>
+				</div>
+				<div>
+					<p>
+						{currentPodcast.description}
+					</p>
+				</div>
+			</InfoStyle>
 			{
 				isPlayerVisible &&
 					<Player

@@ -22,7 +22,9 @@ export const Register: React.FC<RouteComponentProps> = ({ history }): JSX.Elemen
 					onSubmit={async (e): Promise<void> => {
 						e.preventDefault()
 						try {
-							const data = await register({ variables: { email, password } })
+							const data = await register({
+								variables: { email, password }
+							})
 							if (data) {
 								history.push('/')
 							}

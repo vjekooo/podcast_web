@@ -13,7 +13,7 @@ const LOGIN = gql`
 	}
 `
 
-export const Login: React.FC<RouteComponentProps> = (): JSX.Element => {
+export const Login: React.FC<RouteComponentProps> = ({ history }): JSX.Element => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [login] = useMutation(LOGIN)
@@ -28,6 +28,7 @@ export const Login: React.FC<RouteComponentProps> = (): JSX.Element => {
 							.then(res => {
 								if (res && res.data) {
 									setAccessToken(res.data.login.accessToken)
+									history.push('/')
 								}
 							})
 							.catch(err => console.log(err))

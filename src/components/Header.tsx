@@ -25,6 +25,12 @@ export const Header: React.FC = () => (
 				Home
 			</NavLink>
 			<NavLink
+				to="/search"
+				activeClassName="link-active"
+			>
+				Search
+			</NavLink>
+			<NavLink
 				to="/favorites"
 				activeClassName="link-active"
 			>

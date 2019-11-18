@@ -15,7 +15,7 @@ const client = new ApolloClient({
 		if (accessToken) {
 			operation.setContext({
 				headers: {
-					authorization: accessToken
+					authorization: `bearer ${accessToken}`
 				}
 			})
 		}
