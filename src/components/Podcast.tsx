@@ -45,13 +45,14 @@ interface EpisodeState {
 
 interface PodcastState {
 	title: string;
+	url: string;
 	description: string;
 	image: string;
 }
 
 const SUBSCRIBE = gql`
-	mutation Subscribe($url: String, $userId: String) {
-		subscribe(url: $url, userId: $userId)
+	mutation Subscribe($url: String!) {
+		subscribe(url: $url)
 	}
 `
 
@@ -66,6 +67,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 	const [currentEpisode, setCurrentEpisode] = useState<Episode | null>(null)
 	const [currentPodcast, setCurrentPodcast] = useState<PodcastState>({
 		title: '',
+		url: '',
 		description: '',
 		image: ''
 	})
@@ -74,11 +76,13 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 	const handleXml = (xml: any): void => {
 		const items = xml.getElementsByTagName('item')
 		const title = xml.getElementsByTagName('title')
+		const url = xml.getElementsByTagName('itunes:new-feed-url')
 		const description = xml.getElementsByTagName('description')
 		const image = xml.getElementsByTagName('itunes:image')
 
 		setCurrentPodcast({
 			title: title[0].childNodes[0].nodeValue,
+			url: url[0].childNodes[0].nodeValue,
 			description: description[0].childNodes[0].nodeValue,
 			image: image[0].getAttribute('href')
 		})
@@ -115,8 +119,10 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 		handlePlayer()
 	}
 
-	const subscribeToPodacast = (): void => {
-		subscribe()
+	const subscribeToPodacast = (url: string): void => {
+		subscribe({
+			variables: { url }
+		}).then(res => console.log(res)).catch(err => console.log(err))
 	}
 
 	useEffect(() => {
@@ -145,7 +151,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 						</h3>
 						<button
 							type="button"
-							onClick={subscribeToPodacast}
+							onClick={(): void => subscribeToPodacast(currentPodcast.url)}
 						>
 							subscribe
 						</button>

@@ -24,14 +24,14 @@ export const Login: React.FC<RouteComponentProps> = ({ history }): JSX.Element =
 				<form
 					onSubmit={(e): void => {
 						e.preventDefault()
-						login({ variables: { email, password } })
-							.then(res => {
-								if (res && res.data) {
-									setAccessToken(res.data.login.accessToken)
-									history.push('/')
-								}
-							})
-							.catch(err => console.log(err))
+						login({
+							variables: { email, password }
+						}).then(res => {
+							if (res && res.data) {
+								setAccessToken(res.data.login.accessToken)
+								history.push('/')
+							}
+						}).catch(err => console.log(err))
 					}}
 				>
 					<input

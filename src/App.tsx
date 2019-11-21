@@ -4,6 +4,7 @@ import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
 
 import { hot } from 'react-hot-loader/root'
 import { Routes } from './Routes'
+import { setAccessToken } from './accessToken'
 
 const GlobalStyle = createGlobalStyle`	
 	* {
@@ -31,7 +32,10 @@ const Wrapper = styled.div`
 `
 
 const App: React.FC = (): JSX.Element => {
-	const [loading, setLoading] = useState(true)
+	const [{ user, isLoading }, setUser] = useState({
+		user: null,
+		isLoading: true
+	})
 
 	useEffect(() => {
 		window.fetch('http://localhost:4000/refresh_token', {
@@ -40,16 +44,22 @@ const App: React.FC = (): JSX.Element => {
 		}).then(async (res) => {
 			const data = await res.json()
 			console.log(data)
-			setLoading(false)
+			setAccessToken(data.accessToken)
+			setUser({
+				user: data,
+				isLoading: false
+			})
 		})
 	}, [])
+
+	console.log(user)
 
 	return (
 		<ThemeProvider theme={theme}>
 			<Wrapper>
 				<Routes />
 				{
-					loading && <div>...loading</div>
+					isLoading && <div>...loading</div>
 				}
 			</Wrapper>
 			<GlobalStyle />
