@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { RouteComponentProps } from 'react-router'
-import { useMutation } from '@apollo/react-hooks'
+import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 import styled from 'styled-components'
 import axios from 'axios'
 
@@ -56,6 +56,15 @@ const SUBSCRIBE = gql`
 	}
 `
 
+const GET_PODCASTS = gql`
+	query Podcasts {
+		podcasts {
+			id,
+			url
+		}
+	}
+`
+
 export const Podcast: React.FC<RouteComponentProps> = (props) => {
 	const { feedUrl } = props.location.state
 
@@ -71,6 +80,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 		description: '',
 		image: ''
 	})
+	const [fetchPodcasts, { data: podcasts }] = useLazyQuery(GET_PODCASTS)
 	const [subscribe] = useMutation(SUBSCRIBE)
 
 	const handleXml = (xml: any): void => {
@@ -132,7 +142,16 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 				handleXml(parser.parseFromString(response.data, 'text/xml'))
 			})
 			.catch(error => console.log(error))
+		fetchPodcasts()
 	}, [feedUrl])
+
+	let areWeSubscribed = false
+	if (podcasts) {
+		const value = podcasts.podcasts.find((cast: any) => cast.url === currentPodcast.url)
+		if (value) {
+			areWeSubscribed = true
+		}
+	}
 
 	return (
 		<div>
@@ -152,6 +171,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 						<button
 							type="button"
 							onClick={(): void => subscribeToPodacast(currentPodcast.url)}
+							disabled={areWeSubscribed}
 						>
 							subscribe
 						</button>

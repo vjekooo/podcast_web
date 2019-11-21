@@ -75,8 +75,6 @@ export const Home: React.FC = () => {
 		}
 	}, [data, podcasts])
 
-	console.log(podcasts)
-
 	return (
 		<div>
 			<div>
