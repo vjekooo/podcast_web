@@ -6,6 +6,7 @@ import { Podcast } from './components/Podcast'
 import { Header } from './components/Header'
 import { Login } from './views/Login'
 import { Register } from './views/Register'
+import { Favorites } from './views/Favorites'
 
 export const Routes: React.FC = () => {
 	return (
@@ -17,6 +18,7 @@ export const Routes: React.FC = () => {
 				<Route exact path="/register" component={Register} />
 				<Route exact path="/search" component={Search} />
 				<Route exact path="/podcast" component={Podcast} />
+				<Route exact path="/favorites" component={Favorites} />
 				<Route component={(): JSX.Element => <div>404</div>} />
 			</Switch>
 		</Router>

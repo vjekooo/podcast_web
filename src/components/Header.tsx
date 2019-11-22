@@ -37,7 +37,7 @@ export const Header: React.FC = () => (
 				Favorites
 			</NavLink>
 			<NavLink
-				to="/account"
+				to="/favorites"
 				activeClassName="link-active"
 			>
 				Account

@@ -4,8 +4,9 @@ import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 import styled from 'styled-components'
 import axios from 'axios'
 
-import { Player } from './Player'
+// import { Player } from './Player'
 import { gql } from 'apollo-boost'
+import { Episode } from './Episode'
 
 const TitleStyle = styled.div`
     padding: .5rem 0;
@@ -72,7 +73,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 		podcastList: [],
 		isLoading: true
 	})
-	const [isPlayerVisible, setPlayerState] = useState<boolean>(false)
+	// const [isPlayerVisible, setPlayerState] = useState<boolean>(false)
 	const [currentEpisode, setCurrentEpisode] = useState<Episode | null>(null)
 	const [currentPodcast, setCurrentPodcast] = useState<PodcastState>({
 		title: '',
@@ -82,6 +83,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 	})
 	const [fetchPodcasts, { data: podcasts }] = useLazyQuery(GET_PODCASTS)
 	const [subscribe] = useMutation(SUBSCRIBE)
+	const [isEpisodeVisible, setEpisodeVisibilityState] = useState(false)
 
 	const handleXml = (xml: any): void => {
 		const items = xml.getElementsByTagName('item')
@@ -118,15 +120,22 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 		setPodcastList({ podcastList: list, isLoading: false })
 	}
 
-	const handlePlayer = (): void => {
-		setPlayerState(
+	// const handlePlayer = (): void => {
+	// 	setPlayerState(
+	// 		currentState => !currentState
+	// 	)
+	// }
+
+	const handleEpisode = (): void => {
+		setEpisodeVisibilityState(
 			currentState => !currentState
 		)
 	}
 
 	const handleClickEvent = (currentEpisode: Episode): void => {
 		setCurrentEpisode(currentEpisode)
-		handlePlayer()
+		handleEpisode()
+		// handlePlayer()
 	}
 
 	const subscribeToPodacast = (url: string): void => {
@@ -184,10 +193,14 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 				</div>
 			</InfoStyle>
 			{
-				isPlayerVisible &&
-					<Player
-						handlePlayer={handlePlayer}
+				isEpisodeVisible &&
+					// <Player
+					// 	handlePlayer={handlePlayer}
+					// 	currentEpisode={currentEpisode}
+					// />
+					<Episode
 						currentEpisode={currentEpisode}
+						onClick={handleEpisode}
 					/>
 			}
 			<ListStyle>
