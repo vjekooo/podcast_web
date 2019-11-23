@@ -42,8 +42,20 @@ export const GET_PODCASTS = gql`
 `
 
 export const SET_FAVORITE = gql`
-	mutation Favorite($title: String!, $description: String!, $url: String!) {
-		setFavorite(title: $title, description: $description, url: $url)
+	mutation Favorite(
+		$title: String!,
+		$description: String!,
+		$url: String!,
+		$duration: String!,
+		$pubDate: String!
+	) {
+		setFavorite(
+			title: $title,
+			description: $description,
+			url: $url,
+			duration: $duration,
+			pubDate: $pubDate
+		)
 	}
 `
 
@@ -59,7 +71,9 @@ export const GET_FAVORITES = gql`
 			id
 			description
 			title
-			url
+			url,
+			duration,
+			pubDate
 		}
 	}
 `

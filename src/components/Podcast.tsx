@@ -3,11 +3,12 @@ import { RouteComponentProps } from 'react-router'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 import styled from 'styled-components'
 import axios from 'axios'
-// import { Player } from './Player'
+
 import { EpisodeView } from './Episode'
 
-import { Episode } from '../models/models'
+import { handleDuration } from '../helpers'
 
+import { Episode } from '../models/models'
 import { SUBSCRIBE, GET_PODCASTS, UNSUBSCRIBE } from '../query/query'
 
 const TitleStyle = styled.div`
@@ -33,10 +34,22 @@ const ListStyle = styled.div`
 		list-style-type: none;
 		padding-left: 0;
 	}
+	li {
+		display: flex;
+	}
+	div:first-child {
+		display: flex;
+		flex-direction: column;
+		width: 90%;
+	}
+	div:last-child {
+		display: flex;
+		align-items: center;
+	}
 `
 
 interface EpisodeState {
-	podcastList: Episode[];
+	episodeList: Episode[];
 	isLoading: boolean;
 }
 
@@ -50,11 +63,11 @@ interface PodcastState {
 export const Podcast: React.FC<RouteComponentProps> = (props) => {
 	const { feedUrl } = props.location.state
 
-	const [{ podcastList, isLoading }, setPodcastList] = useState<EpisodeState>({
-		podcastList: [],
+	const [{ episodeList, isLoading }, setEpisodeList] = useState<EpisodeState>({
+		episodeList: [],
 		isLoading: true
 	})
-	const [currentEpisode, setCurrentEpisode] = useState<Episode | null>(null)
+	const [currentEpisode, setCurrentEpisode] = useState<Episode>()
 	const [currentPodcast, setCurrentPodcast] = useState<PodcastState>({
 		title: '',
 		url: '',
@@ -69,6 +82,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 
 	const handleXml = (xml: any): void => {
 		const items = xml.getElementsByTagName('item')
+
 		const title = xml.getElementsByTagName('title')
 		const url = xml.getElementsByTagName('itunes:new-feed-url')
 		const description = xml.getElementsByTagName('description')
@@ -89,17 +103,21 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 				const title = singleItem.getElementsByTagName('title')
 				const description = singleItem.getElementsByTagName('description')
 				const enclosure = singleItem.getElementsByTagName('enclosure')
+				const pubDate = singleItem.getElementsByTagName('pubDate')
+				const duration = singleItem.getElementsByTagName('itunes:duration')
 
 				const newPod: Episode = {
 					title: title[0].childNodes[0].nodeValue,
 					description: description[0].childNodes[0].nodeValue,
-					url: enclosure[0].getAttribute('url')
+					url: enclosure[0].getAttribute('url'),
+					pubDate: pubDate[0].childNodes[0].nodeValue,
+					duration: duration[0].childNodes[0].nodeValue
 				}
 				list.push(newPod)
 			}
 		}
 
-		setPodcastList({ podcastList: list, isLoading: false })
+		setEpisodeList({ episodeList: list, isLoading: false })
 	}
 
 	const handleEpisode = (): void => {
@@ -186,7 +204,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 				</div>
 			</InfoStyle>
 			{
-				isEpisodeVisible &&
+				isEpisodeVisible && currentEpisode &&
 					<EpisodeView
 						currentEpisode={currentEpisode}
 						onClick={handleEpisode}
@@ -195,14 +213,26 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 			<ListStyle>
 				<ul>
 					{
-						podcastList.map((item: Episode, index): JSX.Element => (
+						episodeList.map((item: Episode, index: number): JSX.Element => (
 							<li
 								key={index}
 								onClick={(): void => handleClickEvent(item)}
 							>
-								{
-									item.title
-								}
+								<div>
+									<span>
+										{
+											item.title
+										}
+									</span>
+									<span>
+										{
+											handleDuration(item.duration)
+										}
+									</span>
+								</div>
+								<div>
+									play
+								</div>
 							</li>
 						))
 					}

@@ -6,6 +6,8 @@ import { SET_FAVORITE, GET_FAVORITES, REMOVE_FAVORITE } from '../query/query'
 import { Episode } from '../models/models'
 import { PlayerContext } from '../UseContext'
 
+import { handleDuration, handleDate } from '../helpers'
+
 const EpisodeStyle = styled.div`
     position: fixed;
 	top: 0;
@@ -65,7 +67,9 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 		handleFavoriteEpisode()
 	}, [favorites])
 
-	const handleFavorite = ({ id, title, description, url }: Episode): void => {
+	const handleFavorite = ({
+		id, title, description, url, duration, pubDate
+	}: Episode): void => {
 		if (isFavorite) {
 			removeFavorite({
 				variables: { id },
@@ -73,7 +77,7 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 			}).catch(err => console.log(err))
 		} else {
 			setFavorite({
-				variables: { title, description, url },
+				variables: { title, description, url, duration, pubDate },
 				refetchQueries: [{ query: GET_FAVORITES }]
 			}).catch(err => console.log(err))
 		}
@@ -96,10 +100,19 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 				<TitleStyle>
 					<h3>
 						{
-							currentEpisode &&
-								currentEpisode.title
+							currentEpisode.title
 						}
 					</h3>
+					<p>
+						{
+							handleDuration(currentEpisode.duration)
+						}
+					</p>
+					<p>
+						{
+							handleDate(currentEpisode.pubDate)
+						}
+					</p>
 					<button
 						type="button"
 						onClick={(): void => {
