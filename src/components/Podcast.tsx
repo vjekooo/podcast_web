@@ -118,12 +118,12 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 			unsubscribe({
 				variables: { url },
 				refetchQueries: [{ query: GET_PODCASTS }]
-			}).then(res => console.log(res)).catch(err => console.log(err))
+			}).catch(err => console.log(err))
 		} else {
 			subscribe({
 				variables: { url },
 				refetchQueries: [{ query: GET_PODCASTS }]
-			}).then(res => console.log(res)).catch(err => console.log(err))
+			}).catch(err => console.log(err))
 		}
 	}
 
