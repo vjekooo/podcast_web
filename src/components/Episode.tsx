@@ -1,8 +1,8 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect, useContext, useState } from 'react'
 import styled from 'styled-components'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 
-import { SET_FAVORITE, GET_FAVORITES } from '../query/query'
+import { SET_FAVORITE, GET_FAVORITES, REMOVE_FAVORITE } from '../query/query'
 import { Episode } from '../models/models'
 import { PlayerContext } from '../UseContext'
 
@@ -34,32 +34,48 @@ const ImageStyle = styled.div`
 `
 
 interface Props {
-	currentEpisode: Episode | null;
+	currentEpisode: Episode;
 	onClick: () => void;
 }
 
 export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
-	const [setFavorite] = useMutation(SET_FAVORITE)
-	const [fetchFavorites, { data: favorites }] = useLazyQuery(GET_FAVORITES)
-
 	const { setValues } = useContext(PlayerContext)
+
+	const [setFavorite] = useMutation(SET_FAVORITE)
+	const [removeFavorite] = useMutation(REMOVE_FAVORITE)
+	const [fetchFavorites, { data: favorites }] = useLazyQuery(GET_FAVORITES)
+	const [isFavorite, setIsFavorite] = useState(false)
+
+	const handleFavoriteEpisode = (): void => {
+		if (favorites) {
+			const value = favorites.favorites.find((fav: any) => fav.url === currentEpisode.url)
+			if (value) {
+				setIsFavorite(true)
+			} else {
+				setIsFavorite(false)
+			}
+		}
+	}
 
 	useEffect(() => {
 		fetchFavorites()
+	}, [])
+
+	useEffect(() => {
+		handleFavoriteEpisode()
 	}, [favorites])
 
-	const handleFavorite = (title: string, description: string, url: string): void => {
-		if (!url) return
-		setFavorite({
-			variables: { title, description, url }
-		}).then(res => console.log(res)).catch(err => console.log(err))
-	}
-
-	let isThisOneFavorite = false
-	if (favorites && currentEpisode) {
-		const value = favorites.favorites.find((fav: any) => fav.url === currentEpisode.url)
-		if (value) {
-			isThisOneFavorite = true
+	const handleFavorite = ({ id, title, description, url }: Episode): void => {
+		if (isFavorite) {
+			removeFavorite({
+				variables: { id },
+				refetchQueries: [{ query: GET_FAVORITES }]
+			}).catch(err => console.log(err))
+		} else {
+			setFavorite({
+				variables: { title, description, url },
+				refetchQueries: [{ query: GET_FAVORITES }]
+			}).catch(err => console.log(err))
 		}
 	}
 
@@ -86,18 +102,17 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 					</h3>
 					<button
 						type="button"
-						disabled={isThisOneFavorite}
 						onClick={(): void => {
 							if (currentEpisode) {
-								handleFavorite(
-									currentEpisode.title,
-									currentEpisode.description,
-									currentEpisode.url
-								)
+								handleFavorite(currentEpisode)
 							}
 						}}
 					>
-						favorite
+						{
+							isFavorite
+								? 'unFavorite'
+								: 'favorite'
+						}
 					</button>
 					<button
 						type="button"

@@ -12,6 +12,7 @@ export interface Episode {
 }
 
 export interface Favorite {
+	id: number;
 	title: string;
 	description: string;
 	url: string;

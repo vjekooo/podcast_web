@@ -26,6 +26,12 @@ export const SUBSCRIBE = gql`
 	}
 `
 
+export const UNSUBSCRIBE = gql`
+	mutation Unsubscribe($url: String!) {
+		unsubscribe(url: $url)
+	}
+`
+
 export const GET_PODCASTS = gql`
 	query Podcasts {
 		podcasts {
@@ -38,6 +44,12 @@ export const GET_PODCASTS = gql`
 export const SET_FAVORITE = gql`
 	mutation Favorite($title: String!, $description: String!, $url: String!) {
 		setFavorite(title: $title, description: $description, url: $url)
+	}
+`
+
+export const REMOVE_FAVORITE = gql`
+	mutation RemoveFavorite($id: ID!) {
+		removeFavorite(id: $id)
 	}
 `
 

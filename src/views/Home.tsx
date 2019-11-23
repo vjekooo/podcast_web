@@ -71,7 +71,7 @@ export const Home: React.FC = () => {
 			<ContentStyle>
 				{
 					subscriptions &&
-						subscriptions.map((podcast: any) => (
+						subscriptions.map((podcast: any, index: number) => (
 							<Link
 								to={{
 									pathname: '/podcast',
@@ -79,7 +79,7 @@ export const Home: React.FC = () => {
 										feedUrl: podcast.url
 									}
 								}}
-								key={podcast.id}
+								key={index}
 							>
 								<img src={podcast.image} />
 							</Link>
