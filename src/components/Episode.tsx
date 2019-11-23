@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 
 import { SET_FAVORITE, GET_FAVORITES } from '../query/query'
 import { Episode } from '../models/models'
+import { PlayerContext } from '../UseContext'
 
 const EpisodeStyle = styled.div`
     position: fixed;
@@ -40,6 +41,8 @@ interface Props {
 export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 	const [setFavorite] = useMutation(SET_FAVORITE)
 	const [fetchFavorites, { data: favorites }] = useLazyQuery(GET_FAVORITES)
+
+	const { setValues } = useContext(PlayerContext)
 
 	useEffect(() => {
 		fetchFavorites()
@@ -95,6 +98,17 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 						}}
 					>
 						favorite
+					</button>
+					<button
+						type="button"
+						onClick={(): void =>
+							setValues({
+								episode: currentEpisode,
+								isPlayerVisible: true
+							})
+						}
+					>
+						play
 					</button>
 				</TitleStyle>
 			</HeaderStyle>

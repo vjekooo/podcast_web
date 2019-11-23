@@ -1,11 +1,11 @@
 
 import React from 'react'
 
-export const World: React.FC = () => {
+export const Account: React.FC = () => {
 	return (
 		<div>
 			<div>
-				World
+				This needs more work
 			</div>
 		</div>
 	)

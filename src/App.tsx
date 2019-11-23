@@ -5,6 +5,8 @@ import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
 import { hot } from 'react-hot-loader/root'
 import { Routes } from './Routes'
 import { setAccessToken } from './accessToken'
+import { PlayerContext } from './UseContext'
+import { Player } from './components/Player'
 
 const GlobalStyle = createGlobalStyle`	
 	* {
@@ -36,6 +38,10 @@ const App: React.FC = (): JSX.Element => {
 		user: null,
 		isLoading: true
 	})
+	const [{ episode, isPlayerVisible }, setValues] = useState({
+		episode: null,
+		isPlayerVisible: false
+	})
 
 	useEffect(() => {
 		window.fetch('http://localhost:4000/refresh_token', {
@@ -57,9 +63,18 @@ const App: React.FC = (): JSX.Element => {
 	return (
 		<ThemeProvider theme={theme}>
 			<Wrapper>
-				<Routes />
+				<PlayerContext.Provider value={{ setValues }}>
+					<Routes />
+				</PlayerContext.Provider>
 				{
 					isLoading && <div>...loading</div>
+				}
+				{
+					isPlayerVisible &&
+						<Player
+							setValues={setValues}
+							currentEpisode={episode}
+						/>
 				}
 			</Wrapper>
 			<GlobalStyle />

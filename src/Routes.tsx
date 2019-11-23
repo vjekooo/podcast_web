@@ -7,6 +7,7 @@ import { Header } from './components/Header'
 import { Login } from './views/Login'
 import { Register } from './views/Register'
 import { Favorites } from './views/Favorites'
+import { Account } from './views/Account'
 
 export const Routes: React.FC = () => {
 	return (
@@ -19,6 +20,7 @@ export const Routes: React.FC = () => {
 				<Route exact path="/search" component={Search} />
 				<Route exact path="/podcast" component={Podcast} />
 				<Route exact path="/favorites" component={Favorites} />
+				<Route exact path="/account" component={Account} />
 				<Route component={(): JSX.Element => <div>404</div>} />
 			</Switch>
 		</Router>
