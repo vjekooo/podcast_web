@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import { RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 
+import { Podcast } from '../models/models'
+
 const TitleStyle = styled.div`
 	padding: .5rem 0%;
 `
@@ -39,12 +41,6 @@ const ListStyle = styled.div`
 interface State {
 	data: Podcast[];
 	isLoading: boolean;
-}
-
-interface Podcast {
-	feedUrl: string;
-	collectionId: string;
-	artworkUrl100: string;
 }
 
 export const Search: React.FC<RouteComponentProps> = (): JSX.Element => {

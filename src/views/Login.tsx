@@ -1,17 +1,10 @@
 
 import React, { useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
 import { RouteComponentProps } from 'react-router'
 import { setAccessToken } from '../accessToken'
 
-const LOGIN = gql`
-	mutation Login($email: String!, $password: String!) {
-		login(email: $email, password: $password) {
-			accessToken
-		}
-	}
-`
+import { LOGIN } from '../query/query'
 
 export const Login: React.FC<RouteComponentProps> = ({ history }): JSX.Element => {
 	const [email, setEmail] = useState('')

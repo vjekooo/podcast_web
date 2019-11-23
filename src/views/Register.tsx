@@ -1,14 +1,9 @@
 
 import React, { useState } from 'react'
-import { gql } from 'apollo-boost'
 import { useMutation } from '@apollo/react-hooks'
 import { RouteComponentProps } from 'react-router-dom'
 
-const REGISTER = gql`
-	mutation Register($email: String!, $password: String!) {
-		register(email: $email, password: $password)
-	}
-`
+import { REGISTER } from '../query/query'
 
 export const Register: React.FC<RouteComponentProps> = ({ history }): JSX.Element => {
 	const [email, setEmail] = useState('')

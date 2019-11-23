@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import { useMutation } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
+import { useMutation, useLazyQuery } from '@apollo/react-hooks'
+
+import { SET_FAVORITE, GET_FAVORITES } from '../query/query'
+import { Episode } from '../models/models'
 
 const EpisodeStyle = styled.div`
     position: fixed;
@@ -30,31 +32,32 @@ const ImageStyle = styled.div`
     width: 30%;
 `
 
-export interface Episode {
-	title: string;
-	description: string;
-	url: string;
-}
-
 interface Props {
 	currentEpisode: Episode | null;
 	onClick: () => void;
 }
 
-const SET_FAVORITE = gql`
-	mutation Favorite($title: String!, $url: String!) {
-		setFavorite(title: $title, url: $url)
-	}
-`
-
-export const Episode: React.FC<Props> = ({ currentEpisode, onClick }) => {
+export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 	const [setFavorite] = useMutation(SET_FAVORITE)
+	const [fetchFavorites, { data: favorites }] = useLazyQuery(GET_FAVORITES)
 
-	const handleFavorite = (title: string, url: string): void => {
+	useEffect(() => {
+		fetchFavorites()
+	}, [favorites])
+
+	const handleFavorite = (title: string, description: string, url: string): void => {
 		if (!url) return
 		setFavorite({
-			variables: { title, url }
+			variables: { title, description, url }
 		}).then(res => console.log(res)).catch(err => console.log(err))
+	}
+
+	let isThisOneFavorite = false
+	if (favorites && currentEpisode) {
+		const value = favorites.favorites.find((fav: any) => fav.url === currentEpisode.url)
+		if (value) {
+			isThisOneFavorite = true
+		}
 	}
 
 	return (
@@ -80,10 +83,12 @@ export const Episode: React.FC<Props> = ({ currentEpisode, onClick }) => {
 					</h3>
 					<button
 						type="button"
+						disabled={isThisOneFavorite}
 						onClick={(): void => {
 							if (currentEpisode) {
 								handleFavorite(
 									currentEpisode.title,
+									currentEpisode.description,
 									currentEpisode.url
 								)
 							}

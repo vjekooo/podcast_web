@@ -3,10 +3,12 @@ import { RouteComponentProps } from 'react-router'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 import styled from 'styled-components'
 import axios from 'axios'
-
 // import { Player } from './Player'
-import { gql } from 'apollo-boost'
-import { Episode } from './Episode'
+import { EpisodeView } from './Episode'
+
+import { Episode } from '../models/models'
+
+import { SUBSCRIBE, GET_PODCASTS } from '../query/query'
 
 const TitleStyle = styled.div`
     padding: .5rem 0;
@@ -33,12 +35,6 @@ const ListStyle = styled.div`
 	}
 `
 
-export interface Episode {
-	title: string;
-	description: string;
-	url: string;
-}
-
 interface EpisodeState {
 	podcastList: Episode[];
 	isLoading: boolean;
@@ -50,21 +46,6 @@ interface PodcastState {
 	description: string;
 	image: string;
 }
-
-const SUBSCRIBE = gql`
-	mutation Subscribe($url: String!) {
-		subscribe(url: $url)
-	}
-`
-
-const GET_PODCASTS = gql`
-	query Podcasts {
-		podcasts {
-			id,
-			url
-		}
-	}
-`
 
 export const Podcast: React.FC<RouteComponentProps> = (props) => {
 	const { feedUrl } = props.location.state
@@ -198,7 +179,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 					// 	handlePlayer={handlePlayer}
 					// 	currentEpisode={currentEpisode}
 					// />
-					<Episode
+					<EpisodeView
 						currentEpisode={currentEpisode}
 						onClick={handleEpisode}
 					/>

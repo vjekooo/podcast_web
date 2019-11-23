@@ -1,9 +1,9 @@
 
 import React, { useEffect, useState } from 'react'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { GET_PODCASTS, GET_USER } from '../query/query'
 
 const ContentStyle = styled.div`
     display: flex;
@@ -14,21 +14,6 @@ const ContentStyle = styled.div`
 	}
 	img {
 		width: 100%;
-	}
-`
-
-const GET_USER = gql`
-	query User {
-		user
-	}
-`
-
-const GET_PODCASTS = gql`
-	query Podcasts {
-		podcasts {
-			id,
-			url
-		}
 	}
 `
 

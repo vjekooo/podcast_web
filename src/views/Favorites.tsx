@@ -1,30 +1,37 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useLazyQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
-import { Link } from 'react-router-dom'
+
+import { GET_FAVORITES } from '../query/query'
+import { EpisodeView } from '../components/Episode'
+import { Favorite } from '../models/models'
 
 const FavoriteStyle = styled.div`
     display: flex;
-`
-
-const GET_FAVORITES = gql`
-	query Favorites {
-		favorites {
-			id
-			title
-            url
-        }
+	ul {
+		list-style-type: none;
+		padding-left: 0;
+	}
+	li {
+		cursor: pointer;
 	}
 `
 
-interface Favorite {
-	title: string;
-	url: string;
-}
-
 export const Favorites: React.FC = () => {
 	const [fetchFavorites, { data: favorites }] = useLazyQuery(GET_FAVORITES)
+	const [isEpisodeVisible, setEpisodeVisibilityState] = useState(false)
+	const [currentFavorite, setCurrentFavorite] = useState<Favorite | null>(null)
+
+	const handleEpisode = (): void => {
+		setEpisodeVisibilityState(
+			currentState => !currentState
+		)
+	}
+
+	const handleClickEvent = (currentFavorite: Favorite): void => {
+		setCurrentFavorite(currentFavorite)
+		handleEpisode()
+	}
 
 	useEffect(() => {
 		fetchFavorites()
@@ -32,18 +39,31 @@ export const Favorites: React.FC = () => {
 
 	return (
 		<FavoriteStyle>
+			<ul>
+				{
+					favorites &&
+						favorites.favorites.map((fav: any) => (
+							<li
+								key={fav.id}
+								onClick={(): void => handleClickEvent(fav)}
+							>
+								{
+									fav.title
+								}
+							</li>
+						))
+				}
+			</ul>
 			{
-				favorites &&
-					favorites.favorites.map((fav: any) => (
-						<Link
-							to="/"
-							key={fav.id}
-						>
-							{
-								fav.title
-							}
-						</Link>
-					))
+				isEpisodeVisible &&
+					// <Player
+					// 	handlePlayer={handlePlayer}
+					// 	currentEpisode={currentEpisode}
+					// />
+					<EpisodeView
+						currentEpisode={currentFavorite}
+						onClick={handleEpisode}
+					/>
 			}
 		</FavoriteStyle>
 	)
