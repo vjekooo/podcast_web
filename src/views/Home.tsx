@@ -1,21 +1,9 @@
 
 import React, { useEffect, useState } from 'react'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks'
-import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { GET_PODCASTS, GET_USER } from '../query/query'
-
-const ContentStyle = styled.div`
-    display: flex;
-	flex-wrap: wrap;
-	margin-top: 1rem;
-	a {
-		width: 30%;
-	}
-	img {
-		width: 100%;
-	}
-`
+import { ContentStyle } from './styles/Home'
 
 interface Podcast {
 	url: string;

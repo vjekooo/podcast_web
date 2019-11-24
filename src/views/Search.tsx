@@ -1,42 +1,10 @@
 
 import React, { useState, useEffect, Fragment } from 'react'
-import styled from 'styled-components'
 import { RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 
 import { Podcast } from '../models/models'
-
-const TitleStyle = styled.div`
-	padding: .5rem 0%;
-`
-
-const SearchStyle = styled.div`
-	margin-bottom: 1rem;
-	input {
-		width: 100%;
-		min-height: 20px;
-		text-transform: uppercase;
-		padding: .5rem;
-		&:focus {
-			outline: none;
-		}
-	}
-`
-
-const ListStyle = styled.div`
-	width: 100%;
-	padding-left: 0;
-	display: flex;
-	justify-content: space-between;
-	flex-wrap: wrap;
-	a {
-		width: 18%;
-		padding-bottom: .2rem;
-	}
-	img {
-		width: 100%;
-	}
-`
+import { TitleStyle, SearchStyle, ListStyle } from './styles/Search'
 
 interface State {
 	data: Podcast[];

@@ -1,21 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
 import { useLazyQuery } from '@apollo/react-hooks'
 
 import { GET_FAVORITES } from '../query/query'
 import { EpisodeView } from '../components/Episode'
 import { Favorite } from '../models/models'
 
-const FavoriteStyle = styled.div`
-    display: flex;
-	ul {
-		list-style-type: none;
-		padding-left: 0;
-	}
-	li {
-		cursor: pointer;
-	}
-`
+import { FavoriteStyle } from './styles/Favorites'
 
 export const Favorites: React.FC = () => {
 	const [fetchFavorites, { data: favorites }] = useLazyQuery(GET_FAVORITES)
@@ -55,11 +45,7 @@ export const Favorites: React.FC = () => {
 				}
 			</ul>
 			{
-				isEpisodeVisible &&
-					// <Player
-					// 	handlePlayer={handlePlayer}
-					// 	currentEpisode={currentEpisode}
-					// />
+				isEpisodeVisible && currentFavorite &&
 					<EpisodeView
 						currentEpisode={currentFavorite}
 						onClick={handleEpisode}

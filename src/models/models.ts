@@ -19,4 +19,6 @@ export interface Favorite {
 	title: string;
 	description: string;
 	url: string;
+	pubDate: string;
+	duration: string;
 }

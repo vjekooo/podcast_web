@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { RouteComponentProps } from 'react-router'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
-import styled from 'styled-components'
 import axios from 'axios'
+
+import { PlayerContext } from '../UseContext'
 
 import { EpisodeView } from './Episode'
 
@@ -10,43 +11,7 @@ import { handleDuration } from '../helpers'
 
 import { Episode } from '../models/models'
 import { SUBSCRIBE, GET_PODCASTS, UNSUBSCRIBE } from '../query/query'
-
-const TitleStyle = styled.div`
-    padding: .5rem 0;
-`
-
-const InfoStyle = styled.div`
-    padding: .5rem 0;
-	img {
-		width: 150px;
-		margin-right: 1rem;
-	}
-	.info-header {
-		display: flex;
-	}
-	h3 {
-		margin-top: 0;
-	}
-`
-
-const ListStyle = styled.div`
-    ul {
-		list-style-type: none;
-		padding-left: 0;
-	}
-	li {
-		display: flex;
-	}
-	div:first-child {
-		display: flex;
-		flex-direction: column;
-		width: 90%;
-	}
-	div:last-child {
-		display: flex;
-		align-items: center;
-	}
-`
+import { TitleStyle, InfoStyle, ListStyle, ListItemStyle } from './styles/Podcast'
 
 interface EpisodeState {
 	episodeList: Episode[];
@@ -62,6 +27,8 @@ interface PodcastState {
 
 export const Podcast: React.FC<RouteComponentProps> = (props) => {
 	const { feedUrl } = props.location.state
+
+	const { setValues } = useContext(PlayerContext)
 
 	const [{ episodeList, isLoading }, setEpisodeList] = useState<EpisodeState>({
 		episodeList: [],
@@ -161,6 +128,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 			.then(response => {
 				const parser = new window.DOMParser()
 				handleXml(parser.parseFromString(response.data, 'text/xml'))
+				// parseXml(parser.parseFromString(response.data, 'text/xml'))
 			})
 			.catch(error => console.log(error))
 		fetchPodcasts()
@@ -214,11 +182,12 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 				<ul>
 					{
 						episodeList.map((item: Episode, index: number): JSX.Element => (
-							<li
+							<ListItemStyle
 								key={index}
-								onClick={(): void => handleClickEvent(item)}
 							>
-								<div>
+								<div
+									onClick={(): void => handleClickEvent(item)}
+								>
 									<span>
 										{
 											item.title
@@ -231,9 +200,19 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 									</span>
 								</div>
 								<div>
-									play
+									<button
+										type="button"
+										onClick={(): void =>
+											setValues({
+												episode: item,
+												isPlayerVisible: true
+											})
+										}
+									>
+										play
+									</button>
 								</div>
-							</li>
+							</ListItemStyle>
 						))
 					}
 				</ul>
