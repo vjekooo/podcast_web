@@ -5,7 +5,7 @@ import { SET_FAVORITE, GET_FAVORITES, REMOVE_FAVORITE } from '../query/query'
 import { Episode, Favorite } from '../models/models'
 import { PlayerContext } from '../UseContext'
 
-import { handleDuration, handleDate } from '../helpers'
+import { handleDate } from '../helpers'
 import { EpisodeStyle, TopStyle, ImageStyle, HeaderStyle, TitleStyle } from './styles/Episode'
 
 interface Props {
@@ -78,7 +78,7 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 					</h3>
 					<p>
 						{
-							handleDuration(currentEpisode.duration)
+							currentEpisode.duration
 						}
 					</p>
 					<p>
