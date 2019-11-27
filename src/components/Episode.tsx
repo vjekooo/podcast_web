@@ -23,7 +23,7 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 
 	const handleFavoriteEpisode = (): void => {
 		if (favorites) {
-			const value = favorites.favorites.find((fav: any) => fav.url === currentEpisode.url)
+			const value = favorites.favorites.find((fav: Favorite) => fav.url === currentEpisode.url)
 			if (value) {
 				setIsFavorite(true)
 			} else {

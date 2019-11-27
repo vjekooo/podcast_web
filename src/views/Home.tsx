@@ -8,6 +8,7 @@ import { ContentStyle } from './styles/Home'
 interface Podcast {
 	id: string;
 	url: string;
+	image: string;
 }
 
 interface Subs {
@@ -50,7 +51,7 @@ export const Home: React.FC = () => {
 			<ContentStyle>
 				{
 					subscriptions &&
-						subscriptions.fetchPodcasts.map((podcast: any, index: number) => (
+						subscriptions.fetchPodcasts.map((podcast: Podcast, index: number) => (
 							<Link
 								to={{
 									pathname: '/podcast',

@@ -78,12 +78,6 @@ export const GET_FAVORITES = gql`
 	}
 `
 
-// export const NODE_FETCH = gql`
-// 	query FetchPodcasts($url: String!) {
-// 		fetchPodcasts(url: $url)
-// 	}
-// `
-
 export const NODE_FETCH = gql`
 	query FetchPodcasts($url: String!) {
 		fetchPodcasts(url: $url) {

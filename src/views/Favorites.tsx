@@ -32,7 +32,7 @@ export const Favorites: React.FC = () => {
 			<ul>
 				{
 					favorites &&
-						favorites.favorites.map((fav: any) => (
+						favorites.favorites.map((fav: Favorite) => (
 							<li
 								key={fav.id}
 								onClick={(): void => handleClickEvent(fav)}
