@@ -38,7 +38,7 @@ const App: React.FC = (): JSX.Element => {
 		user: null,
 		isLoading: true
 	})
-	const [{ episode, isPlayerVisible }, setValues] = useState({
+	const [{ episode, isPlayerVisible }, setPlayerValues] = useState({
 		episode: null,
 		isPlayerVisible: false
 	})
@@ -63,7 +63,7 @@ const App: React.FC = (): JSX.Element => {
 	return (
 		<ThemeProvider theme={theme}>
 			<Wrapper>
-				<PlayerContext.Provider value={{ setValues }}>
+				<PlayerContext.Provider value={{ setPlayerValues }}>
 					<Routes />
 				</PlayerContext.Provider>
 				{
@@ -72,7 +72,7 @@ const App: React.FC = (): JSX.Element => {
 				{
 					isPlayerVisible &&
 						<Player
-							setValues={setValues}
+							setValues={setPlayerValues}
 							currentEpisode={episode}
 						/>
 				}

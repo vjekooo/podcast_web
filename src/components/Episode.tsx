@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
-	const { setValues } = useContext(PlayerContext)
+	const { setPlayerValues } = useContext(PlayerContext)
 
 	const [setFavorite] = useMutation(SET_FAVORITE)
 	const [removeFavorite] = useMutation(REMOVE_FAVORITE)
@@ -103,7 +103,7 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 					<button
 						type="button"
 						onClick={(): void =>
-							setValues({
+							setPlayerValues({
 								episode: currentEpisode,
 								isPlayerVisible: true
 							})

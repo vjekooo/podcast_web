@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks'
 import { Link } from 'react-router-dom'
-import { GET_PODCASTS, GET_USER, NODE_FETCH } from '../query/query'
+import { GET_PODCASTS, GET_USER, FETCH_PODCASTS } from '../query/query'
 import { ContentStyle } from './styles/Home'
 
 interface Podcast {
@@ -23,7 +23,7 @@ interface UrlObj {
 export const Home: React.FC = () => {
 	const { data } = useQuery(GET_USER)
 	const [fetchPodcasts, { data: podcasts }] = useLazyQuery(GET_PODCASTS)
-	const [nodeFetch, { data: subscriptions, loading }] = useLazyQuery(NODE_FETCH)
+	const [nodeFetch, { data: subscriptions, loading }] = useLazyQuery(FETCH_PODCASTS)
 
 	useEffect(() => {
 		if (data) fetchPodcasts()
@@ -51,21 +51,21 @@ export const Home: React.FC = () => {
 			<ContentStyle>
 				{
 					subscriptions &&
-						subscriptions.fetchPodcasts.map((podcast: Podcast, index: number) => (
-							<Link
-								to={{
-									pathname: '/podcast',
-									state: {
-										feedUrl: podcast.url
-									}
-								}}
-								key={index}
-							>
-								<img src={podcast.image} />
-							</Link>
-						))
+						subscriptions.fetchPodcasts
+							.map((podcast: Podcast, index: number) => (
+								<Link
+									to={{
+										pathname: '/podcast',
+										state: {
+											feedUrl: podcast.url
+										}
+									}}
+									key={index}
+								>
+									<img src={podcast.image} />
+								</Link>
+							))
 				}
-				<a />
 			</ContentStyle>
 		</div>
 	)

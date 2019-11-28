@@ -1,4 +1,8 @@
 
 import { createContext } from 'react'
 
-export const PlayerContext = createContext({})
+interface ContextProps {
+    setPlayerValues: any;
+};
+
+export const PlayerContext = createContext<Partial<ContextProps>>({})

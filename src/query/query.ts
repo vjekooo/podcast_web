@@ -78,9 +78,21 @@ export const GET_FAVORITES = gql`
 	}
 `
 
-export const NODE_FETCH = gql`
+export const FETCH_PODCASTS = gql`
 	query FetchPodcasts($url: String!) {
 		fetchPodcasts(url: $url) {
+			url,
+			title,
+			pubDate,
+			description,
+			image
+		}
+	}
+`
+
+export const FETCH_PODCASTS_EPISODES = gql`
+	query FetchPodcastsEpisodes($url: String!) {
+		fetchPodcastsEpisodes(url: $url) {
 			url,
 			title,
 			pubDate,

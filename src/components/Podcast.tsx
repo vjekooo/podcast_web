@@ -7,8 +7,21 @@ import { PlayerContext } from '../UseContext'
 import { EpisodeView } from './Episode'
 
 import { Episode } from '../models/models'
-import { SUBSCRIBE, GET_PODCASTS, UNSUBSCRIBE, NODE_FETCH } from '../query/query'
-import { TitleStyle, InfoStyle, ListStyle, ListItemStyle } from './styles/Podcast'
+import {
+	SUBSCRIBE,
+	GET_PODCASTS,
+	UNSUBSCRIBE,
+	FETCH_PODCASTS_EPISODES
+} from '../query/query'
+
+import {
+	TitleStyle,
+	InfoStyle,
+	ListStyle,
+	ListItemStyle,
+	ListItemTitleStyle,
+	ListItemTimeStyle
+} from './styles/Podcast'
 
 interface EpisodeState {
 	episodeList: Episode[];
@@ -25,7 +38,7 @@ interface PodcastState {
 export const Podcast: React.FC<RouteComponentProps> = (props) => {
 	const { feedUrl } = props.location.state
 
-	const { setValues } = useContext(PlayerContext)
+	const { setPlayerValues } = useContext(PlayerContext)
 
 	const [currentEpisode, setCurrentEpisode] = useState<Episode>()
 	const [fetchPodcasts, { data: podcasts, loading }] = useLazyQuery(GET_PODCASTS)
@@ -34,7 +47,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 	const [isEpisodeVisible, setEpisodeVisibilityState] = useState(false)
 	const [isSubscribed, setIsSubscribed] = useState(false)
 
-	const [nodeFetch, { data: podcast }] = useLazyQuery(NODE_FETCH)
+	const [nodeFetch, { data: podcast }] = useLazyQuery(FETCH_PODCASTS_EPISODES)
 
 	const handleEpisode = (): void => {
 		setEpisodeVisibilityState(
@@ -62,9 +75,10 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 	}
 
 	const handleIsSubscribed = (): void => {
-		const currentPodcast = podcast && podcast.fetchPodcasts[0]
+		const currentPodcast = podcast && podcast.fetchPodcastsEpisodes[0]
 		if (currentPodcast) {
-			const value = podcasts.podcasts.find((cast: any) => cast.url === currentPodcast.url)
+			const value = podcasts.podcasts
+				.find((cast: any) => cast.url === currentPodcast.url)
 			if (value) {
 				setIsSubscribed(true)
 			} else {
@@ -85,9 +99,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 
 	useEffect(() => {
 		handleIsSubscribed()
-	}, [podcast.fetchPodcasts])
-
-	console.log(podcast)
+	}, [podcast && podcast.fetchPodcastsEpisodes])
 
 	return (
 		<div>
@@ -101,20 +113,20 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 				<div className="info-header">
 					<img src={
 						podcast &&
-							podcast.fetchPodcasts[0].image
+							podcast.fetchPodcastsEpisodes[0].image
 					} />
 					<div>
 						<h3>
 							{
 								podcast &&
-									podcast.fetchPodcasts[0].title
+									podcast.fetchPodcastsEpisodes[0].title
 							}
 						</h3>
 						<button
 							type="button"
 							onClick={(): void => handleSubscription(
 								podcast &&
-									podcast.fetchPodcasts[0].url
+									podcast.fetchPodcastsEpisodes[0].url
 							)}
 						>
 							{
@@ -129,7 +141,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 					<p>
 						{
 							podcast &&
-								podcast.fetchPodcasts[0].description
+								podcast.fetchPodcastsEpisodes[0].description
 						}
 					</p>
 				</div>
@@ -145,39 +157,40 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 				<ul>
 					{
 						podcast &&
-							podcast.fetchPodcasts[0].episodes.map((item: Episode, index: number): JSX.Element => (
-								<ListItemStyle
-									key={index}
-								>
-									<div
-										onClick={(): void => handleClickEvent(item)}
+							podcast.fetchPodcastsEpisodes[0].episodes
+								.map((item: Episode, index: number): JSX.Element => (
+									<ListItemStyle
+										key={index}
 									>
-										<span>
-											{
-												item.title
-											}
-										</span>
-										<span>
-											{
-												item.duration
-											}
-										</span>
-									</div>
-									<div>
-										<button
-											type="button"
-											onClick={(): void =>
-												setValues({
-													episode: item,
-													isPlayerVisible: true
-												})
-											}
+										<div
+											onClick={(): void => handleClickEvent(item)}
 										>
-											play
-										</button>
-									</div>
-								</ListItemStyle>
-							))
+											<ListItemTitleStyle>
+												{
+													item.title
+												}
+											</ListItemTitleStyle>
+											<ListItemTimeStyle>
+												{
+													item.duration
+												}
+											</ListItemTimeStyle>
+										</div>
+										<div>
+											<button
+												type="button"
+												onClick={(): void =>
+													setPlayerValues({
+														episode: item,
+														isPlayerVisible: true
+													})
+												}
+											>
+												play
+											</button>
+										</div>
+									</ListItemStyle>
+								))
 					}
 				</ul>
 			</ListStyle>

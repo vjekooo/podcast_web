@@ -37,3 +37,11 @@ export const ListItemStyle = styled.li`
 		align-items: center;
 	}
 `
+
+export const ListItemTitleStyle = styled.span`
+	
+`
+
+export const ListItemTimeStyle = styled.span`
+	font-size: .7rem;
+`
