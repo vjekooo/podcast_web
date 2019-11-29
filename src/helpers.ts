@@ -7,6 +7,5 @@ export const handleDuration = (value: string): string => {
 }
 
 export const handleDate = (value: string): string => {
-	console.log(value)
 	return value.slice(0, 16)
 }

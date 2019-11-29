@@ -55,12 +55,12 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 		)
 	}
 
-	const handleClickEvent = (currentEpisode: Episode): void => {
+	const handleClickOnPodcast = (currentEpisode: Episode): void => {
 		setCurrentEpisode(currentEpisode)
 		handleEpisode()
 	}
 
-	const handleSubscription = (url: string): void => {
+	const setPodcastSubscriptionStatus = (url: string): void => {
 		if (isSubscribed) {
 			unsubscribe({
 				variables: { url },
@@ -74,7 +74,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 		}
 	}
 
-	const handleIsSubscribed = (): void => {
+	const checkIfPodcastSubscribed = (): void => {
 		const currentPodcast = podcast?.fetchPodcastsEpisodes[0]
 		if (currentPodcast) {
 			const value = podcasts.podcasts
@@ -98,7 +98,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 	}, [feedUrl])
 
 	useEffect(() => {
-		handleIsSubscribed()
+		checkIfPodcastSubscribed()
 	}, [podcast?.fetchPodcastsEpisodes])
 
 	return (
@@ -122,7 +122,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 						</h3>
 						<button
 							type="button"
-							onClick={(): void => handleSubscription(
+							onClick={(): void => setPodcastSubscriptionStatus(
 								podcast?.fetchPodcastsEpisodes[0].url
 							)}
 						>
@@ -158,7 +158,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 									key={index}
 								>
 									<div
-										onClick={(): void => handleClickEvent(item)}
+										onClick={(): void => handleClickOnPodcast(item)}
 									>
 										<ListItemTitleStyle>
 											{

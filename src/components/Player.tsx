@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Episode } from '../models/models'
 import { PlayerStyle, HeaderStyle, ContentStyle } from './styles/Player'
 
@@ -9,6 +9,16 @@ interface Props {
 }
 
 export const Player: React.FC<Props> = ({ setValues, currentEpisode }) => {
+	const [episode, setEpisode] = useState<Episode | null>(null)
+
+	useEffect(() => {
+		setEpisode(null)
+	}, [currentEpisode?.title])
+
+	useEffect(() => {
+		setEpisode(currentEpisode)
+	}, [episode])
+
 	return (
 		<PlayerStyle>
 			<HeaderStyle>
@@ -27,14 +37,17 @@ export const Player: React.FC<Props> = ({ setValues, currentEpisode }) => {
 			<ContentStyle>
 				<h3>
 					{
-						currentEpisode?.title
+						episode?.title
 					}
 				</h3>
-				<audio
-					controls
-				>
-					<source src={currentEpisode?.url ?? ''} />
-				</audio>
+				{
+					episode &&
+						<audio
+							controls
+						>
+							<source src={episode?.url ?? ''} />
+						</audio>
+				}
 			</ContentStyle>
 		</PlayerStyle>
 	)

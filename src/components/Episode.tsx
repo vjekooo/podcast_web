@@ -40,7 +40,7 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 		checkIfEpisodeFavorite()
 	}, [favorites])
 
-	const setEpisodeAsFavorite = ({
+	const setEpisodeFavoriteStatus = ({
 		id, title, description, url, duration, pubDate
 	}: Episode): void => {
 		if (isFavorite) {
@@ -90,7 +90,7 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 						type="button"
 						onClick={(): void => {
 							if (currentEpisode) {
-								setEpisodeAsFavorite(currentEpisode)
+								setEpisodeFavoriteStatus(currentEpisode)
 							}
 						}}
 					>
