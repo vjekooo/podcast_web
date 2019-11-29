@@ -44,18 +44,23 @@ const App: React.FC = (): JSX.Element => {
 	})
 
 	useEffect(() => {
-		window.fetch('http://localhost:4000/refresh_token', {
-			method: 'POST',
-			credentials: 'include'
-		}).then(async (res) => {
-			const data = await res.json()
-			console.log(data)
+		async function fetchRefreshToken (): Promise<void> {
+			const response = await window.fetch('http://localhost:4000/refresh_token', {
+				method: 'POST',
+				credentials: 'include'
+			})
+
+			const data = await response.json()
+
+			if (!data) return
+
 			setAccessToken(data.accessToken)
 			setUser({
 				user: data,
 				isLoading: false
 			})
-		})
+		}
+		fetchRefreshToken()
 	}, [])
 
 	console.log(user)

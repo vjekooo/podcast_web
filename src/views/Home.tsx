@@ -50,21 +50,20 @@ export const Home: React.FC = () => {
 			</div>
 			<ContentStyle>
 				{
-					subscriptions &&
-						subscriptions.fetchPodcasts
-							.map((podcast: Podcast, index: number) => (
-								<Link
-									to={{
-										pathname: '/podcast',
-										state: {
-											feedUrl: podcast.url
-										}
-									}}
-									key={index}
-								>
-									<img src={podcast.image} />
-								</Link>
-							))
+					subscriptions?.fetchPodcasts
+						.map((podcast: Podcast, index: number): JSX.Element => (
+							<Link
+								to={{
+									pathname: '/podcast',
+									state: {
+										feedUrl: podcast.url
+									}
+								}}
+								key={index}
+							>
+								<img src={podcast.image} />
+							</Link>
+						))
 				}
 			</ContentStyle>
 		</div>

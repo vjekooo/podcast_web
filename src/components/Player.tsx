@@ -27,14 +27,13 @@ export const Player: React.FC<Props> = ({ setValues, currentEpisode }) => {
 			<ContentStyle>
 				<h3>
 					{
-						currentEpisode &&
-							currentEpisode.title
+						currentEpisode?.title
 					}
 				</h3>
 				<audio
 					controls
 				>
-					<source src={currentEpisode ? currentEpisode.url : ''} />
+					<source src={currentEpisode?.url ?? ''} />
 				</audio>
 			</ContentStyle>
 		</PlayerStyle>

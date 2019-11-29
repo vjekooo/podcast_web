@@ -21,7 +21,7 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 	const [fetchFavorites, { data: favorites }] = useLazyQuery(GET_FAVORITES)
 	const [isFavorite, setIsFavorite] = useState(false)
 
-	const handleFavoriteEpisode = (): void => {
+	const checkIfEpisodeFavorite = (): void => {
 		if (favorites) {
 			const value = favorites.favorites.find((fav: Favorite) => fav.url === currentEpisode.url)
 			if (value) {
@@ -37,10 +37,10 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 	}, [])
 
 	useEffect(() => {
-		handleFavoriteEpisode()
+		checkIfEpisodeFavorite()
 	}, [favorites])
 
-	const handleFavorite = ({
+	const setEpisodeAsFavorite = ({
 		id, title, description, url, duration, pubDate
 	}: Episode): void => {
 		if (isFavorite) {
@@ -90,7 +90,7 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 						type="button"
 						onClick={(): void => {
 							if (currentEpisode) {
-								handleFavorite(currentEpisode)
+								setEpisodeAsFavorite(currentEpisode)
 							}
 						}}
 					>
@@ -115,8 +115,7 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 			</HeaderStyle>
 			<div>
 				{
-					currentEpisode &&
-						currentEpisode.description
+					currentEpisode?.description ?? ''
 				}
 			</div>
 		</EpisodeStyle>

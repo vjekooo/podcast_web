@@ -75,7 +75,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 	}
 
 	const handleIsSubscribed = (): void => {
-		const currentPodcast = podcast && podcast.fetchPodcastsEpisodes[0]
+		const currentPodcast = podcast?.fetchPodcastsEpisodes[0]
 		if (currentPodcast) {
 			const value = podcasts.podcasts
 				.find((cast: any) => cast.url === currentPodcast.url)
@@ -99,7 +99,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 
 	useEffect(() => {
 		handleIsSubscribed()
-	}, [podcast && podcast.fetchPodcastsEpisodes])
+	}, [podcast?.fetchPodcastsEpisodes])
 
 	return (
 		<div>
@@ -112,21 +112,18 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 			<InfoStyle>
 				<div className="info-header">
 					<img src={
-						podcast &&
-							podcast.fetchPodcastsEpisodes[0].image
+						podcast?.fetchPodcastsEpisodes[0].image
 					} />
 					<div>
 						<h3>
 							{
-								podcast &&
-									podcast.fetchPodcastsEpisodes[0].title
+								podcast?.fetchPodcastsEpisodes[0].title
 							}
 						</h3>
 						<button
 							type="button"
 							onClick={(): void => handleSubscription(
-								podcast &&
-									podcast.fetchPodcastsEpisodes[0].url
+								podcast?.fetchPodcastsEpisodes[0].url
 							)}
 						>
 							{
@@ -140,8 +137,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 				<div>
 					<p>
 						{
-							podcast &&
-								podcast.fetchPodcastsEpisodes[0].description
+							podcast?.fetchPodcastsEpisodes[0].description
 						}
 					</p>
 				</div>
@@ -156,41 +152,40 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 			<ListStyle>
 				<ul>
 					{
-						podcast &&
-							podcast.fetchPodcastsEpisodes[0].episodes
-								.map((item: Episode, index: number): JSX.Element => (
-									<ListItemStyle
-										key={index}
+						podcast?.fetchPodcastsEpisodes[0].episodes
+							.map((item: Episode, index: number): JSX.Element => (
+								<ListItemStyle
+									key={index}
+								>
+									<div
+										onClick={(): void => handleClickEvent(item)}
 									>
-										<div
-											onClick={(): void => handleClickEvent(item)}
+										<ListItemTitleStyle>
+											{
+												item.title
+											}
+										</ListItemTitleStyle>
+										<ListItemTimeStyle>
+											{
+												item.duration
+											}
+										</ListItemTimeStyle>
+									</div>
+									<div>
+										<button
+											type="button"
+											onClick={(): void =>
+												setPlayerValues({
+													episode: item,
+													isPlayerVisible: true
+												})
+											}
 										>
-											<ListItemTitleStyle>
-												{
-													item.title
-												}
-											</ListItemTitleStyle>
-											<ListItemTimeStyle>
-												{
-													item.duration
-												}
-											</ListItemTimeStyle>
-										</div>
-										<div>
-											<button
-												type="button"
-												onClick={(): void =>
-													setPlayerValues({
-														episode: item,
-														isPlayerVisible: true
-													})
-												}
-											>
-												play
-											</button>
-										</div>
-									</ListItemStyle>
-								))
+											play
+										</button>
+									</div>
+								</ListItemStyle>
+							))
 					}
 				</ul>
 			</ListStyle>
