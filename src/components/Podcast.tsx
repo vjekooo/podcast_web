@@ -75,7 +75,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 	}
 
 	const checkIfPodcastSubscribed = (): void => {
-		const currentPodcast = podcast?.fetchPodcastsEpisodes[0]
+		const currentPodcast = podcast?.fetchPodcastEpisodes
 		if (currentPodcast) {
 			const value = podcasts.podcasts
 				.find((cast: any) => cast.url === currentPodcast.url)
@@ -88,18 +88,15 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 	}
 
 	useEffect(() => {
-		const url = {
-			url: feedUrl
-		}
 		nodeFetch({
-			variables: { url: JSON.stringify(url) }
+			variables: { url: feedUrl }
 		})
 		fetchPodcasts()
 	}, [feedUrl])
 
 	useEffect(() => {
 		checkIfPodcastSubscribed()
-	}, [podcast?.fetchPodcastsEpisodes])
+	}, [podcast?.fetchPodcastEpisodes])
 
 	return (
 		<div>
@@ -112,18 +109,18 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 			<InfoStyle>
 				<div className="info-header">
 					<img src={
-						podcast?.fetchPodcastsEpisodes[0].image
+						podcast?.fetchPodcastEpisodes.image
 					} />
 					<div>
 						<h3>
 							{
-								podcast?.fetchPodcastsEpisodes[0].title
+								podcast?.fetchPodcastEpisodes.title
 							}
 						</h3>
 						<button
 							type="button"
 							onClick={(): void => setPodcastSubscriptionStatus(
-								podcast?.fetchPodcastsEpisodes[0].url
+								podcast?.fetchPodcastEpisodes.url
 							)}
 						>
 							{
@@ -137,7 +134,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 				<div>
 					<p>
 						{
-							podcast?.fetchPodcastsEpisodes[0].description
+							podcast?.fetchPodcastEpisodes.description
 						}
 					</p>
 				</div>
@@ -152,7 +149,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 			<ListStyle>
 				<ul>
 					{
-						podcast?.fetchPodcastsEpisodes[0].episodes
+						podcast?.fetchPodcastEpisodes.episodes
 							.map((item: Episode, index: number): JSX.Element => (
 								<ListItemStyle
 									key={index}

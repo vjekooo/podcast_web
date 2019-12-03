@@ -91,8 +91,8 @@ export const FETCH_PODCASTS = gql`
 `
 
 export const FETCH_PODCASTS_EPISODES = gql`
-	query FetchPodcastsEpisodes($urls: String!) {
-		fetchPodcastsEpisodes(urls: $urls) {
+	query FetchPodcastEpisodes($url: String!) {
+		fetchPodcastEpisodes(url: $url) {
 			url,
 			title,
 			pubDate,
