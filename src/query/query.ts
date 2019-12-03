@@ -79,8 +79,8 @@ export const GET_FAVORITES = gql`
 `
 
 export const FETCH_PODCASTS = gql`
-	query FetchPodcasts($url: String!) {
-		fetchPodcasts(url: $url) {
+	query FetchPodcasts($urls: [String!]!) {
+		fetchPodcasts(urls: $urls) {
 			url,
 			title,
 			pubDate,
@@ -91,8 +91,8 @@ export const FETCH_PODCASTS = gql`
 `
 
 export const FETCH_PODCASTS_EPISODES = gql`
-	query FetchPodcastsEpisodes($url: String!) {
-		fetchPodcastsEpisodes(url: $url) {
+	query FetchPodcastsEpisodes($urls: String!) {
+		fetchPodcastsEpisodes(urls: $urls) {
 			url,
 			title,
 			pubDate,
@@ -106,5 +106,11 @@ export const FETCH_PODCASTS_EPISODES = gql`
 				duration
 			}
 		}
+	}
+`
+
+export const LOGOUT = gql`
+	mutation Logout($token: String!) {
+		logout(token: $token)
 	}
 `

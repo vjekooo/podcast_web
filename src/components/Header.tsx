@@ -1,47 +1,62 @@
 
 import React from 'react'
-import styled from 'styled-components'
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom'
+import { useMutation } from '@apollo/react-hooks'
+import { LOGOUT } from '../query/query'
+import { HeaderStyle, NavStyle } from './styles/Header'
+import { getAccessToken } from '../accessToken'
 
-const NavStyle = styled.nav`
-	display: flex;
-	padding: .5rem 0 0 0;
-	a {
-		margin-right: .5rem;
-	}
-	.link-active {
-		color: red;
-	}
-`
+const Header: React.FC<RouteComponentProps> = ({ history }) => {
+	const [logout] = useMutation(LOGOUT)
 
-export const Header: React.FC = () => (
-	<header>
-		<NavStyle>
-			<NavLink
-				to="/"
-				exact
-				activeClassName="link-active"
-			>
-				Home
-			</NavLink>
-			<NavLink
-				to="/search"
-				activeClassName="link-active"
-			>
-				Search
-			</NavLink>
-			<NavLink
-				to="/favorites"
-				activeClassName="link-active"
-			>
-				Favorites
-			</NavLink>
-			<NavLink
-				to="/account"
-				activeClassName="link-active"
-			>
-				Account
-			</NavLink>
-		</NavStyle>
-	</header >
-)
+	const handleLogout = (): void => {
+		logout({
+			variables: {
+				token: getAccessToken()
+			}
+		}).then(() => {
+			history.push('/login')
+		})
+	}
+
+	return (
+		<HeaderStyle>
+			<NavStyle>
+				<NavLink
+					to="/"
+					exact
+					activeClassName="link-active"
+				>
+					Home
+				</NavLink>
+				<NavLink
+					to="/search"
+					activeClassName="link-active"
+				>
+					Search
+				</NavLink>
+				<NavLink
+					to="/favorites"
+					activeClassName="link-active"
+				>
+					Favorites
+				</NavLink>
+				<NavLink
+					to="/account"
+					activeClassName="link-active"
+				>
+					Account
+				</NavLink>
+			</NavStyle>
+			<div>
+				<button
+					onClick={handleLogout}
+				>
+					logout
+				</button>
+			</div>
+		</HeaderStyle >
+	)
+}
+
+export default (withRouter(Header))

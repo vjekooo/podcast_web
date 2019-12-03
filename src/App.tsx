@@ -7,6 +7,7 @@ import { Routes } from './Routes'
 import { setAccessToken } from './accessToken'
 import { PlayerContext } from './UseContext'
 import { Player } from './components/Player'
+import { refreshToken } from './helpers'
 
 const GlobalStyle = createGlobalStyle`	
 	* {
@@ -33,9 +34,14 @@ const Wrapper = styled.div`
   background-color: ${(props): string => props.theme.bg};
 `
 
+interface UserState {
+	user: string;
+	isLoading: boolean;
+}
+
 const App: React.FC = (): JSX.Element => {
-	const [{ user, isLoading }, setUser] = useState({
-		user: null,
+	const [{ user, isLoading }, setUser] = useState<UserState>({
+		user: '',
 		isLoading: true
 	})
 	const [{ episode, isPlayerVisible }, setPlayerValues] = useState({
@@ -44,23 +50,14 @@ const App: React.FC = (): JSX.Element => {
 	})
 
 	useEffect(() => {
-		async function fetchRefreshToken (): Promise<void> {
-			const response = await window.fetch('http://localhost:4000/refresh_token', {
-				method: 'POST',
-				credentials: 'include'
+		refreshToken()
+			.then(data => {
+				setAccessToken(data.accessToken)
+				setUser({
+					user: data.accessToken,
+					isLoading: false
+				})
 			})
-
-			const data = await response.json()
-
-			if (!data) return
-
-			setAccessToken(data.accessToken)
-			setUser({
-				user: data,
-				isLoading: false
-			})
-		}
-		fetchRefreshToken()
 	}, [])
 
 	console.log(user)

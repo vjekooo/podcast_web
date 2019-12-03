@@ -18,7 +18,6 @@ export const TopStyle = styled.div`
 export const HeaderStyle = styled.div`
     margin-bottom: 2rem;
 	display: flex;
-
 `
 
 export const TitleStyle = styled.div`

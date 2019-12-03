@@ -28,14 +28,9 @@ export const Home: React.FC = () => {
 	useEffect(() => {
 		if (data) fetchPodcasts()
 		if (podcasts) {
-			const urlObj: UrlObj = {}
-			podcasts.podcasts.forEach((item: Podcast) => {
-				const indexString = `url${item.id}`
-				urlObj[indexString] = item.url
-			})
-			const string = JSON.stringify(urlObj)
+			const urls = podcasts.podcasts.map((url: Subs) => url.url)
 			nodeFetch({
-				variables: { url: string }
+				variables: { urls: urls }
 			})
 		}
 	}, [data, podcasts])
