@@ -5,8 +5,8 @@
 	"main": "index.jsx",
 	"scripts": {
 		"dev": "webpack-dev-server --colors --env.mode development",
-		"build": "npm run clean | webpack --env.mode production",
-		"build:analyze": "npm run build -- --env.presets analyze",
+		"build": "yarn clean | webpack --env.mode production",
+		"build:analyze": "yarn build -- --env.presets analyze",
 		"test": "jest",
 		"clean": "rm -rf ./dist"
 	},

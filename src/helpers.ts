@@ -42,8 +42,6 @@ export const refreshToken = (): Promise<TokenResponse> => {
 			.then(data => data)
 			.catch(err => console.log(err))
 
-		console.log(data)
-
 		if (!data) {
 			reject(new Error('Whoops'))
 		}
