@@ -23,14 +23,16 @@ const themeLight = {
 	bg: 'white',
 	fontColor: 'black',
 	linkColor: 'blue',
-	linkColorActive: 'red'
+	linkColorActive: 'red',
+	playerBackground: 'whitesmoke'
 }
 
 const themeDark = {
 	bg: 'black',
 	fontColor: 'white',
 	linkColor: 'white',
-	linkColorActive: 'gray'
+	linkColorActive: 'gray',
+	playerBackground: 'black'
 }
 
 const Wrapper = styled.div`
@@ -42,7 +44,7 @@ const Wrapper = styled.div`
   font-family: 'Avenir';
   background-color: ${(props): string => props.theme.bg};
   color: ${(props): string => props.theme.fontColor};
-  height: 100vh;
+  min-height: 100vh;
 `
 
 interface UserState {

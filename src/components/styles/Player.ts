@@ -5,7 +5,7 @@ export const PlayerStyle = styled.div`
 	left: 0;
 	right: 0;
     bottom: 0;
-    background-color: whitesmoke;
+    background-color: ${(props): string => props.theme.playerBackground};
     display: flex;
     flex-direction: column;
     align-items: center;
