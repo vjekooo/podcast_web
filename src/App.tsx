@@ -19,9 +19,18 @@ const GlobalStyle = createGlobalStyle`
 	}
 `
 
-const theme = {
+const themeLight = {
 	bg: 'white',
-	font: 'Avenir'
+	fontColor: 'black',
+	linkColor: 'blue',
+	linkColorActive: 'red'
+}
+
+const themeDark = {
+	bg: 'black',
+	fontColor: 'white',
+	linkColor: 'white',
+	linkColorActive: 'gray'
 }
 
 const Wrapper = styled.div`
@@ -30,8 +39,10 @@ const Wrapper = styled.div`
   max-width: 600px;
   padding-right: 10px;
   padding-left: 10px;
-  font-family: ${(props): string => props.theme.font};
+  font-family: 'Avenir';
   background-color: ${(props): string => props.theme.bg};
+  color: ${(props): string => props.theme.fontColor};
+  height: 100vh;
 `
 
 interface UserState {
@@ -48,6 +59,11 @@ const App: React.FC = (): JSX.Element => {
 		episode: null,
 		isPlayerVisible: false
 	})
+	const [theme, setTheme] = useState(true)
+
+	const handleThemeState = (): void => {
+		setTheme(!theme)
+	}
 
 	useEffect(() => {
 		refreshToken()
@@ -63,9 +79,9 @@ const App: React.FC = (): JSX.Element => {
 	console.log(user)
 
 	return (
-		<ThemeProvider theme={theme}>
+		<ThemeProvider theme={theme ? themeLight : themeDark}>
 			<Wrapper>
-				<PlayerContext.Provider value={{ setPlayerValues }}>
+				<PlayerContext.Provider value={{ setPlayerValues, handleThemeState }}>
 					<Routes />
 				</PlayerContext.Provider>
 				{

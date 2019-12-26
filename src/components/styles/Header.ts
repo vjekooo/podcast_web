@@ -10,8 +10,9 @@ export const NavStyle = styled.nav`
     display: flex;
     a {
         margin-right: .5rem;
+        color: ${(props): string => props.theme.linkColor}
     }
     .link-active {
-        color: red;
+        color: ${(props): string => props.theme.linkColorActive};
     }
 `

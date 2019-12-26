@@ -1,12 +1,15 @@
 
-import React from 'react'
+import React, { useContext } from 'react'
 import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom'
 import { useMutation } from '@apollo/react-hooks'
 import { LOGOUT } from '../query/query'
 import { HeaderStyle, NavStyle } from './styles/Header'
 import { getAccessToken } from '../accessToken'
+import { PlayerContext } from '../UseContext'
 
 const Header: React.FC<RouteComponentProps> = ({ history }) => {
+	const { handleThemeState } = useContext(PlayerContext)
+
 	const [logout] = useMutation(LOGOUT)
 
 	const handleLogout = (): void => {
@@ -53,6 +56,11 @@ const Header: React.FC<RouteComponentProps> = ({ history }) => {
 					onClick={handleLogout}
 				>
 					logout
+				</button>
+				<button
+					onClick={handleThemeState}
+				>
+					change theme
 				</button>
 			</div>
 		</HeaderStyle >
