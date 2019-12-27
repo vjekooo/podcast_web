@@ -64,7 +64,7 @@ const App: React.FC = (): JSX.Element => {
 	const [theme, setTheme] = useState(true)
 
 	const handleThemeState = (): void => {
-		setTheme(!theme)
+		setTheme(prevState => !prevState)
 	}
 
 	useEffect(() => {
