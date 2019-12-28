@@ -1,8 +1,14 @@
 
 import { createContext } from 'react'
+import { Episode } from './models/models'
+
+interface Values {
+	episode: Episode | null;
+	isPlayerVisible: boolean;
+}
 
 interface ContextProps {
-    setPlayerValues: () => void;
+    setPlayerValues: (values: Values) => void;
     handleThemeState: () => void;
 };
 

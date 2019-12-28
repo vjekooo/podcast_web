@@ -102,12 +102,14 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 					</button>
 					<button
 						type="button"
-						onClick={(): void =>
-							setPlayerValues({
-								episode: currentEpisode,
-								isPlayerVisible: true
-							})
-						}
+						onClick={(): void => {
+							if (setPlayerValues) {
+								setPlayerValues({
+									episode: currentEpisode,
+									isPlayerVisible: true
+								})
+							}
+						}}
 					>
 						play
 					</button>

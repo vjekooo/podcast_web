@@ -171,12 +171,14 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 									<div>
 										<button
 											type="button"
-											onClick={(): void =>
-												setPlayerValues({
-													episode: item,
-													isPlayerVisible: true
-												})
-											}
+											onClick={(): void => {
+												if (setPlayerValues) {
+													setPlayerValues({
+														episode: item,
+														isPlayerVisible: true
+													})
+												}
+											}}
 										>
 											play
 										</button>

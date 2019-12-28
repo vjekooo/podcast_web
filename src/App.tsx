@@ -8,6 +8,7 @@ import { setAccessToken } from './accessToken'
 import { PlayerContext } from './UseContext'
 import { Player } from './components/Player'
 import { refreshToken } from './helpers'
+import { Episode } from './models/models'
 
 const GlobalStyle = createGlobalStyle`	
 	* {
@@ -52,12 +53,17 @@ interface UserState {
 	isLoading: boolean;
 }
 
+interface PlayerState {
+	episode: Episode | null;
+	isPlayerVisible: boolean;
+}
+
 const App: React.FC = (): JSX.Element => {
 	const [{ user, isLoading }, setUser] = useState<UserState>({
 		user: '',
 		isLoading: true
 	})
-	const [{ episode, isPlayerVisible }, setPlayerValues] = useState({
+	const [{ episode, isPlayerVisible }, setPlayerValues] = useState<PlayerState>({
 		episode: null,
 		isPlayerVisible: false
 	})
@@ -92,7 +98,6 @@ const App: React.FC = (): JSX.Element => {
 				{
 					isPlayerVisible &&
 						<Player
-							setValues={setPlayerValues}
 							currentEpisode={episode}
 						/>
 				}

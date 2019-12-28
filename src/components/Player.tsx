@@ -1,7 +1,8 @@
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Episode } from '../models/models'
 import { PlayerStyle, HeaderStyle, ContentStyle } from './styles/Player'
+import { PlayerContext } from '../UseContext'
 
 interface Values {
 	episode: Episode | null;
@@ -9,11 +10,12 @@ interface Values {
 }
 
 interface Props {
-	setValues: (values: Values) => void;
 	currentEpisode: Episode | null;
 }
 
-export const Player: React.FC<Props> = ({ setValues, currentEpisode }) => {
+export const Player: React.FC<Props> = ({ currentEpisode }) => {
+	const { setPlayerValues } = useContext(PlayerContext)
+
 	const [episode, setEpisode] = useState<Episode | null>(null)
 
 	useEffect(() => {
@@ -29,12 +31,14 @@ export const Player: React.FC<Props> = ({ setValues, currentEpisode }) => {
 			<HeaderStyle>
 				<button
 					type="button"
-					onClick={(): void =>
-						setValues({
-							episode: null,
-							isPlayerVisible: false
-						})
-					}
+					onClick={(): void => {
+						if (setPlayerValues) {
+							setPlayerValues({
+								episode: null,
+								isPlayerVisible: false
+							})
+						}
+					}}
 				>
 				x
 				</button>
