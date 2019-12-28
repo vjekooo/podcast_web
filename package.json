@@ -1,7 +1,7 @@
 {
-	"name": "webpack_config",
+	"name": "podcast",
 	"version": "2.0.1",
-	"description": "Webpack for React development",
+	"description": "Podcast web player",
 	"main": "index.jsx",
 	"scripts": {
 		"dev": "webpack-dev-server --colors --env.mode development",
@@ -14,9 +14,9 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/vjekooo/webpack_react"
+		"url": "https://github.com/vjekooo/podcast_web"
 	},
-	"bugs": "https://github.com/vjekooo/webpack_react/issues",
+	"bugs": "https://github.com/vjekooo/podcast_web/issues",
 	"keywords": [
 		"react",
 		"webpack"
