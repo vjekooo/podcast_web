@@ -3,8 +3,13 @@ import React, { useState, useEffect } from 'react'
 import { Episode } from '../models/models'
 import { PlayerStyle, HeaderStyle, ContentStyle } from './styles/Player'
 
+interface Values {
+	episode: Episode | null;
+	isPlayerVisible: boolean;
+}
+
 interface Props {
-	setValues: any;
+	setValues: (values: Values) => void;
 	currentEpisode: Episode | null;
 }
 

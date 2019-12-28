@@ -2,8 +2,8 @@
 import { createContext } from 'react'
 
 interface ContextProps {
-    setPlayerValues: any;
-    handleThemeState: any;
+    setPlayerValues: () => void;
+    handleThemeState: () => void;
 };
 
 export const PlayerContext = createContext<Partial<ContextProps>>({})

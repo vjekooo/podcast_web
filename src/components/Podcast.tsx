@@ -78,7 +78,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 		const currentPodcast = podcast?.fetchPodcastEpisodes
 		if (currentPodcast) {
 			const value = podcasts.podcasts
-				.find((cast: any) => cast.url === currentPodcast.url)
+				.find((cast: PodcastState) => cast.url === currentPodcast.url)
 			if (value) {
 				setIsSubscribed(true)
 			} else {
