@@ -84,7 +84,7 @@ module.exports = ({ mode, presets } = { mode: 'production', presets: [] }) => {
 			},
 			plugins: [
 				new HtmlWebpackPlugin({
-					title: 'Noice',
+					title: 'Podcast',
 					template: 'public/index.html',
 					favicon: 'public/favicon.ico'
 				}),
