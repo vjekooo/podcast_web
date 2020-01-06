@@ -2,7 +2,7 @@
 FROM node as build
 WORKDIR /app
 COPY . /app/
-RUN npm install
+RUN npm install --silent
 RUN npm run build
 
 FROM nginx
