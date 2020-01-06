@@ -1,9 +1,9 @@
 
-FROM node as build
+FROM node:12.14.0 as build
 WORKDIR /app
 COPY . /app/
 RUN npm config set unsafe-perm true
-RUN npm install --silent
+RUN npm install
 RUN npm run build
 
 FROM nginx
