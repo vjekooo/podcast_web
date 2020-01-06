@@ -1,0 +1,17 @@
+--- 
+  files: 
+    - 
+      destination: /home/ubuntu/podcast/web/
+      source: /
+  hooks: 
+    ApplicationStop:
+      -
+        location: /codedeploy/stop_app.sh
+    ApplicationStart: 
+      - 
+        location: /codedeploy/start_app.sh  
+    BeforeInstall: 
+      - 
+        location: /codedeploy/install_dependencies.sh
+  os: linux
+  version: 0.0
