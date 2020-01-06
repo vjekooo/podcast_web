@@ -1,12 +1,28 @@
 
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const dotenv = require('dotenv')
+const fs = require('fs')
+const path = require('path')
+
 const webpackMerge = require('webpack-merge')
 const modeConfig = env => require(`./build-utils/webpack.${env}`)(env)
 const presetConfig = require('./build-utils/loadPresets')
 const commonPaths = require('./build-utils/common-paths')
 
 module.exports = ({ mode, presets } = { mode: 'production', presets: [] }) => {
+
+	const currentPath = path.join(__dirname)
+	const basePath = currentPath + '/.env'
+	const envPath = basePath + '.' + mode
+	const finalPath = fs.existsSync(envPath) ? envPath : basePath
+	const fileEnv = dotenv.config({ path: finalPath }).parsed
+
+	const envKeys = Object.keys(fileEnv).reduce((prev, next) => {
+		prev[`process.env.${next}`] = JSON.stringify(fileEnv[next])
+		return prev
+	}, {})
+
 	return webpackMerge(
 		{
 			mode,
@@ -88,7 +104,8 @@ module.exports = ({ mode, presets } = { mode: 'production', presets: [] }) => {
 					template: 'public/index.html',
 					favicon: 'public/favicon.ico'
 				}),
-				new webpack.ProgressPlugin()
+				new webpack.ProgressPlugin(),
+				new webpack.DefinePlugin(envKeys)
 			]
 		},
 		modeConfig(mode),

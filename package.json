@@ -37,6 +37,7 @@
 		"babel-jest": "24.9.0",
 		"babel-loader": "8.0.6",
 		"babel-plugin-styled-components": "^1.10.6",
+		"dotenv": "^8.2.0",
 		"eslint": "^6.7.1",
 		"eslint-config-react": "1.1.7",
 		"eslint-config-standard": "^14.1.0",
