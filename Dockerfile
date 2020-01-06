@@ -1,5 +1,5 @@
 
-FROM node:12.14.0 as build
+FROM node:10.18.0 as build
 WORKDIR /app
 COPY . /app/
 RUN npm config set unsafe-perm true
