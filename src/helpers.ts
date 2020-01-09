@@ -34,7 +34,7 @@ interface TokenResponse {
 
 export const refreshToken = (): Promise<TokenResponse> => {
 	return new Promise((resolve, reject) => {
-		const data = window.fetch('http://ec2-63-32-44-201.eu-west-1.compute.amazonaws.com:4000/refresh_token', {
+		const data = window.fetch('http://ec2-34-242-87-37.eu-west-1.compute.amazonaws.com:4000/refresh_token', {
 			method: 'POST',
 			credentials: 'include'
 		})

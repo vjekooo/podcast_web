@@ -2,7 +2,6 @@
 FROM node as build
 WORKDIR /app
 COPY . /app/
-RUN npm config set unsafe-perm true
 RUN npm install
 RUN npm run build
 
