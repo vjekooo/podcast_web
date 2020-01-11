@@ -3,4 +3,4 @@
 
 cd /home/ubuntu/podcast/web
 
-docker-compose stop
+docker-compose down
