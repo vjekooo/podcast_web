@@ -25,11 +25,11 @@ module.exports = env => ({
 	devtool: 'inline-source-map',
 	devServer: {
 		host: 'localhost',
+		port: port,
 		historyApiFallback: true,
 		open: true,
 		hot: true,
 		stats: 'minimal',
-		port: port,
 		overlay: {
 			errors: true,
 			warnings: false

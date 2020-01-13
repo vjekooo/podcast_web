@@ -31,6 +31,13 @@ export const Search: React.FC<RouteComponentProps> = (): JSX.Element => {
 					isLoading: false
 				})
 			})
+			.catch(error => {
+				console.log(error)
+				setData({
+					data: [],
+					isLoading: false
+				})
+			})
 	}, [searchQuery])
 
 	return (

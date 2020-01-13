@@ -5,6 +5,7 @@ import { RouteComponentProps } from 'react-router'
 import { setAccessToken } from '../accessToken'
 
 import { LOGIN } from '../query/query'
+import { FormStyle } from './styles/Login'
 
 export const Login: React.FC<RouteComponentProps> = ({ history }): JSX.Element => {
 	const [email, setEmail] = useState('')
@@ -14,7 +15,7 @@ export const Login: React.FC<RouteComponentProps> = ({ history }): JSX.Element =
 	return (
 		<div>
 			<div>
-				<form
+				<FormStyle
 					onSubmit={(e): void => {
 						e.preventDefault()
 						login({
@@ -38,7 +39,7 @@ export const Login: React.FC<RouteComponentProps> = ({ history }): JSX.Element =
 						onChange={(e): void => setPassword(e.target.value)}
 					/>
 					<button>Login</button>
-				</form>
+				</FormStyle>
 			</div>
 		</div>
 	)

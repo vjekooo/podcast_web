@@ -5,6 +5,8 @@ import { RouteComponentProps } from 'react-router-dom'
 
 import { REGISTER } from '../query/query'
 
+import { FormStyle } from './styles/Login'
+
 export const Register: React.FC<RouteComponentProps> = ({ history }): JSX.Element => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
@@ -13,7 +15,7 @@ export const Register: React.FC<RouteComponentProps> = ({ history }): JSX.Elemen
 	return (
 		<div>
 			<div>
-				<form
+				<FormStyle
 					onSubmit={async (e): Promise<void> => {
 						e.preventDefault()
 						try {
@@ -39,7 +41,7 @@ export const Register: React.FC<RouteComponentProps> = ({ history }): JSX.Elemen
 						onChange={(e): void => setPassword(e.target.value)}
 					/>
 					<button>Register</button>
-				</form>
+				</FormStyle>
 			</div>
 		</div>
 	)
