@@ -34,7 +34,7 @@ interface TokenResponse {
 
 export const refreshToken = (): Promise<TokenResponse> => {
 	return new Promise((resolve, reject) => {
-		const data = window.fetch('http://0.0.0.0:4000/refresh_token', {
+		const data = window.fetch('http://34.242.87.37/refresh_token', {
 			method: 'POST',
 			credentials: 'include'
 		})
