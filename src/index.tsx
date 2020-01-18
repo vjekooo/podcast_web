@@ -9,7 +9,7 @@ import { getAccessToken } from './accessToken'
 
 const client = new ApolloClient({
 	// uri: 'http://localhost:4000/graphql',
-	uri: 'http://34.242.87.37:4000/graphql',
+	uri: 'http://localhost:4000/graphql',
 	credentials: 'include',
 	request: (operation): void => {
 		const accessToken = getAccessToken()
