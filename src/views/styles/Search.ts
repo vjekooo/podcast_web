@@ -11,6 +11,7 @@ export const SearchStyle = styled.div`
 		min-height: 20px;
 		text-transform: uppercase;
 		padding: .5rem;
+		font-size: 14px;
 		&:focus {
 			outline: none;
 		}

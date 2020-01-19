@@ -8,7 +8,7 @@ export const FormStyle = styled.form`
     input {
         margin-bottom: 1rem;
         min-height: 30px;
-        font-size: 16px;
+        font-size: 14px;
     }
     button {
         height: 30px;
