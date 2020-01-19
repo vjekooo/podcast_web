@@ -76,6 +76,13 @@ const App: React.FC = (): JSX.Element => {
 		setTheme(prevState => !prevState)
 	}
 
+	const handleUser = (value: string): void => {
+		setUser({
+			user: value,
+			isLoading: false
+		})
+	}
+
 	useEffect(() => {
 		refreshToken()
 			.then(data => {
@@ -108,14 +115,11 @@ const App: React.FC = (): JSX.Element => {
 	return (
 		<ThemeProvider theme={theme ? themeLight : themeDark}>
 			<Wrapper>
-				{
-					user &&
-						<PlayerContext.Provider
-							value={{ setPlayerValues, handleThemeState, user }}
-						>
-							<Routes user={user} />
-						</PlayerContext.Provider>
-				}
+				<PlayerContext.Provider
+					value={{ setPlayerValues, handleThemeState, user, handleUser }}
+				>
+					<Routes user={user} />
+				</PlayerContext.Provider>
 				{
 					isLoading && <div>...loading App</div>
 				}

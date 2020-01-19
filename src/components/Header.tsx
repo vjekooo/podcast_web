@@ -15,6 +15,8 @@ const Header: React.FC<RouteComponentProps> = ({ history }) => {
 	const handleLogout = (): void => {
 		if (!user) {
 			history.push('/login')
+			window.location.reload()
+			return
 		}
 		logout({
 			variables: {
@@ -22,6 +24,7 @@ const Header: React.FC<RouteComponentProps> = ({ history }) => {
 			}
 		}).then(() => {
 			history.push('/login')
+			window.location.reload()
 		})
 	}
 
