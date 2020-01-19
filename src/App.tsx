@@ -2,11 +2,12 @@
 import React, { useEffect, useState } from 'react'
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
 
+import { Player } from './components/Player'
+
 import { hot } from 'react-hot-loader/root'
 import { Routes } from './Routes'
 import { setAccessToken } from './accessToken'
 import { PlayerContext } from './UseContext'
-import { Player } from './components/Player'
 import { refreshToken, tokenExpiresIn } from './helpers'
 import { Episode } from './models/models'
 
@@ -112,7 +113,7 @@ const App: React.FC = (): JSX.Element => {
 						<PlayerContext.Provider
 							value={{ setPlayerValues, handleThemeState, user }}
 						>
-							<Routes />
+							<Routes user={user} />
 						</PlayerContext.Provider>
 				}
 				{

@@ -9,12 +9,16 @@ import { Register } from './views/Register'
 import { Favorites } from './views/Favorites'
 import { Account } from './views/Account'
 
-export const Routes: React.FC = () => {
+interface Props {
+	user: string;
+}
+
+export const Routes: React.FC<Props> = ({ user }) => {
 	return (
 		<Router>
 			<Header />
 			<Switch>
-				<Route exact path="/" component={Home} />
+				<Route exact path="/" component={user ? Home : Login} />
 				<Route exact path="/login" component={Login} />
 				<Route exact path="/register" component={Register} />
 				<Route exact path="/search" component={Search} />
