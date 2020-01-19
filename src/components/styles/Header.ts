@@ -16,3 +16,15 @@ export const NavStyle = styled.nav`
         color: ${(props): string => props.theme.linkColorActive};
     }
 `
+
+export const ToolStyle = styled.div`
+    display: flex;
+`
+
+export const ThemeSwitch = styled.div`
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background-color: ${(props): string => props.theme.switcher};
+    margin-right: 1rem;
+`

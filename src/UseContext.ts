@@ -10,6 +10,7 @@ interface Values {
 interface ContextProps {
     setPlayerValues: (values: Values) => void;
     handleThemeState: () => void;
+    user: string;
 };
 
 export const PlayerContext = createContext<Partial<ContextProps>>({})

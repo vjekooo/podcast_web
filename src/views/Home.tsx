@@ -1,9 +1,10 @@
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks'
 import { Link } from 'react-router-dom'
 import { GET_PODCASTS, GET_USER, FETCH_PODCASTS } from '../query/query'
 import { ContentStyle } from './styles/Home'
+import { PlayerContext } from '../UseContext'
 
 interface Podcast {
 	id: string;
@@ -21,6 +22,8 @@ interface UrlObj {
 }
 
 export const Home: React.FC = () => {
+	const { user } = useContext(PlayerContext)
+
 	const { data } = useQuery(GET_USER)
 	const [fetchPodcasts, { data: podcasts }] = useLazyQuery(GET_PODCASTS)
 	const [nodeFetch, { data: subscriptions, loading }] = useLazyQuery(FETCH_PODCASTS)
@@ -33,7 +36,7 @@ export const Home: React.FC = () => {
 				variables: { urls: urls }
 			})
 		}
-	}, [data, podcasts])
+	}, [user, podcasts])
 
 	return (
 		<div>

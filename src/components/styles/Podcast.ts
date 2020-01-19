@@ -8,6 +8,7 @@ export const InfoStyle = styled.div`
 	padding: .5rem 0;
 	img {
 		width: 150px;
+		height: 150px;
 		margin-right: 1rem;
 	}
 	.info-header {

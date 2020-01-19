@@ -7,7 +7,7 @@ import { Routes } from './Routes'
 import { setAccessToken } from './accessToken'
 import { PlayerContext } from './UseContext'
 import { Player } from './components/Player'
-import { refreshToken } from './helpers'
+import { refreshToken, tokenExpiresIn } from './helpers'
 import { Episode } from './models/models'
 
 const GlobalStyle = createGlobalStyle`	
@@ -25,7 +25,8 @@ const themeLight = {
 	fontColor: 'black',
 	linkColor: 'blue',
 	linkColorActive: 'red',
-	playerBackground: 'whitesmoke'
+	playerBackground: 'whitesmoke',
+	switcher: 'black'
 }
 
 const themeDark = {
@@ -33,7 +34,8 @@ const themeDark = {
 	fontColor: 'white',
 	linkColor: 'white',
 	linkColorActive: 'gray',
-	playerBackground: 'black'
+	playerBackground: 'black',
+	switcher: 'yellow'
 }
 
 const Wrapper = styled.div`
@@ -84,16 +86,41 @@ const App: React.FC = (): JSX.Element => {
 			})
 	}, [])
 
-	console.log(user)
+	useEffect(() => {
+		if (user) {
+			const token = JSON.parse(window.atob(user.split('.')[1]))
+			const timeout = tokenExpiresIn(token.exp)
+			setTimeout(() => {
+				console.log(user)
+				refreshToken()
+					.then(data => {
+						setAccessToken(data.accessToken)
+						setUser({
+							user: data.accessToken,
+							isLoading: false
+						})
+					})
+			}, timeout - 5)
+		}
+	}, [user])
 
 	return (
 		<ThemeProvider theme={theme ? themeLight : themeDark}>
 			<Wrapper>
-				<PlayerContext.Provider value={{ setPlayerValues, handleThemeState }}>
-					<Routes />
-				</PlayerContext.Provider>
 				{
-					isLoading && <div>...loading</div>
+					user &&
+						<PlayerContext.Provider
+							value={{ setPlayerValues, handleThemeState, user }}
+						>
+							<Routes />
+						</PlayerContext.Provider>
+				}
+				{
+					isLoading && <div>...loading App</div>
+				}
+				{
+					!isLoading && !user &&
+						<div>login to use the app</div>
 				}
 				{
 					isPlayerVisible &&
