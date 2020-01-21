@@ -22,3 +22,7 @@ export interface Favorite {
 	pubDate: string;
 	duration: string;
 }
+
+export interface KeyValue {
+	[key: string]: string;
+}

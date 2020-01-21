@@ -21,10 +21,10 @@ export const parseJwt = (token: string): string => {
 }
 
 export const tokenExpiresIn = (exp: number): number => {
-	const tokenMinutes = new Date(exp * 1000).getMinutes()
+	// const tokenMinutes = new Date(exp * 1000).getMinutes()
 	// const currentMinutes = new Date().getMinutes()
 
-	return Math.abs(tokenMinutes)
+	return exp
 }
 
 interface TokenResponse {
@@ -34,8 +34,8 @@ interface TokenResponse {
 
 export const refreshToken = (): Promise<TokenResponse> => {
 	return new Promise((resolve, reject) => {
-		// const data = window.fetch('http://localhost:4000/refresh_token', {
-		const data = window.fetch('http://34.242.87.37:4000/refresh_token', {
+		const data = window.fetch('http://localhost:4000/refresh_token', {
+		// const data = window.fetch('http://34.242.87.37:4000/refresh_token', {
 			method: 'POST',
 			credentials: 'include'
 		})

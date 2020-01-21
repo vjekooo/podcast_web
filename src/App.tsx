@@ -62,9 +62,9 @@ interface PlayerState {
 }
 
 const App: React.FC = (): JSX.Element => {
-	const [{ user, isLoading }, setUser] = useState<UserState>({
+	const [userValues, setUserValues] = useState<UserState>({
 		user: '',
-		isLoading: true
+		isLoading: false
 	})
 	const [{ episode, isPlayerVisible }, setPlayerValues] = useState<PlayerState>({
 		episode: null,
@@ -77,17 +77,21 @@ const App: React.FC = (): JSX.Element => {
 	}
 
 	const handleUser = (value: string): void => {
-		setUser({
+		setUserValues({
 			user: value,
 			isLoading: false
 		})
 	}
 
 	useEffect(() => {
+		setUserValues({
+			...userValues,
+			isLoading: true
+		})
 		refreshToken()
 			.then(data => {
 				setAccessToken(data.accessToken)
-				setUser({
+				setUserValues({
 					user: data.accessToken,
 					isLoading: false
 				})
@@ -95,36 +99,50 @@ const App: React.FC = (): JSX.Element => {
 	}, [])
 
 	useEffect(() => {
-		if (user) {
-			const token = JSON.parse(window.atob(user.split('.')[1]))
+		setUserValues({
+			...userValues,
+			isLoading: true
+		})
+		if (userValues.user) {
+			const token = JSON.parse(window.atob(userValues.user.split('.')[1]))
 			const timeout = tokenExpiresIn(token.exp)
 			setTimeout(() => {
-				console.log(user)
 				refreshToken()
 					.then(data => {
 						setAccessToken(data.accessToken)
-						setUser({
+						setUserValues({
 							user: data.accessToken,
 							isLoading: false
 						})
 					})
-			}, timeout - 5)
+			}, timeout - 2000)
 		}
-	}, [user])
+		setUserValues({
+			...userValues,
+			isLoading: false
+		})
+	}, [userValues.user])
+
+	const user = userValues.user
 
 	return (
 		<ThemeProvider theme={theme ? themeLight : themeDark}>
 			<Wrapper>
 				<PlayerContext.Provider
-					value={{ setPlayerValues, handleThemeState, user, handleUser }}
+					value={{
+						setPlayerValues,
+						handleThemeState,
+						user,
+						handleUser
+					}}
 				>
-					<Routes user={user} />
+					<Routes user={userValues.user} />
 				</PlayerContext.Provider>
 				{
-					isLoading && <div>...loading App</div>
+					userValues.isLoading && <div>...loading App</div>
 				}
 				{
-					!isLoading && !user &&
+					!userValues.isLoading && !userValues.user &&
 						<div>login to use the app</div>
 				}
 				{
