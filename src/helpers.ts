@@ -21,10 +21,10 @@ export const parseJwt = (token: string): string => {
 }
 
 export const tokenExpiresIn = (exp: number): number => {
-	const tokenMinutes = new Date(exp * 1000).getMinutes()
+	// const tokenMinutes = new Date(exp * 1000).getMinutes()
 	// const currentMinutes = new Date().getMinutes()
 
-	return Math.abs(tokenMinutes)
+	return exp
 }
 
 export const stripHtmlFromString = (text: string): string => {
