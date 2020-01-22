@@ -22,6 +22,7 @@ import {
 	ListItemTitleStyle,
 	ListItemTimeStyle
 } from './styles/Podcast'
+import { stripHtmlFromString } from '../helpers'
 
 interface EpisodeState {
 	episodeList: Episode[];
@@ -134,7 +135,9 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 				<div>
 					<p>
 						{
-							podcast?.fetchPodcastEpisodes.description
+							stripHtmlFromString(
+								podcast?.fetchPodcastEpisodes.description
+							)
 						}
 					</p>
 				</div>

@@ -27,6 +27,11 @@ export const tokenExpiresIn = (exp: number): number => {
 	return Math.abs(tokenMinutes)
 }
 
+export const stripHtmlFromString = (text: string): string => {
+	const doc = new window.DOMParser().parseFromString(text, 'text/html')
+	return doc.body.textContent || ''
+}
+
 interface TokenResponse {
 	ok: boolean;
 	accessToken: string;
@@ -34,8 +39,8 @@ interface TokenResponse {
 
 export const refreshToken = (): Promise<TokenResponse> => {
 	return new Promise((resolve, reject) => {
-		// const data = window.fetch('http://localhost:4000/refresh_token', {
-		const data = window.fetch('http://34.242.87.37:4000/refresh_token', {
+		const data = window.fetch('http://localhost:4000/refresh_token', {
+		// const data = window.fetch('http://34.242.87.37:4000/refresh_token', {
 			method: 'POST',
 			credentials: 'include'
 		})

@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const PlayerStyle = styled.div`
+	min-height: 80px;
 	position: fixed;
 	left: 0;
 	right: 0;
@@ -8,27 +9,31 @@ export const PlayerStyle = styled.div`
     background-color: ${(props): string => props.theme.playerBackground};
     display: flex;
     flex-direction: column;
-    align-items: center;
 	padding: .5rem;
 	z-index: 10;
 `
 
-export const HeaderStyle = styled.div`
-	width: 100%;
+export const TopStyle = styled.div`
 	display: flex;
-	justify-content: flex-end;
 `
 
-export const ContentStyle = styled.div`
-	width: 100%;
+export const MainStyle = styled.div`
 	display: flex;
-	flex-direction: column;
-	justify-content: center;
+	justify-content: space-between;
 	align-items: center;
-	h3 {
-		margin-top: 0;
+	height: auto;
+	img {
+		width: 50px;
+		height: 50px;
 	}
-	audio {
-		width: 100%;
+`
+
+export const ControlsStyle = styled.div`
+	display: flex;
+	width: 50%;
+	div {
+		display: flex;
+		width: 33%;
+		justify-content: center;
 	}
 `

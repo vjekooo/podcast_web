@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
 
-import { Player } from './components/Player'
+import { CustomPlayer } from './components/CustomPlayer'
 
 import { hot } from 'react-hot-loader/root'
 import { Routes } from './Routes'
@@ -129,8 +129,8 @@ const App: React.FC = (): JSX.Element => {
 				}
 				{
 					isPlayerVisible &&
-						<Player
-							currentEpisode={episode}
+						<CustomPlayer
+							episode={episode}
 						/>
 				}
 			</Wrapper>
