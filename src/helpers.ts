@@ -1,5 +1,8 @@
 
 export const handleDuration = (value: string): string => {
+	if (value.indexOf(':') > -1) {
+		return value
+	}
 	const unixTimeInMili = Number(value) * 1000
 	const date = new Date(unixTimeInMili)
 

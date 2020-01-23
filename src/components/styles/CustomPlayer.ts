@@ -9,6 +9,7 @@ export const PlayerStyle = styled.div`
     background-color: ${(props): string => props.theme.playerBackground};
     display: flex;
     flex-direction: column;
+	justify-content: center;
 	padding: .5rem;
 	z-index: 10;
 `
@@ -35,5 +36,9 @@ export const ControlsStyle = styled.div`
 		display: flex;
 		width: 33%;
 		justify-content: center;
+	}
+	button {
+		margin: 0 .5rem;
+		padding: .5rem;
 	}
 `
