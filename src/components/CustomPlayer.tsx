@@ -7,11 +7,13 @@ interface Props {
 	episode: Episode | null;
 }
 
-export const CustomPlayer: React.FC<Props> = ({ episode }) => {
-	const player = useRef<HTMLAudioElement>({})
-	const [play, setPlay] = useState(false)
+interface AudioRef {
+	current: HTMLAudioElement;
+}
 
-	// const [skipp, setSkipp] = useState()
+export const CustomPlayer: React.FC<Props> = ({ episode }) => {
+	const player = useRef<AudioRef>({})
+	const [play, setPlay] = useState(false)
 
 	useEffect(() => {
 		player.current.src = episode?.url
@@ -19,10 +21,13 @@ export const CustomPlayer: React.FC<Props> = ({ episode }) => {
 	}, [episode?.title])
 
 	const handlePlayPauseClick = (): void => {
-		if (play) {
-			player.current.pause()
-		} else {
+		const paused = player.current.paused
+		if (paused) {
 			player.current.play()
+			setPlay(false)
+		} else {
+			player.current.pause()
+			setPlay(true)
 		}
 	}
 
@@ -50,7 +55,7 @@ export const CustomPlayer: React.FC<Props> = ({ episode }) => {
 							type="button"
 							onClick={(): void => handleSkipping('rwd')}
 						>
-							rwd
+							- 15
 						</button>
 					</div>
 					<div>
@@ -61,7 +66,11 @@ export const CustomPlayer: React.FC<Props> = ({ episode }) => {
 							}}
 							type="button"
 						>
-							play/pause
+							{
+								!play
+									? 'pause'
+									: 'play'
+							}
 						</button>
 					</div>
 					<div>
@@ -69,7 +78,7 @@ export const CustomPlayer: React.FC<Props> = ({ episode }) => {
 							type="button"
 							onClick={(): void => handleSkipping('fwd')}
 						>
-							fwd
+							+ 30
 						</button>
 					</div>
 				</ControlsStyle>
