@@ -31,7 +31,7 @@ export const MainStyle = styled.div`
 
 export const ControlsStyle = styled.div`
 	display: flex;
-	width: 50%;
+	width: 60%;
 	div {
 		display: flex;
 		width: 33%;
@@ -40,5 +40,7 @@ export const ControlsStyle = styled.div`
 	button {
 		margin: 0 .5rem;
 		padding: .5rem;
+		height: 30px;
+		width: 100%;
 	}
 `
