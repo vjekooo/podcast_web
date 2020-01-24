@@ -14,6 +14,7 @@ interface AudioRef {
 export const CustomPlayer: React.FC<Props> = ({ episode }) => {
 	const player = useRef<AudioRef>({})
 	const [play, setPlay] = useState(false)
+	const [isPlayerSmall, setPlayerSize] = useState(true)
 
 	useEffect(() => {
 		player.current.src = episode?.url
@@ -39,6 +40,8 @@ export const CustomPlayer: React.FC<Props> = ({ episode }) => {
 			player.current.currentTime = currentTime - 15
 		}
 	}
+
+	console.log(isPlayerSmall)
 
 	return (
 		<PlayerStyle>
@@ -80,7 +83,11 @@ export const CustomPlayer: React.FC<Props> = ({ episode }) => {
 					</div>
 				</ControlsStyle>
 				<div className="cue">
-					que
+					<button
+						onClick={(): void => setPlayerSize(!isPlayerSmall)}
+					>
+						up
+					</button>
 				</div>
 			</MainStyle>
 		</PlayerStyle>
