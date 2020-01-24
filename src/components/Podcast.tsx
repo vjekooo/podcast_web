@@ -44,8 +44,8 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 
 	const [currentEpisode, setCurrentEpisode] = useState<Episode>()
 	const [fetchPodcasts, { data: podcasts, loading }] = useLazyQuery(GET_PODCASTS)
-	const [subscribe] = useMutation(SUBSCRIBE)
-	const [unsubscribe] = useMutation(UNSUBSCRIBE)
+	const [subscribe, { loading: subscribeLoading, error: subscribeError }] = useMutation(SUBSCRIBE)
+	const [unsubscribe, { loading: unsubscribeLoading, error: unsubscribeError }] = useMutation(UNSUBSCRIBE)
 	const [isEpisodeVisible, setEpisodeVisibilityState] = useState(false)
 	const [isSubscribed, setIsSubscribed] = useState(false)
 
@@ -98,6 +98,10 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 
 	useEffect(() => {
 		checkIfPodcastSubscribed()
+	}, [podcasts?.podcasts])
+
+	useEffect(() => {
+		checkIfPodcastSubscribed()
 	}, [podcast?.fetchPodcastEpisodes])
 
 	return (
@@ -124,6 +128,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 							onClick={(): void => setPodcastSubscriptionStatus(
 								podcast?.fetchPodcastEpisodes.url
 							)}
+							disabled={subscribeLoading || unsubscribeLoading}
 						>
 							{
 								isSubscribed
@@ -131,6 +136,10 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 									: 'subscribe'
 							}
 						</button>
+						{
+							(subscribeError || unsubscribeError) &&
+								<div>error</div>
+						}
 					</div>
 				</div>
 				<div>

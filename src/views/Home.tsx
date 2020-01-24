@@ -29,7 +29,7 @@ export const Home: React.FC = () => {
 	const [nodeFetch, { data: subscriptions, loading }] = useLazyQuery(FETCH_PODCASTS)
 
 	useEffect(() => {
-		if (data) fetchPodcasts()
+		if (data || user) fetchPodcasts()
 		if (podcasts) {
 			const urls = podcasts.podcasts.map((url: Subs) => url.url)
 			nodeFetch({
@@ -68,7 +68,7 @@ export const Home: React.FC = () => {
 				!user &&
 					<LoginStyle>
 						<Link to="/login">
-							login to use the app
+							login
 						</Link>
 						<span>
 							or

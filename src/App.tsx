@@ -88,14 +88,16 @@ const App: React.FC = (): JSX.Element => {
 			...userValues,
 			isLoading: true
 		})
-		refreshToken()
-			.then(data => {
-				setAccessToken(data.accessToken)
-				setUserValues({
-					user: data.accessToken,
-					isLoading: false
+		if (userValues.user) {
+			refreshToken()
+				.then(data => {
+					setAccessToken(data.accessToken)
+					setUserValues({
+						user: data.accessToken,
+						isLoading: false
+					})
 				})
-			})
+		}
 	}, [])
 
 	useEffect(() => {
@@ -106,7 +108,7 @@ const App: React.FC = (): JSX.Element => {
 		if (userValues.user) {
 			const token = JSON.parse(window.atob(userValues.user.split('.')[1]))
 			const timeout = tokenExpiresIn(token.exp)
-			setTimeout(() => {
+			setInterval(() => {
 				refreshToken()
 					.then(data => {
 						setAccessToken(data.accessToken)
