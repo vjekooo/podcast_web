@@ -136,14 +136,10 @@ const App: React.FC = (): JSX.Element => {
 						handleUser
 					}}
 				>
-					<Routes user={userValues.user} />
+					<Routes />
 				</PlayerContext.Provider>
 				{
 					userValues.isLoading && <div>...loading App</div>
-				}
-				{
-					!userValues.isLoading && !userValues.user &&
-						<div>login to use the app</div>
 				}
 				{
 					isPlayerVisible &&

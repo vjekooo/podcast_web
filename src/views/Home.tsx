@@ -3,7 +3,7 @@ import React, { useEffect, useContext } from 'react'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks'
 import { Link } from 'react-router-dom'
 import { GET_PODCASTS, GET_USER, FETCH_PODCASTS } from '../query/query'
-import { ContentStyle } from './styles/Home'
+import { ContentStyle, LoginStyle } from './styles/Home'
 import { PlayerContext } from '../UseContext'
 
 interface Podcast {
@@ -64,6 +64,20 @@ export const Home: React.FC = () => {
 						))
 				}
 			</ContentStyle>
+			{
+				!user &&
+					<LoginStyle>
+						<Link to="/login">
+							login to use the app
+						</Link>
+						<span>
+							or
+						</span>
+						<Link to="/register">
+							register
+						</Link>
+					</LoginStyle>
+			}
 		</div>
 	)
 }

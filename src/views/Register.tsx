@@ -1,15 +1,29 @@
 
-import React, { useState } from 'react'
+import React from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { RouteComponentProps } from 'react-router-dom'
 
 import { REGISTER } from '../query/query'
 
 import { FormStyle } from './styles/Login'
+import { UseFormWithReact } from '../hooks/useFormWIthValidation'
+
+import validate from '../hooks/validate'
+
+const INITIAL_STATE = {
+	email: '',
+	password: ''
+}
 
 export const Register: React.FC<RouteComponentProps> = ({ history }): JSX.Element => {
-	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
+	const {
+		values,
+		handleChange,
+		handleBlur,
+		errors,
+		isSubmitting
+	} = UseFormWithReact(INITIAL_STATE, validate)
+
 	const [register] = useMutation(REGISTER)
 
 	return (
@@ -18,6 +32,8 @@ export const Register: React.FC<RouteComponentProps> = ({ history }): JSX.Elemen
 				<FormStyle
 					onSubmit={async (e): Promise<void> => {
 						e.preventDefault()
+						const email = values.email
+						const password = values.password
 						try {
 							const data = await register({
 								variables: { email, password }
@@ -30,17 +46,43 @@ export const Register: React.FC<RouteComponentProps> = ({ history }): JSX.Elemen
 						}
 					}}
 				>
-					<input
-						type="email"
-						value={email}
-						onChange={(e): void => setEmail(e.target.value)}
-					/>
-					<input
-						type="password"
-						value={password}
-						onChange={(e): void => setPassword(e.target.value)}
-					/>
-					<button>Register</button>
+					<div>
+						<input
+							name="email"
+							type="email"
+							value={values.email}
+							onChange={(e): void => handleChange(e)}
+							onBlur={handleBlur}
+							className={errors.email && 'input-error'}
+						/>
+						{
+							errors.email &&
+								<div className="text-error">
+									{errors.email}
+								</div>
+						}
+					</div>
+					<div>
+						<input
+							name="password"
+							type="password"
+							value={values.password}
+							onChange={(e): void => handleChange(e)}
+							onBlur={handleBlur}
+							className={errors.email && 'input-error'}
+						/>
+						{
+							errors.password &&
+								<div className="text-error">
+									{errors.password}
+								</div>
+						}
+					</div>
+					<button
+						disabled={isSubmitting}
+					>
+						Register
+					</button>
 				</FormStyle>
 			</div>
 		</div>

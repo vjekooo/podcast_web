@@ -12,3 +12,8 @@ export const ContentStyle = styled.div`
 		height: 100%;
 	}
 `
+
+export const LoginStyle = styled.div`
+	display: flex;
+	flex-direction: column;
+`

@@ -7,7 +7,7 @@ export const EpisodeStyle = styled.div`
 	bottom: 0;
 	left: 0;
 	right: 0;
-	background-color: aquamarine;
+    background-color: ${(props): string => props.theme.playerBackground};
 	padding: 1rem;
 `
 

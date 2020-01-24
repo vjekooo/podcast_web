@@ -60,10 +60,7 @@ export const CustomPlayer: React.FC<Props> = ({ episode }) => {
 					</div>
 					<div>
 						<button
-							onClick={(): void => {
-								setPlay(!play)
-								handlePlayPauseClick()
-							}}
+							onClick={(): void => handlePlayPauseClick()}
 							type="button"
 						>
 							{
