@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react'
 import { Episode } from '../models/models'
-import { PlayerStyle, TopStyle, MainStyle, ControlsStyle } from './styles/CustomPlayer'
+import { PlayerStyle, TopStyle, MainStyle, ControlsStyle, ArtworkStyleSmall, ArtworkStyleBig, ButtonStyle } from './styles/CustomPlayer'
 
 interface Props {
 	episode: Episode | null;
@@ -15,10 +15,15 @@ export const CustomPlayer: React.FC<Props> = ({ episode }) => {
 	const player = useRef<AudioRef>({})
 	const [play, setPlay] = useState(false)
 	const [isPlayerSmall, setPlayerSize] = useState(true)
+	const [playTime, setPlayTime] = useState(0)
 
 	useEffect(() => {
-		player.current.src = episode?.url
-		player.current.play()
+		try {
+			player.current.src = episode?.url
+			player.current.play()
+		} catch (error) {
+			console.log(error)
+		}
 	}, [episode?.title])
 
 	const handlePlayPauseClick = (): void => {
@@ -32,6 +37,13 @@ export const CustomPlayer: React.FC<Props> = ({ episode }) => {
 		}
 	}
 
+	const handleProgressChange = (event: any): void => {
+		const duration = player.current.duration
+		const value = Number(event.currentTarget.value)
+
+		player.current.currentTime = duration / 100 * value
+	}
+
 	const handleSkipping = (value: string): void => {
 		const currentTime = player.current.currentTime
 		if (value === 'fwd') {
@@ -41,17 +53,77 @@ export const CustomPlayer: React.FC<Props> = ({ episode }) => {
 		}
 	}
 
-	console.log(isPlayerSmall)
+	const handleAudioChange = (event: any): void => {
+		const currentTime = event.currentTarget.currentTime
+		const duration = player.current.duration
+		setPlayTime(currentTime / duration * 100)
+	}
+
+	// const calculateTotalValue = (length: number): string => {
+	// 	const minutes = Math.floor(length / 60)
+	// 	const secondsInt = length - minutes * 60
+	// 	const secondsStr = secondsInt.toString()
+	// 	const seconds = secondsStr.substr(0, 2)
+	// 	const time = minutes + ':' + seconds
+
+	// 	return time
+	// }
+
+	const calculateCurrentValue = (value: number): string => {
+		const num = Number(value)
+		const hours = Math.floor(num / 3600)
+		const minutes = Math.floor(num % 3600 / 60)
+		const seconds = Math.floor(num % 3600 % 60)
+
+		const hoursDisplay = hours > 0 ? `${hours}:` : ''
+		const minutesDisplay = minutes > 0 ? minutes : '00'
+		const secondsDisplay = seconds < 10 ? `0${seconds}` : seconds
+
+		return `${hoursDisplay}${minutesDisplay}:${secondsDisplay}`
+	}
 
 	return (
-		<PlayerStyle>
-			<TopStyle>
-				<audio ref={player} />
-			</TopStyle>
-			<MainStyle>
-				<div className="artwork">
+		<PlayerStyle size={isPlayerSmall} >
+			<TopStyle size={isPlayerSmall}>
+				<audio
+					ref={player}
+					onTimeUpdate={handleAudioChange}
+				/>
+				<ArtworkStyleBig size={isPlayerSmall} >
 					<img />
-				</div>
+					<div>
+						{
+							episode?.title
+						}
+					</div>
+					<input
+						type="range"
+						onChange={(e): void => handleProgressChange(e)}
+						value={playTime}
+					/>
+					<span>
+						<span>
+							{
+								player.current.duration &&
+									calculateCurrentValue(player.current.currentTime)
+							}
+						</span>
+						<span>
+							-
+							{
+								player.current.duration &&
+									calculateCurrentValue(
+										player.current.duration - player.current.currentTime
+									)
+							}
+						</span>
+					</span>
+				</ArtworkStyleBig>
+			</TopStyle>
+			<MainStyle size={isPlayerSmall} >
+				<ArtworkStyleSmall size={isPlayerSmall} >
+					<img />
+				</ArtworkStyleSmall>
 				<ControlsStyle>
 					<div>
 						<button
@@ -82,13 +154,17 @@ export const CustomPlayer: React.FC<Props> = ({ episode }) => {
 						</button>
 					</div>
 				</ControlsStyle>
-				<div className="cue">
+				<ButtonStyle size={isPlayerSmall} >
 					<button
 						onClick={(): void => setPlayerSize(!isPlayerSmall)}
 					>
-						up
+						{
+							isPlayerSmall
+								? 'up'
+								: 'down'
+						}
 					</button>
-				</div>
+				</ButtonStyle>
 			</MainStyle>
 		</PlayerStyle>
 	)
