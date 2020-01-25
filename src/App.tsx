@@ -104,9 +104,17 @@ const App: React.FC = (): JSX.Element => {
 				...userValues,
 				isLoading: true
 			})
+			refreshToken()
+				.then(data => {
+					setAccessToken(data.accessToken)
+					setUserValues({
+						user: data.accessToken,
+						...userValues
+					})
+				})
 			const token = JSON.parse(window.atob(userValues.user.split('.')[1]))
 			const timeout = tokenExpiresIn(token.exp)
-			setInterval(() => {
+			setTimeout(() => {
 				refreshToken()
 					.then(data => {
 						setAccessToken(data.accessToken)
@@ -132,8 +140,9 @@ const App: React.FC = (): JSX.Element => {
 					value={{
 						setPlayerValues,
 						handleThemeState,
+						handleUser,
 						user,
-						handleUser
+						theme
 					}}
 				>
 					<Routes />
@@ -145,6 +154,7 @@ const App: React.FC = (): JSX.Element => {
 					isPlayerVisible &&
 						<CustomPlayer
 							episode={episode}
+							theme={theme}
 						/>
 				}
 			</Wrapper>

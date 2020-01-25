@@ -20,8 +20,6 @@ export const PlayerStyle = styled.div<Props>`
 	justify-content: ${(props): string => props.size ? 'center' : ''};
 	padding: .5rem;
 	z-index: 10;
-	opacity: .85;
-	backdrop-filter: blur(10px);
 `
 
 export const TopStyle = styled.div<Props>`
@@ -95,6 +93,7 @@ export const MainStyle = styled.div<Props>`
 
 export const ControlsStyle = styled.div`
 	display: flex;
+	align-items: center;
 	width: 60%;
 	div {
 		display: flex;
