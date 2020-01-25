@@ -17,6 +17,10 @@ export const InfoStyle = styled.div`
 	h3 {
 		margin-top: 0;
 	}
+	button {
+		border-radius: 0;
+		border-image: none;
+	}
 `
 
 export const ListStyle = styled.div`
@@ -37,10 +41,14 @@ export const ListItemStyle = styled.li`
 		display: flex;
 		align-items: center;
 	}
+	button {
+		border-radius: 0;
+		border-image: none;
+	}
 `
 
 export const ListItemTitleStyle = styled.span`
-	
+
 `
 
 export const ListItemTimeStyle = styled.span`

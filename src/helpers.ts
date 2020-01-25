@@ -1,12 +1,19 @@
 
-export const handleDuration = (value: string): string => {
-	if (value.indexOf(':') > -1) {
+export const calculateTime = (value: number | string): string => {
+	if (typeof value === 'string' && value.indexOf(':') > -1) {
 		return value
 	}
-	const unixTimeInMili = Number(value) * 1000
-	const date = new Date(unixTimeInMili)
 
-	return date.toISOString().slice(10, 19).replace('T', ' ')
+	const num = Number(value)
+	const hours = Math.floor(num / 3600)
+	const minutes = Math.floor(num % 3600 / 60)
+	const seconds = Math.floor(num % 3600 % 60)
+
+	const hoursDisplay = hours > 0 ? `0${hours}:` : ''
+	const minutesDisplay = minutes < 10 ? `0${minutes}` : minutes
+	const secondsDisplay = seconds < 10 ? `:0${seconds}` : `:${seconds}`
+
+	return `${hoursDisplay}${minutesDisplay}${secondsDisplay}`
 }
 
 export const handleDate = (value: string): string => {

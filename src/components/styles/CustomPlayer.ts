@@ -8,7 +8,7 @@ export const PlayerStyle = styled.div<Props>`
 	max-width: 600px;
 	margin-right: auto;
     margin-left: auto;
-	height: ${(props): string => props.size ? '80px' : '95%'};
+	height: ${(props): string => props.size ? '80px' : '100%'};
 	transition: height .5s ease;
 	position: fixed;
 	left: 0;
@@ -20,6 +20,8 @@ export const PlayerStyle = styled.div<Props>`
 	justify-content: ${(props): string => props.size ? 'center' : ''};
 	padding: .5rem;
 	z-index: 10;
+	opacity: .85;
+	backdrop-filter: blur(10px);
 `
 
 export const TopStyle = styled.div<Props>`
@@ -104,6 +106,7 @@ export const ControlsStyle = styled.div`
 		padding: .5rem;
 		height: 30px;
 		width: 100%;
+		border-radius: 0;
 	}
 `
 
@@ -111,7 +114,8 @@ export const ButtonStyle = styled.div<Props>`
 	position: ${(props): string => props.size ? 'static' : 'absolute'};
 	right: 10px;
 	bottom: 50px;
-	/* button {
-		display: ${(props): string => props.size ? 'flex' : 'none'};
-	} */
+	button {
+		border-radius: 0;
+		border-image: none;
+	}
 `
