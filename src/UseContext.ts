@@ -12,6 +12,7 @@ interface ContextProps {
     handleThemeState: () => void;
     handleUser: (value: string) => void;
     user: string;
+    theme: boolean;
 };
 
 export const PlayerContext = createContext<Partial<ContextProps>>({})

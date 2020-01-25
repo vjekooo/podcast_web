@@ -3,16 +3,18 @@ import React, { useState, useRef, useEffect } from 'react'
 import { Episode } from '../models/models'
 import { PlayerStyle, TopStyle, MainStyle, ControlsStyle, ArtworkStyleSmall, ArtworkStyleBig, ButtonStyle } from './styles/CustomPlayer'
 import { calculateTime } from '../helpers'
+import { ForwardIcon, RewindIcon, PauseIcon, PlayIcon } from '../svgs'
 
 interface Props {
 	episode: Episode | null;
+	theme: boolean;
 }
 
 interface AudioRef {
 	current: HTMLAudioElement;
 }
 
-export const CustomPlayer: React.FC<Props> = ({ episode }) => {
+export const CustomPlayer: React.FC<Props> = ({ episode, theme }) => {
 	const player = useRef<AudioRef>({})
 	const [play, setPlay] = useState(false)
 	const [isPlayerSmall, setPlayerSize] = useState(true)
@@ -104,32 +106,41 @@ export const CustomPlayer: React.FC<Props> = ({ episode }) => {
 				</ArtworkStyleSmall>
 				<ControlsStyle>
 					<div>
-						<button
-							type="button"
+						<span
 							onClick={(): void => handleSkipping('rwd')}
 						>
-							- 15
-						</button>
+							<RewindIcon
+								width={isPlayerSmall ? '30px' : '40px'}
+								fill={theme ? '#000' : '#fff'}
+							/>
+						</span>
 					</div>
 					<div>
-						<button
+						<span
 							onClick={(): void => handlePlayPauseClick()}
-							type="button"
 						>
 							{
 								!play
-									? 'pause'
-									: 'play'
+									? <PauseIcon
+										width={isPlayerSmall ? '40px' : '60px'}
+										fill={theme ? '#000' : '#fff'}
+									/>
+									: <PlayIcon
+										width={isPlayerSmall ? '40px' : '60px'}
+										fill={theme ? '#000' : '#fff'}
+									/>
 							}
-						</button>
+						</span>
 					</div>
 					<div>
-						<button
-							type="button"
+						<span
 							onClick={(): void => handleSkipping('fwd')}
 						>
-							+ 30
-						</button>
+							<ForwardIcon
+								width={isPlayerSmall ? '30px' : '40px'}
+								fill={theme ? '#000' : '#fff'}
+							/>
+						</span>
 					</div>
 				</ControlsStyle>
 				<ButtonStyle size={isPlayerSmall} >
