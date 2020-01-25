@@ -37,7 +37,7 @@ export const CustomPlayer: React.FC<Props> = ({ episode }) => {
 		}
 	}
 
-	const handleProgressChange = (event: any): void => {
+	const handleProgressChange = (event: React.FormEvent<HTMLInputElement>): void => {
 		const duration = player.current.duration
 		const value = Number(event.currentTarget.value)
 
@@ -58,16 +58,6 @@ export const CustomPlayer: React.FC<Props> = ({ episode }) => {
 		const duration = player.current.duration
 		setPlayTime(currentTime / duration * 100)
 	}
-
-	// const calculateTotalValue = (length: number): string => {
-	// 	const minutes = Math.floor(length / 60)
-	// 	const secondsInt = length - minutes * 60
-	// 	const secondsStr = secondsInt.toString()
-	// 	const seconds = secondsStr.substr(0, 2)
-	// 	const time = minutes + ':' + seconds
-
-	// 	return time
-	// }
 
 	const calculateCurrentValue = (value: number): string => {
 		const num = Number(value)

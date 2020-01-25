@@ -8,7 +8,7 @@ export const PlayerStyle = styled.div<Props>`
 	max-width: 600px;
 	margin-right: auto;
     margin-left: auto;
-	height: ${(props): string => props.size ? '80px' : '95vh'};
+	height: ${(props): string => props.size ? '80px' : '95%'};
 	transition: height .5s ease;
 	position: fixed;
 	left: 0;
