@@ -88,24 +88,22 @@ const App: React.FC = (): JSX.Element => {
 			...userValues,
 			isLoading: true
 		})
-		if (userValues.user) {
-			refreshToken()
-				.then(data => {
-					setAccessToken(data.accessToken)
-					setUserValues({
-						user: data.accessToken,
-						isLoading: false
-					})
+		refreshToken()
+			.then(data => {
+				setAccessToken(data.accessToken)
+				setUserValues({
+					user: data.accessToken,
+					isLoading: false
 				})
-		}
+			})
 	}, [])
 
 	useEffect(() => {
-		setUserValues({
-			...userValues,
-			isLoading: true
-		})
 		if (userValues.user) {
+			setUserValues({
+				...userValues,
+				isLoading: true
+			})
 			const token = JSON.parse(window.atob(userValues.user.split('.')[1]))
 			const timeout = tokenExpiresIn(token.exp)
 			setInterval(() => {
@@ -114,15 +112,15 @@ const App: React.FC = (): JSX.Element => {
 						setAccessToken(data.accessToken)
 						setUserValues({
 							user: data.accessToken,
-							isLoading: false
+							...userValues
 						})
 					})
 			}, timeout - 2000)
+			setUserValues({
+				...userValues,
+				isLoading: false
+			})
 		}
-		setUserValues({
-			...userValues,
-			isLoading: false
-		})
 	}, [userValues.user])
 
 	const user = userValues.user

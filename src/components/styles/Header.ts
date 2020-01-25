@@ -19,6 +19,10 @@ export const NavStyle = styled.nav`
 
 export const ToolStyle = styled.div`
     display: flex;
+    button {
+		border-radius: 0;
+		border-image: none;
+	}
 `
 
 export const ThemeSwitch = styled.div`

@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Episode } from '../models/models'
 import { PlayerStyle, TopStyle, MainStyle, ControlsStyle, ArtworkStyleSmall, ArtworkStyleBig, ButtonStyle } from './styles/CustomPlayer'
+import { calculateTime } from '../helpers'
 
 interface Props {
 	episode: Episode | null;
@@ -59,19 +60,6 @@ export const CustomPlayer: React.FC<Props> = ({ episode }) => {
 		setPlayTime(currentTime / duration * 100)
 	}
 
-	const calculateCurrentValue = (value: number): string => {
-		const num = Number(value)
-		const hours = Math.floor(num / 3600)
-		const minutes = Math.floor(num % 3600 / 60)
-		const seconds = Math.floor(num % 3600 % 60)
-
-		const hoursDisplay = hours > 0 ? `${hours}:` : ''
-		const minutesDisplay = minutes > 0 ? minutes : '00'
-		const secondsDisplay = seconds < 10 ? `0${seconds}` : seconds
-
-		return `${hoursDisplay}${minutesDisplay}:${secondsDisplay}`
-	}
-
 	return (
 		<PlayerStyle size={isPlayerSmall} >
 			<TopStyle size={isPlayerSmall}>
@@ -95,14 +83,14 @@ export const CustomPlayer: React.FC<Props> = ({ episode }) => {
 						<span>
 							{
 								player.current.duration &&
-									calculateCurrentValue(player.current.currentTime)
+									calculateTime(player.current.currentTime)
 							}
 						</span>
 						<span>
 							-
 							{
 								player.current.duration &&
-									calculateCurrentValue(
+									calculateTime(
 										player.current.duration - player.current.currentTime
 									)
 							}

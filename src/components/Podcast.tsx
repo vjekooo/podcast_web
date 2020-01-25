@@ -23,7 +23,7 @@ import {
 	ListItemTimeStyle
 } from './styles/Podcast'
 
-import { stripHtmlFromString, handleDuration } from '../helpers'
+import { stripHtmlFromString, calculateTime } from '../helpers'
 
 interface EpisodeState {
 	episodeList: Episode[];
@@ -177,7 +177,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 										</ListItemTitleStyle>
 										<ListItemTimeStyle>
 											{
-												handleDuration(item.duration)
+												calculateTime(item.duration)
 											}
 										</ListItemTimeStyle>
 									</div>
