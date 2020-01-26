@@ -10,4 +10,5 @@ export const LoadingStyle = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    opacity: .9;
 `

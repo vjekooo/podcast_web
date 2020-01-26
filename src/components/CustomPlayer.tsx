@@ -62,8 +62,54 @@ export const CustomPlayer: React.FC<Props> = ({ episode, theme }) => {
 		setPlayTime(currentTime / duration * 100)
 	}
 
+	let xDown: any = null
+	let yDown: any = null
+
+	const getTouches = (evt: any): any => {
+		return evt.touches
+	}
+
+	const handleTouchStart = (evt: any): void => {
+		const firstTouch = getTouches(evt)[0]
+		xDown = firstTouch.clientX
+		yDown = firstTouch.clientY
+	}
+
+	const handleTouchMove = (evt: any): void => {
+		if (!xDown || !yDown) {
+			return
+		}
+
+		const xUp = evt.touches[0].clientX
+		const yUp = evt.touches[0].clientY
+
+		const xDiff = xDown - xUp
+		const yDiff = yDown - yUp
+
+		if (Math.abs(xDiff) > Math.abs(yDiff)) {
+			if (xDiff > 0) {
+				/* left swipe */
+			} else {
+				/* right swipe */
+			}
+		} else {
+			if (yDiff > 0) {
+				setPlayerSize(false)
+			} else {
+				setPlayerSize(true)
+			}
+		}
+		/* reset values */
+		xDown = null
+		yDown = null
+	}
+
 	return (
-		<PlayerStyle size={isPlayerSmall} >
+		<PlayerStyle
+			size={isPlayerSmall}
+			onTouchStart={handleTouchStart}
+			onTouchMove={handleTouchMove}
+		>
 			<TopStyle size={isPlayerSmall}>
 				<audio
 					ref={player}
@@ -144,15 +190,6 @@ export const CustomPlayer: React.FC<Props> = ({ episode, theme }) => {
 					</div>
 				</ControlsStyle>
 				<ButtonStyle size={isPlayerSmall} >
-					<button
-						onClick={(): void => setPlayerSize(!isPlayerSmall)}
-					>
-						{
-							isPlayerSmall
-								? 'up'
-								: 'down'
-						}
-					</button>
 				</ButtonStyle>
 			</MainStyle>
 		</PlayerStyle>
