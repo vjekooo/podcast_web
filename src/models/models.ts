@@ -12,6 +12,7 @@ export interface Episode {
 	url: string;
 	pubDate: string;
 	duration: string;
+	image?: string;
 }
 
 export interface Favorite {

@@ -40,7 +40,6 @@ export const ArtworkStyleBig = styled.div<Props>`
 	margin-bottom: 1rem;
 	img {
 		width: 100%;
-		height: 100%;
 		margin-bottom: 2rem;
 	}
 	div {

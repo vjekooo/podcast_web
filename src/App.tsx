@@ -113,7 +113,7 @@ const App: React.FC = (): JSX.Element => {
 					})
 				})
 			const token = JSON.parse(window.atob(userValues.user.split('.')[1]))
-			const timeout = tokenExpiresIn(token.exp)
+			const timeout = tokenExpiresIn(token)
 			setTimeout(() => {
 				refreshToken()
 					.then(data => {
