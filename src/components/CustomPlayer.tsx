@@ -62,14 +62,18 @@ export const CustomPlayer: React.FC<Props> = ({ episode, theme }) => {
 		setPlayTime(currentTime / duration * 100)
 	}
 
-	let xDown: any = null
-	let yDown: any = null
+	let xDown: number | null = null
+	let yDown: number | null = null
 
 	const getTouches = (evt: any): any => {
 		return evt.touches
 	}
 
-	const handleTouchStart = (evt: any): void => {
+	const handleTouchStart = (evt: any, value?: string): void => {
+		if (value) {
+			setPlayerSize(!isPlayerSmall)
+			return
+		}
 		const firstTouch = getTouches(evt)[0]
 		xDown = firstTouch.clientX
 		yDown = firstTouch.clientY
@@ -87,19 +91,12 @@ export const CustomPlayer: React.FC<Props> = ({ episode, theme }) => {
 		const yDiff = yDown - yUp
 
 		if (Math.abs(xDiff) > Math.abs(yDiff)) {
-			if (xDiff > 0) {
-				/* left swipe */
-			} else {
-				/* right swipe */
-			}
-		} else {
 			if (yDiff > 0) {
 				setPlayerSize(false)
 			} else {
 				setPlayerSize(true)
 			}
 		}
-		/* reset values */
 		xDown = null
 		yDown = null
 	}
@@ -107,7 +104,7 @@ export const CustomPlayer: React.FC<Props> = ({ episode, theme }) => {
 	return (
 		<PlayerStyle
 			size={isPlayerSmall}
-			onTouchStart={handleTouchStart}
+			onTouchStart={(e): void => handleTouchStart(e)}
 			onTouchMove={handleTouchMove}
 		>
 			<TopStyle size={isPlayerSmall}>
@@ -189,7 +186,10 @@ export const CustomPlayer: React.FC<Props> = ({ episode, theme }) => {
 						</span>
 					</div>
 				</ControlsStyle>
-				<ButtonStyle size={isPlayerSmall} >
+				<ButtonStyle
+					size={isPlayerSmall}
+					onTouchStart={(e): void => handleTouchStart(e, 'yes')}
+				>
 				</ButtonStyle>
 			</MainStyle>
 		</PlayerStyle>

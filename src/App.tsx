@@ -51,21 +51,13 @@ const Wrapper = styled.div`
   min-height: 100vh;
 `
 
-interface UserState {
-	user: string;
-	isLoading: boolean;
-}
-
 interface PlayerState {
 	episode: Episode | null;
 	isPlayerVisible: boolean;
 }
 
 const App: React.FC = (): JSX.Element => {
-	const [userValues, setUserValues] = useState<UserState>({
-		user: '',
-		isLoading: false
-	})
+	const [user, setUser] = useState<string>('')
 	const [{ episode, isPlayerVisible }, setPlayerValues] = useState<PlayerState>({
 		episode: null,
 		isPlayerVisible: false
@@ -77,61 +69,35 @@ const App: React.FC = (): JSX.Element => {
 	}
 
 	const handleUser = (value: string): void => {
-		setUserValues({
-			user: value,
-			isLoading: false
-		})
+		setUser(value)
 	}
 
 	useEffect(() => {
-		setUserValues({
-			...userValues,
-			isLoading: true
-		})
 		refreshToken()
 			.then(data => {
 				setAccessToken(data.accessToken)
-				setUserValues({
-					user: data.accessToken,
-					isLoading: false
-				})
+				setUser(data.accessToken)
 			})
 	}, [])
 
 	useEffect(() => {
-		if (userValues.user) {
-			setUserValues({
-				...userValues,
-				isLoading: true
-			})
+		if (user) {
 			refreshToken()
 				.then(data => {
 					setAccessToken(data.accessToken)
-					setUserValues({
-						user: data.accessToken,
-						...userValues
-					})
+					setUser(data.accessToken)
 				})
-			const token = JSON.parse(window.atob(userValues.user.split('.')[1]))
+			const token = JSON.parse(window.atob(user.split('.')[1]))
 			const timeout = tokenExpiresIn(token)
 			setTimeout(() => {
 				refreshToken()
 					.then(data => {
 						setAccessToken(data.accessToken)
-						setUserValues({
-							user: data.accessToken,
-							...userValues
-						})
+						setUser(data.accessToken)
 					})
 			}, timeout - 2000)
-			setUserValues({
-				...userValues,
-				isLoading: false
-			})
 		}
-	}, [userValues.user])
-
-	const user = userValues.user
+	}, [user])
 
 	return (
 		<ThemeProvider theme={theme ? themeLight : themeDark}>
@@ -147,9 +113,6 @@ const App: React.FC = (): JSX.Element => {
 				>
 					<Routes />
 				</PlayerContext.Provider>
-				{
-					userValues.isLoading && <div>...loading App</div>
-				}
 				{
 					isPlayerVisible &&
 						<CustomPlayer
