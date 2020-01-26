@@ -29,6 +29,7 @@ export const TopStyle = styled.div<Props>`
 
 export const ArtworkStyleSmall = styled.div<Props>`
 	display: ${(props): string => props.size ? 'block' : 'none'};
+	width: 20%;
 `
 
 export const ArtworkStyleBig = styled.div<Props>`
@@ -44,6 +45,7 @@ export const ArtworkStyleBig = styled.div<Props>`
 	}
 	div {
 		margin-bottom: 2rem;
+		text-align: center;
 	}
 	input[type=range]::range-track {
 		width: 100%;
@@ -113,6 +115,8 @@ export const ButtonStyle = styled.div<Props>`
 	position: ${(props): string => props.size ? 'static' : 'absolute'};
 	right: 10px;
 	bottom: 50px;
+	width: 20%;
+	height: 50px;
 	button {
 		border-radius: 0;
 		border-image: none;

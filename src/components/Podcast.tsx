@@ -15,12 +15,12 @@ import {
 } from '../query/query'
 
 import {
-	TitleStyle,
 	InfoStyle,
 	ListStyle,
 	ListItemStyle,
 	ListItemTitleStyle,
 	ListItemTimeStyle
+	// SearchStyle
 } from './styles/Podcast'
 
 import { stripHtmlFromString, calculateTime } from '../helpers'
@@ -55,6 +55,8 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 	const [nodeFetch, { data: podcast, loading }] = useLazyQuery(FETCH_PODCASTS_EPISODES)
 
 	const [isModalActive, setModalStatus] = useState(false)
+
+	// const [searchValue, setSearchValue] = useState('')
 
 	const handleEpisode = (): void => {
 		setEpisodeVisibilityState(
@@ -94,6 +96,11 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 		}
 	}
 
+	// const handleSearchInputChange = (event: React.FormEvent<HTMLInputElement>): void => {
+	// 	console.log(event?.currentTarget.value)
+	// 	setSearchValue(event.currentTarget.value)
+	// }
+
 	useEffect(() => {
 		nodeFetch({
 			variables: { url: feedUrl }
@@ -117,12 +124,6 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 
 	return (
 		<div>
-			<TitleStyle>
-				{/* {
-					loading &&
-						'Loading podcast'
-				} */}
-			</TitleStyle>
 			<InfoStyle>
 				<div className="info-header">
 					<img src={
@@ -144,11 +145,6 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 									: ''
 							}
 						>
-							{/* {
-								isSubscribed
-									? 'unsubscribe'
-									: 'subscribe'
-							} */}
 							{
 								<Star
 									width='50px'
@@ -173,6 +169,14 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 					</p>
 				</div>
 			</InfoStyle>
+			{/* <SearchStyle>
+				<input
+					type="text"
+					onChange={handleSearchInputChange}
+					placeholder="search episodes"
+					value={searchValue}
+				/>
+			</SearchStyle> */}
 			{
 				isEpisodeVisible && currentEpisode &&
 					<EpisodeView

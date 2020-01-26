@@ -1,11 +1,7 @@
 import styled from 'styled-components'
 
-export const TitleStyle = styled.div`
-	padding: .5rem 0;
-`
-
 export const InfoStyle = styled.div`
-	padding: .5rem 0;
+	padding-top: 1rem;
 	img {
 		width: 150px;
 		height: 150px;
@@ -20,6 +16,14 @@ export const InfoStyle = styled.div`
 	.kill-button {
 		opacity: .5;
 		pointer-events: none;
+	}
+`
+
+export const SearchStyle = styled.div`
+	width: 100%;
+	input {
+		width: 100%;
+		height: 30px;
 	}
 `
 
