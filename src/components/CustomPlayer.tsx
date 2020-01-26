@@ -70,7 +70,7 @@ export const CustomPlayer: React.FC<Props> = ({ episode, theme }) => {
 					onTimeUpdate={handleAudioChange}
 				/>
 				<ArtworkStyleBig size={isPlayerSmall} >
-					<img />
+					<img src={episode?.image} />
 					<div>
 						{
 							episode?.title
@@ -102,7 +102,7 @@ export const CustomPlayer: React.FC<Props> = ({ episode, theme }) => {
 			</TopStyle>
 			<MainStyle size={isPlayerSmall} >
 				<ArtworkStyleSmall size={isPlayerSmall} >
-					<img />
+					<img src={episode?.image} />
 				</ArtworkStyleSmall>
 				<ControlsStyle>
 					<div>

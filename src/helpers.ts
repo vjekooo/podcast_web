@@ -30,11 +30,11 @@ export const parseJwt = (token: string): string => {
 	return JSON.parse(jsonPayload)
 }
 
-export const tokenExpiresIn = (exp: number): number => {
-	// const tokenMinutes = new Date(exp * 1000).getMinutes()
-	// const currentMinutes = new Date().getMinutes()
+export const tokenExpiresIn = (token: any): number => {
+	const iatTime = token.iat * 1000
+	const expTime = token.exp * 1000
 
-	return exp
+	return expTime - iatTime
 }
 
 export const stripHtmlFromString = (text: string): string => {
