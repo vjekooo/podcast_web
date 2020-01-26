@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { Episode } from '../models/models'
 import { PlayerStyle, TopStyle, MainStyle, ControlsStyle, ArtworkStyleSmall, ArtworkStyleBig, ButtonStyle } from './styles/CustomPlayer'
 import { calculateTime } from '../helpers'
-import { ForwardIcon, RewindIcon, PauseIcon, PlayIcon } from '../svgs'
+import { ForwardIcon, RewindIcon, PauseIcon, PlayIcon, Arrow } from '../svgs'
 
 interface Props {
 	episode: Episode | null;
@@ -62,134 +62,133 @@ export const CustomPlayer: React.FC<Props> = ({ episode, theme }) => {
 		setPlayTime(currentTime / duration * 100)
 	}
 
-	let xDown: number | null = null
-	let yDown: number | null = null
+	// let xDown: number | null = null
+	// let yDown: number | null = null
 
-	const getTouches = (evt: any): any => {
-		return evt.touches
-	}
+	// const getTouches = (evt: any): any => {
+	// 	return evt.touches
+	// }
 
-	const handleTouchStart = (evt: any, value?: string): void => {
-		if (value) {
-			setPlayerSize(!isPlayerSmall)
-			return
-		}
-		const firstTouch = getTouches(evt)[0]
-		xDown = firstTouch.clientX
-		yDown = firstTouch.clientY
-	}
+	// const handleTouchStart = (evt: any, value?: string): void => {
+	// 	if (value) {
+	// 		setPlayerSize(!isPlayerSmall)
+	// 		return
+	// 	}
+	// 	const firstTouch = getTouches(evt)[0]
+	// 	xDown = firstTouch.clientX
+	// 	yDown = firstTouch.clientY
+	// }
 
-	const handleTouchMove = (evt: any): void => {
-		if (!xDown || !yDown) {
-			return
-		}
+	// const handleTouchMove = (evt: any): void => {
+	// 	if (!xDown || !yDown) {
+	// 		return
+	// 	}
 
-		const xUp = evt.touches[0].clientX
-		const yUp = evt.touches[0].clientY
+	// 	const xUp = evt.touches[0].clientX
+	// 	const yUp = evt.touches[0].clientY
 
-		const xDiff = xDown - xUp
-		const yDiff = yDown - yUp
+	// 	const xDiff = xDown - xUp
+	// 	const yDiff = yDown - yUp
 
-		if (Math.abs(xDiff) > Math.abs(yDiff)) {
-			if (yDiff > 0) {
-				setPlayerSize(false)
-			} else {
-				setPlayerSize(true)
-			}
-		}
-		xDown = null
-		yDown = null
-	}
+	// 	if (Math.abs(xDiff) > Math.abs(yDiff)) {
+	// 		if (yDiff > 0) {
+	// 			setPlayerSize(false)
+	// 		} else {
+	// 			setPlayerSize(true)
+	// 		}
+	// 	}
+	// 	xDown = null
+	// 	yDown = null
+	// }
 
 	return (
 		<PlayerStyle
 			size={isPlayerSmall}
-			onTouchStart={(e): void => handleTouchStart(e)}
-			onTouchMove={handleTouchMove}
 		>
 			<TopStyle size={isPlayerSmall}>
 				<audio
 					ref={player}
 					onTimeUpdate={handleAudioChange}
 				/>
-				<ArtworkStyleBig size={isPlayerSmall} >
-					<img src={episode?.image} />
-					<div>
-						{
-							episode?.title
-						}
-					</div>
-					<input
-						type="range"
-						onChange={(e): void => handleProgressChange(e)}
-						value={playTime}
-					/>
-					<span>
-						<span>
-							{
-								player.current.duration &&
-									calculateTime(player.current.currentTime)
-							}
-						</span>
-						<span>
-							-
-							{
-								player.current.duration &&
-									calculateTime(
-										player.current.duration - player.current.currentTime
-									)
-							}
-						</span>
-					</span>
-				</ArtworkStyleBig>
+				{
+					!isPlayerSmall &&
+						<ArtworkStyleBig size={isPlayerSmall} >
+							<img src={episode?.image} />
+							<div>
+								{
+									episode?.title
+								}
+							</div>
+							<input
+								type="range"
+								onChange={(e): void => handleProgressChange(e)}
+								value={playTime}
+							/>
+							<span>
+								<span>
+									{
+										player.current.duration &&
+											calculateTime(player.current.currentTime)
+									}
+								</span>
+								<span>
+									-
+									{
+										player.current.duration &&
+											calculateTime(
+												player.current.duration - player.current.currentTime
+											)
+									}
+								</span>
+							</span>
+						</ArtworkStyleBig>
+				}
 			</TopStyle>
 			<MainStyle size={isPlayerSmall} >
 				<ArtworkStyleSmall size={isPlayerSmall} >
 					<img src={episode?.image} />
 				</ArtworkStyleSmall>
 				<ControlsStyle>
-					<div>
-						<span
-							onClick={(): void => handleSkipping('rwd')}
-						>
-							<RewindIcon
-								width={isPlayerSmall ? '30px' : '40px'}
-								fill={theme ? '#000' : '#fff'}
-							/>
-						</span>
-					</div>
-					<div>
-						<span
-							onClick={(): void => handlePlayPauseClick()}
-						>
-							{
-								!play
-									? <PauseIcon
-										width={isPlayerSmall ? '40px' : '60px'}
-										fill={theme ? '#000' : '#fff'}
-									/>
-									: <PlayIcon
-										width={isPlayerSmall ? '40px' : '60px'}
-										fill={theme ? '#000' : '#fff'}
-									/>
-							}
-						</span>
-					</div>
-					<div>
-						<span
-							onClick={(): void => handleSkipping('fwd')}
-						>
-							<ForwardIcon
-								width={isPlayerSmall ? '30px' : '40px'}
-								fill={theme ? '#000' : '#fff'}
-							/>
-						</span>
-					</div>
+					<span
+						onClick={(): void => handleSkipping('rwd')}
+					>
+						<RewindIcon
+							width={isPlayerSmall ? '30px' : '40px'}
+							fill={theme ? '#000' : '#fff'}
+						/>
+					</span>
+					<span
+						onClick={(): void => handlePlayPauseClick()}
+					>
+						{
+							!play
+								? <PauseIcon
+									width={isPlayerSmall ? '40px' : '60px'}
+									fill={theme ? '#000' : '#fff'}
+								/>
+								: <PlayIcon
+									width={isPlayerSmall ? '40px' : '60px'}
+									fill={theme ? '#000' : '#fff'}
+								/>
+						}
+					</span>
+					<span
+						onClick={(): void => handleSkipping('fwd')}
+					>
+						<ForwardIcon
+							width={isPlayerSmall ? '30px' : '40px'}
+							fill={theme ? '#000' : '#fff'}
+						/>
+					</span>
 				</ControlsStyle>
 				<ButtonStyle
 					size={isPlayerSmall}
-					onTouchStart={(e): void => handleTouchStart(e, 'yes')}
+					onClick={(): void => setPlayerSize(!isPlayerSmall)}
 				>
+					<Arrow
+						width='30px'
+						fill={theme ? '#000' : '#fff'}
+					/>
 				</ButtonStyle>
 			</MainStyle>
 		</PlayerStyle>

@@ -28,8 +28,10 @@ export const TopStyle = styled.div<Props>`
 `
 
 export const ArtworkStyleSmall = styled.div<Props>`
-	display: ${(props): string => props.size ? 'block' : 'none'};
 	width: 20%;
+	img {
+		display: ${(props): string => props.size ? 'block' : 'none'};
+	}
 `
 
 export const ArtworkStyleBig = styled.div<Props>`
@@ -41,11 +43,12 @@ export const ArtworkStyleBig = styled.div<Props>`
 	margin-bottom: 1rem;
 	img {
 		width: 100%;
-		margin-bottom: 2rem;
+		margin-bottom: 1rem;
 	}
 	div {
 		margin-bottom: 2rem;
 		text-align: center;
+		font-size: 18px;
 	}
 	input[type=range]::range-track {
 		width: 100%;
@@ -87,6 +90,8 @@ export const MainStyle = styled.div<Props>`
 	justify-content: ${(props): string => props.size ? 'space-between' : 'center'};
 	align-items: center;
 	height: ${(props): string => !props.size ? '30%' : 'auto'};
+	width: 90%;
+	margin: 0 auto;
 	img {
 		width: 50px;
 		height: 50px;
@@ -97,7 +102,8 @@ export const ControlsStyle = styled.div`
 	display: flex;
 	align-items: center;
 	width: 60%;
-	div {
+	height: 100%;
+	span {
 		display: flex;
 		width: 33%;
 		justify-content: center;
@@ -112,13 +118,13 @@ export const ControlsStyle = styled.div`
 `
 
 export const ButtonStyle = styled.div<Props>`
-	position: ${(props): string => props.size ? 'static' : 'absolute'};
-	right: 10px;
-	bottom: 50px;
+	/* position: ${(props): string => props.size ? 'static' : 'absolute'}; */
 	width: 20%;
-	height: 50px;
-	button {
-		border-radius: 0;
-		border-image: none;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	svg {
+		transform: ${(props): string => props.size ? 'rotate(0deg)' : 'rotate(180deg)'};
 	}
 `
