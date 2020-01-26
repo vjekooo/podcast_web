@@ -76,6 +76,7 @@ export const ArtworkStyleBig = styled.div<Props>`
 		display: flex;
 		justify-content: space-between;
 		font-size: 12px;
+		margin: .5rem 0;
 	}
 `
 
