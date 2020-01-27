@@ -6,7 +6,8 @@ import { Episode, Favorite } from '../models/models'
 import { PlayerContext } from '../UseContext'
 
 import { handleDate, stripHtmlFromString, calculateTime } from '../helpers'
-import { EpisodeStyle, TopStyle, ImageStyle, HeaderStyle, TitleStyle } from './styles/Episode'
+import { EpisodeStyle, TopStyle, ImageStyle, HeaderStyle, TitleStyle, ContentStyle } from './styles/Episode'
+import { CloseIcon, PlayIcon, FavoriteIcon } from '../svgs'
 
 interface Props {
 	currentEpisode: Episode | Favorite;
@@ -14,7 +15,7 @@ interface Props {
 }
 
 export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
-	const { setPlayerValues } = useContext(PlayerContext)
+	const { setPlayerValues, theme } = useContext(PlayerContext)
 
 	const [setFavorite] = useMutation(SET_FAVORITE)
 	const [removeFavorite] = useMutation(REMOVE_FAVORITE)
@@ -59,62 +60,69 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 	return (
 		<EpisodeStyle>
 			<TopStyle>
-				<button
-					type="button"
+				<span
 					onClick={onClick}
 				>
-					close
-				</button>
+					<CloseIcon
+						width='30px'
+						fill={theme ? '#000' : '#fff'}
+					/>
+				</span>
 			</TopStyle>
-			<HeaderStyle>
-				<ImageStyle>
-					<img />
-				</ImageStyle>
-				<TitleStyle>
-					<h3>
-						{
-							currentEpisode.title
-						}
-					</h3>
-					<p>
-						{
-							calculateTime(currentEpisode.duration)
-						}
-					</p>
-					<p>
-						{
-							handleDate(currentEpisode.pubDate)
-						}
-					</p>
-					<button
-						type="button"
-						onClick={(): void => {
-							if (currentEpisode) {
-								setEpisodeFavoriteStatus(currentEpisode)
+			<ContentStyle>
+				<HeaderStyle>
+					<ImageStyle>
+						<img src={currentEpisode.image} />
+					</ImageStyle>
+					<TitleStyle>
+						<h3>
+							{
+								currentEpisode.title
 							}
-						}}
-					>
-						{
-							isFavorite
-								? 'unFavorite'
-								: 'favorite'
-						}
-					</button>
-					<button
-						type="button"
-						onClick={(): void => {
-							if (setPlayerValues) {
-								setPlayerValues({
-									episode: currentEpisode,
-									isPlayerVisible: true
-								})
+						</h3>
+						<p>
+							{
+								calculateTime(currentEpisode.duration)
 							}
-						}}
-					>
-						play
-					</button>
-				</TitleStyle>
-			</HeaderStyle>
+						</p>
+						<p>
+							{
+								handleDate(currentEpisode.pubDate)
+							}
+						</p>
+						<div>
+							<span
+								onClick={(): void => {
+									if (currentEpisode) {
+										setEpisodeFavoriteStatus(currentEpisode)
+									}
+								}}
+							>
+								<FavoriteIcon
+									width='30px'
+									fill={isFavorite ? '#FFC300' : '#fff'}
+									fill2={theme ? '#FFC300' : '#FFC300'}
+								/>
+							</span>
+							<span
+								onClick={(): void => {
+									if (setPlayerValues) {
+										setPlayerValues({
+											episode: currentEpisode,
+											isPlayerVisible: true
+										})
+									}
+								}}
+							>
+								<PlayIcon
+									width='30px'
+									fill={theme ? '#000' : '#fff'}
+								/>
+							</span>
+						</div>
+					</TitleStyle>
+				</HeaderStyle>
+			</ContentStyle>
 			<div>
 				{
 					stripHtmlFromString(currentEpisode?.description || '')

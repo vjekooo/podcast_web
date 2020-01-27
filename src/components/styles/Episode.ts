@@ -18,12 +18,29 @@ export const TopStyle = styled.div`
 export const HeaderStyle = styled.div`
     margin-bottom: 2rem;
 	display: flex;
+	flex-direction: column;
+	padding-top: 2rem;
 `
 
 export const TitleStyle = styled.div`
+	text-align: center;
+	div {
+		span {
+			margin-right: 1rem;
+		}
+	}
 
+`
+export const ContentStyle = styled.div`
+	overflow-y: scroll;
 `
 
 export const ImageStyle = styled.div`
-    width: 30%;
+    width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	img {
+		width: 40%;
+	}
 `
