@@ -196,7 +196,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 										key={index}
 									>
 										<div
-											onClick={(): void => handleClickOnPodcast(item)}
+											onClick={(): void => handleClickOnPodcast(episodeWithImage)}
 										>
 											<ListItemTitleStyle>
 												{

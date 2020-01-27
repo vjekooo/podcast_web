@@ -22,6 +22,7 @@ export interface Favorite {
 	url: string;
 	pubDate: string;
 	duration: string;
+	image?: string;
 }
 
 export interface KeyValue {
