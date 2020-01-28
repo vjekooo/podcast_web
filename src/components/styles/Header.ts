@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const HeaderStyle = styled.header`
 	display: flex;
 	justify-content: space-between;
-    padding: .5rem 0 0 0;
+    padding: .5rem .5rem 0 .5rem;
 `
 
 export const NavStyle = styled.nav`

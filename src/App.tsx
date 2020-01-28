@@ -43,8 +43,6 @@ const Wrapper = styled.div`
   margin-right: auto;
   margin-left: auto;
   max-width: 600px;
-  padding-right: 10px;
-  padding-left: 10px;
   font-family: 'Avenir';
   background-color: ${(props): string => props.theme.bg};
   color: ${(props): string => props.theme.fontColor};
