@@ -8,5 +8,11 @@ export const FavoriteStyle = styled.div`
 	}
 	li {
 		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		span:first-child {
+			width: 90%;
+		}
 	}
 `

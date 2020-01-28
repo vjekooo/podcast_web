@@ -47,14 +47,16 @@ export const SET_FAVORITE = gql`
 		$description: String!,
 		$url: String!,
 		$duration: String!,
-		$pubDate: String!
+		$pubDate: String!,
+		$image: String!
 	) {
 		setFavorite(
 			title: $title,
 			description: $description,
 			url: $url,
 			duration: $duration,
-			pubDate: $pubDate
+			pubDate: $pubDate,
+			image: $image
 		)
 	}
 `
@@ -73,7 +75,8 @@ export const GET_FAVORITES = gql`
 			title
 			url,
 			duration,
-			pubDate
+			pubDate,
+			image
 		}
 	}
 `
