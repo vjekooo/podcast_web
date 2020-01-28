@@ -42,7 +42,7 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 	}, [favorites])
 
 	const setEpisodeFavoriteStatus = ({
-		id, title, description, url, duration, pubDate
+		id, title, description, url, duration, pubDate, image
 	}: Episode): void => {
 		if (isFavorite) {
 			removeFavorite({
@@ -51,7 +51,7 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 			}).catch(err => console.log(err))
 		} else {
 			setFavorite({
-				variables: { title, description, url, duration, pubDate },
+				variables: { title, description, url, duration, pubDate, image },
 				refetchQueries: [{ query: GET_FAVORITES }]
 			}).catch(err => console.log(err))
 		}
@@ -122,12 +122,12 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 						</div>
 					</TitleStyle>
 				</HeaderStyle>
+				<div>
+					{
+						stripHtmlFromString(currentEpisode?.description || '')
+					}
+				</div>
 			</ContentStyle>
-			<div>
-				{
-					stripHtmlFromString(currentEpisode?.description || '')
-				}
-			</div>
 		</EpisodeStyle>
 	)
 }

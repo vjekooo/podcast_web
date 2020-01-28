@@ -9,6 +9,7 @@ export const EpisodeStyle = styled.div`
 	right: 0;
     background-color: ${(props): string => props.theme.playerBackground};
 	padding: 1rem;
+	z-index: 10;
 `
 
 export const TopStyle = styled.div`
