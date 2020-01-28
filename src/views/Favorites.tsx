@@ -5,7 +5,7 @@ import { GET_FAVORITES } from '../query/query'
 import { EpisodeView } from '../components/Episode'
 import { Favorite } from '../models/models'
 
-import { FavoriteStyle } from './styles/Favorites'
+import { FavoriteStyle, ListItem } from './styles/Favorites'
 import { PlayIcon } from '../svgs'
 import { PlayerContext } from '../UseContext'
 
@@ -46,9 +46,12 @@ export const Favorites: React.FC = () => {
 				{
 					favorites &&
 						favorites.favorites.map((fav: Favorite) => (
-							<li
+							<ListItem
 								key={fav.id}
 							>
+								<div>
+									<img src={fav.image} />
+								</div>
 								<span
 									onClick={(): void => handleClickEvent(fav)}
 								>
@@ -64,7 +67,7 @@ export const Favorites: React.FC = () => {
 										fill={theme ? '#000' : '#fff'}
 									/>
 								</span>
-							</li>
+							</ListItem>
 						))
 				}
 			</ul>

@@ -1,5 +1,9 @@
 import styled from 'styled-components'
 
+export const SearchContainerStyle = styled.div`
+	padding: 0 .5rem;
+`
+
 export const TitleStyle = styled.div`
 	padding: .5rem 0%;
 `

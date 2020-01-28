@@ -1,10 +1,10 @@
 
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, useEffect } from 'react'
 import { RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 
 import { Podcast } from '../models/models'
-import { TitleStyle, SearchStyle, ListStyle } from './styles/Search'
+import { TitleStyle, SearchStyle, ListStyle, SearchContainerStyle } from './styles/Search'
 
 interface State {
 	data: Podcast[];
@@ -41,8 +41,7 @@ export const Search: React.FC<RouteComponentProps> = (): JSX.Element => {
 	}, [searchQuery])
 
 	return (
-		<Fragment>
-
+		<SearchContainerStyle>
 			<TitleStyle>
 				{
 					isLoading
@@ -74,6 +73,6 @@ export const Search: React.FC<RouteComponentProps> = (): JSX.Element => {
 					))
 				}
 			</ListStyle>
-		</Fragment>
+		</SearchContainerStyle>
 	)
 }

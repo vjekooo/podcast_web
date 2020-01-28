@@ -7,12 +7,28 @@ export const FavoriteStyle = styled.div`
 		padding-left: 0;
 	}
 	li {
-		cursor: pointer;
+		/* border-bottom: 1px solid gray; */
+		padding: .5rem .5rem;
+	}
+`
+
+export const ListItem = styled.li`
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	div:first-child {
+		width: 15%;
 		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		span:first-child {
-			width: 90%;
+		img {
+			width: 100%;
 		}
+	}
+	span {
+		width: 75%;
+		padding: 0 .5rem;
+	}
+	span:last-child {
+		width: 10%;
 	}
 `
