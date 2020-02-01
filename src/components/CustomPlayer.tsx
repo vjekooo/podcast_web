@@ -7,7 +7,7 @@ import { ForwardIcon, RewindIcon, PauseIcon, PlayIcon, Arrow } from '../svgs'
 
 interface Props {
 	episode: Episode | null;
-	theme: boolean;
+	theme: string;
 }
 
 interface AudioRef {
@@ -154,7 +154,7 @@ export const CustomPlayer: React.FC<Props> = ({ episode, theme }) => {
 					>
 						<RewindIcon
 							width={isPlayerSmall ? '30px' : '40px'}
-							fill={theme ? '#000' : '#fff'}
+							fill={theme === 'dark' ? '#000' : '#fff'}
 						/>
 					</span>
 					<span
@@ -164,11 +164,11 @@ export const CustomPlayer: React.FC<Props> = ({ episode, theme }) => {
 							!play
 								? <PauseIcon
 									width={isPlayerSmall ? '40px' : '60px'}
-									fill={theme ? '#000' : '#fff'}
+									fill={theme === 'dark' ? '#000' : '#fff'}
 								/>
 								: <PlayIcon
 									width={isPlayerSmall ? '40px' : '60px'}
-									fill={theme ? '#000' : '#fff'}
+									fill={theme === 'dark' ? '#000' : '#fff'}
 								/>
 						}
 					</span>
@@ -177,7 +177,7 @@ export const CustomPlayer: React.FC<Props> = ({ episode, theme }) => {
 					>
 						<ForwardIcon
 							width={isPlayerSmall ? '30px' : '40px'}
-							fill={theme ? '#000' : '#fff'}
+							fill={theme === 'dark' ? '#000' : '#fff'}
 						/>
 					</span>
 				</ControlsStyle>
@@ -187,7 +187,7 @@ export const CustomPlayer: React.FC<Props> = ({ episode, theme }) => {
 				>
 					<Arrow
 						width='30px'
-						fill={theme ? '#000' : '#fff'}
+						fill={theme === 'dark' ? '#000' : '#fff'}
 					/>
 				</ButtonStyle>
 			</MainStyle>

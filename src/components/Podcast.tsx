@@ -19,7 +19,8 @@ import {
 	ListStyle,
 	ListItemStyle,
 	ListItemTitleStyle,
-	ListItemTimeStyle
+	ListItemTimeStyle,
+	PodcastContainer
 	// SearchStyle
 } from './styles/Podcast'
 
@@ -123,7 +124,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 	}, [subscribeError, unsubscribeError])
 
 	return (
-		<div>
+		<PodcastContainer>
 			<InfoStyle>
 				<div className="info-header">
 					<img src={
@@ -222,7 +223,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 											>
 												<PlayIcon
 													width='20px'
-													fill={theme ? '#000' : '#fff'}
+													fill={theme === 'dark' ? '#000' : '#fff'}
 												/>
 											</span>
 										</div>
@@ -243,6 +244,6 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 						value={subscribeError || unsubscribeError}
 					/>
 			}
-		</div>
+		</PodcastContainer>
 	)
 }

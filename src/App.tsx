@@ -10,6 +10,8 @@ import { setAccessToken } from './accessToken'
 import { PlayerContext } from './UseContext'
 import { refreshToken, tokenExpiresIn } from './helpers'
 import { Episode } from './models/models'
+import { useQuery } from '@apollo/react-hooks'
+import { GET_USER } from './query/query'
 
 const GlobalStyle = createGlobalStyle`	
 	* {
@@ -60,11 +62,8 @@ const App: React.FC = (): JSX.Element => {
 		episode: null,
 		isPlayerVisible: false
 	})
-	const [theme, setTheme] = useState(true)
 
-	const handleThemeState = (): void => {
-		setTheme(prevState => !prevState)
-	}
+	const { data: theme } = useQuery(GET_USER)
 
 	const handleUser = (value: string): void => {
 		setUser(value)
@@ -97,13 +96,14 @@ const App: React.FC = (): JSX.Element => {
 		}
 	}, [user])
 
+	const currentTheme = theme?.user[0].theme
+
 	return (
-		<ThemeProvider theme={theme ? themeLight : themeDark}>
+		<ThemeProvider theme={currentTheme === 'light' ? themeLight : themeDark}>
 			<Wrapper>
 				<PlayerContext.Provider
 					value={{
 						setPlayerValues,
-						handleThemeState,
 						handleUser,
 						user,
 						theme
@@ -115,7 +115,7 @@ const App: React.FC = (): JSX.Element => {
 					isPlayerVisible &&
 						<CustomPlayer
 							episode={episode}
-							theme={theme}
+							theme={currentTheme}
 						/>
 				}
 			</Wrapper>

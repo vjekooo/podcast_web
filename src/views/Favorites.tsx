@@ -64,7 +64,7 @@ export const Favorites: React.FC = () => {
 								>
 									<PlayIcon
 										width='20px'
-										fill={theme ? '#000' : '#fff'}
+										fill={theme === 'dark' ? '#000' : '#fff'}
 									/>
 								</span>
 							</ListItem>
