@@ -1,5 +1,9 @@
 import styled from 'styled-components'
 
+export const PodcastContainer = styled.div`
+	padding: 0 .5rem;
+`
+
 export const InfoStyle = styled.div`
 	padding-top: 1rem;
 	img {
@@ -37,6 +41,7 @@ export const ListStyle = styled.div`
 export const ListItemStyle = styled.li`
 	display: flex;
 	justify-content: space-between;
+	margin-bottom: .5rem;
 	div:first-child {
 		display: flex;
 		flex-direction: column;

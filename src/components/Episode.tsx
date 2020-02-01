@@ -65,7 +65,7 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 				>
 					<CloseIcon
 						width='30px'
-						fill={theme ? '#000' : '#fff'}
+						fill={theme === 'dark' ? '#000' : '#fff'}
 					/>
 				</span>
 			</TopStyle>
@@ -101,7 +101,7 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 								<FavoriteIcon
 									width='30px'
 									fill={isFavorite ? '#FFC300' : '#fff'}
-									fill2={theme ? '#FFC300' : '#FFC300'}
+									fill2={theme === 'dark' ? '#FFC300' : '#FFC300'}
 								/>
 							</span>
 							<span
@@ -116,7 +116,7 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 							>
 								<PlayIcon
 									width='30px'
-									fill={theme ? '#000' : '#fff'}
+									fill={theme === 'dark' ? '#000' : '#fff'}
 								/>
 							</span>
 						</div>

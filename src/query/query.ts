@@ -16,7 +16,9 @@ export const REGISTER = gql`
 
 export const GET_USER = gql`
 	query User {
-		user
+		user {
+			theme
+		}
 	}
 `
 
@@ -109,6 +111,12 @@ export const FETCH_PODCASTS_EPISODES = gql`
 				duration
 			}
 		}
+	}
+`
+
+export const SET_THEME = gql`
+	mutation setTheme($theme: String!) {
+		setTheme(theme: $theme)
 	}
 `
 
