@@ -64,7 +64,7 @@ const App: React.FC = (): JSX.Element => {
 		isPlayerVisible: false
 	})
 
-	const [loadUser, { data: theme }] = useLazyQuery(GET_USER)
+	const [loadUser, { data: userTheme }] = useLazyQuery(GET_USER)
 	const [setTheme] = useMutation(SET_THEME)
 
 	useTimeout((): any =>
@@ -122,8 +122,10 @@ const App: React.FC = (): JSX.Element => {
 	// 	}
 	// }, [user])
 
+	const theme = userTheme?.user[0].theme
+
 	return (
-		<ThemeProvider theme={theme?.user[0].theme === 'light' ? themeLight : themeDark}>
+		<ThemeProvider theme={theme === 'light' ? themeLight : themeDark}>
 			<Wrapper>
 				<PlayerContext.Provider
 					value={{
@@ -140,7 +142,7 @@ const App: React.FC = (): JSX.Element => {
 					isPlayerVisible &&
 						<CustomPlayer
 							episode={episode}
-							theme={theme?.user[0].theme}
+							theme={theme}
 						/>
 				}
 			</Wrapper>

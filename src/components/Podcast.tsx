@@ -223,7 +223,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 											>
 												<PlayIcon
 													width='20px'
-													fill={theme === 'dark' ? '#000' : '#fff'}
+													fill={theme === 'light' ? '#000' : '#fff'}
 												/>
 											</span>
 										</div>
