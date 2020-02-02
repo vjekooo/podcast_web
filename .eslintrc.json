@@ -19,7 +19,9 @@
 	"rules": {
 		"react/prop-types": 0,
 		"indent": ["error", "tab"],
-		"no-tabs": 0
+		"no-tabs": 0,
+		"react/jsx-uses-react": "error",
+		"react/jsx-uses-vars": "error"
 	},
 	"settings":  {
 		"react":  {
