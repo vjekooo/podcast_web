@@ -25,6 +25,7 @@ export const PlayerStyle = styled.div<Props>`
 export const TopStyle = styled.div<Props>`
 	display: flex;
 	height: ${(props): string => !props.size ? '70%' : '1px'};
+	margin-bottom: ${(props): string => !props.size ? '5%' : '0'};
 `
 
 export const ArtworkStyleSmall = styled.div<Props>`
@@ -89,9 +90,11 @@ export const MainStyle = styled.div<Props>`
 	display: flex;
 	justify-content: ${(props): string => props.size ? 'space-between' : 'center'};
 	align-items: center;
-	height: ${(props): string => !props.size ? '30%' : 'auto'};
+	height: ${(props): string => !props.size ? '25%' : 'auto'};
 	width: 90%;
 	margin: 0 auto;
+	background-color: ${(props): string => props.theme.playerBackground};
+	z-index: 11;
 	img {
 		width: 50px;
 		height: 50px;
