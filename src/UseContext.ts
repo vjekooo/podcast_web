@@ -10,6 +10,7 @@ interface Values {
 interface ContextProps {
     setPlayerValues: (values: Values) => void;
     handleUser: (value: string) => void;
+    changeTheme: () => void;
     user: string;
     theme: string;
 };
