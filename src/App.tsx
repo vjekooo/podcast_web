@@ -8,10 +8,11 @@ import { hot } from 'react-hot-loader/root'
 import { Routes } from './Routes'
 import { setAccessToken } from './accessToken'
 import { PlayerContext } from './UseContext'
-import { refreshToken, tokenExpiresIn } from './helpers'
+import { refreshToken } from './helpers'
 import { Episode } from './models/models'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 import { GET_USER, SET_THEME } from './query/query'
+import useTimeout from './hooks/useTimeout'
 
 const GlobalStyle = createGlobalStyle`	
 	* {
@@ -66,6 +67,14 @@ const App: React.FC = (): JSX.Element => {
 	const [loadUser, { data: theme }] = useLazyQuery(GET_USER)
 	const [setTheme] = useMutation(SET_THEME)
 
+	useTimeout((): any =>
+		refreshToken()
+			.then(data => {
+				setAccessToken(data.accessToken)
+				setUser(data.accessToken)
+			})
+	, 840000)
+
 	const handleUser = (value: string): void => {
 		setUser(value)
 	}
@@ -90,22 +99,28 @@ const App: React.FC = (): JSX.Element => {
 	useEffect(() => {
 		if (user) {
 			loadUser()
-			refreshToken()
-				.then(data => {
-					setAccessToken(data.accessToken)
-					setUser(data.accessToken)
-				})
-			const token = JSON.parse(window.atob(user.split('.')[1]))
-			const timeout = tokenExpiresIn(token)
-			setTimeout(() => {
-				refreshToken()
-					.then(data => {
-						setAccessToken(data.accessToken)
-						setUser(data.accessToken)
-					})
-			}, timeout - 2000)
 		}
 	}, [user])
+
+	// useEffect(() => {
+	// 	if (user) {
+	// 		loadUser()
+	// 		refreshToken()
+	// 			.then(data => {
+	// 				setAccessToken(data.accessToken)
+	// 				setUser(data.accessToken)
+	// 			})
+	// 		const token = JSON.parse(window.atob(user.split('.')[1]))
+	// 		const timeout = tokenExpiresIn(token)
+	// 		setTimeout(() => {
+	// 			refreshToken()
+	// 				.then(data => {
+	// 					setAccessToken(data.accessToken)
+	// 					setUser(data.accessToken)
+	// 				})
+	// 		}, timeout - 2000)
+	// 	}
+	// }, [user])
 
 	return (
 		<ThemeProvider theme={theme?.user[0].theme === 'light' ? themeLight : themeDark}>
