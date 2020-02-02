@@ -10,8 +10,8 @@ import { setAccessToken } from './accessToken'
 import { PlayerContext } from './UseContext'
 import { refreshToken, tokenExpiresIn } from './helpers'
 import { Episode } from './models/models'
-import { useQuery } from '@apollo/react-hooks'
-import { GET_USER } from './query/query'
+import { useMutation, useLazyQuery } from '@apollo/react-hooks'
+import { GET_USER, SET_THEME } from './query/query'
 
 const GlobalStyle = createGlobalStyle`	
 	* {
@@ -63,10 +63,20 @@ const App: React.FC = (): JSX.Element => {
 		isPlayerVisible: false
 	})
 
-	const { data: theme } = useQuery(GET_USER)
+	const [loadUser, { data: theme }] = useLazyQuery(GET_USER)
+	const [setTheme] = useMutation(SET_THEME)
 
 	const handleUser = (value: string): void => {
 		setUser(value)
+	}
+
+	const changeTheme = (): void => {
+		setTheme({
+			variables: {
+				theme: 'aaa'
+			},
+			refetchQueries: [{ query: GET_USER }]
+		})
 	}
 
 	useEffect(() => {
@@ -79,6 +89,7 @@ const App: React.FC = (): JSX.Element => {
 
 	useEffect(() => {
 		if (user) {
+			loadUser()
 			refreshToken()
 				.then(data => {
 					setAccessToken(data.accessToken)
@@ -96,17 +107,16 @@ const App: React.FC = (): JSX.Element => {
 		}
 	}, [user])
 
-	const currentTheme = theme?.user[0].theme
-
 	return (
-		<ThemeProvider theme={currentTheme === 'light' ? themeLight : themeDark}>
+		<ThemeProvider theme={theme?.user[0].theme === 'light' ? themeLight : themeDark}>
 			<Wrapper>
 				<PlayerContext.Provider
 					value={{
 						setPlayerValues,
 						handleUser,
 						user,
-						theme
+						theme,
+						changeTheme
 					}}
 				>
 					<Routes />
@@ -115,7 +125,7 @@ const App: React.FC = (): JSX.Element => {
 					isPlayerVisible &&
 						<CustomPlayer
 							episode={episode}
-							theme={currentTheme}
+							theme={theme?.user[0].theme}
 						/>
 				}
 			</Wrapper>
