@@ -42,12 +42,7 @@ export const ArtworkStyleBig = styled.div<Props>`
 	width: 100%;
 	height: 100%;
 	margin-bottom: 1rem;
-	img {
-		width: 100%;
-		margin-bottom: 1rem;
-	}
 	div {
-		margin-bottom: 2rem;
 		text-align: center;
 		font-size: 18px;
 	}
@@ -86,12 +81,23 @@ export const ArtworkStyleBig = styled.div<Props>`
 	}
 `
 
+export const BigImage = styled.div`
+	width: 100%;
+	height: 100%;
+	margin-bottom: 1rem;
+	img {
+		width: 100%;
+		max-height: 350px;
+		object-fit: contain;
+	}
+`
+
 export const MainStyle = styled.div<Props>`
 	display: flex;
 	justify-content: ${(props): string => props.size ? 'space-between' : 'center'};
 	align-items: center;
-	height: ${(props): string => !props.size ? '25%' : 'auto'};
-	width: 90%;
+	height: ${(props): string => !props.size ? '20%' : 'auto'};
+	width: 95%;
 	margin: 0 auto;
 	background-color: ${(props): string => props.theme.playerBackground};
 	z-index: 11;

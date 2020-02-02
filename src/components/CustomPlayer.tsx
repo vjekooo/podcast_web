@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react'
 import { Episode } from '../models/models'
-import { PlayerStyle, TopStyle, MainStyle, ControlsStyle, ArtworkStyleSmall, ArtworkStyleBig, ButtonStyle } from './styles/CustomPlayer'
+import { PlayerStyle, TopStyle, MainStyle, ControlsStyle, ArtworkStyleSmall, ArtworkStyleBig, ButtonStyle, BigImage } from './styles/CustomPlayer'
 import { calculateTime } from '../helpers'
 import { ForwardIcon, RewindIcon, PauseIcon, PlayIcon, Arrow } from '../svgs'
 
@@ -112,8 +112,10 @@ export const CustomPlayer: React.FC<Props> = ({ episode, theme }) => {
 				/>
 				{
 					!isPlayerSmall &&
-						<ArtworkStyleBig size={isPlayerSmall} >
-							<img src={episode?.image} />
+						<ArtworkStyleBig size={isPlayerSmall}>
+							<BigImage>
+								<img src={episode?.image} />
+							</BigImage>
 							<div>
 								{
 									episode?.title
