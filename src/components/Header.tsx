@@ -1,32 +1,12 @@
 
 import React, { useContext } from 'react'
-import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom'
-import { useMutation } from '@apollo/react-hooks'
-import { LOGOUT } from '../query/query'
+import { NavLink, withRouter } from 'react-router-dom'
 import { HeaderStyle, NavStyle, ToolStyle, ThemeSwitch } from './styles/Header'
-import { getAccessToken } from '../accessToken'
+
 import { PlayerContext } from '../UseContext'
 
-const Header: React.FC<RouteComponentProps> = ({ history }) => {
-	const { changeTheme, user } = useContext(PlayerContext)
-
-	const [logout] = useMutation(LOGOUT)
-
-	const handleLogout = (): void => {
-		if (!user) {
-			history.push('/login')
-			window.location.reload()
-			return
-		}
-		logout({
-			variables: {
-				token: getAccessToken()
-			}
-		}).then(() => {
-			history.push('/login')
-			window.location.reload()
-		})
-	}
+const Header: React.FC = () => {
+	const { changeTheme } = useContext(PlayerContext)
 
 	const handleTheme = (): void => {
 		if (changeTheme) {
@@ -68,15 +48,6 @@ const Header: React.FC<RouteComponentProps> = ({ history }) => {
 					onClick={handleTheme}
 				>
 				</ThemeSwitch>
-				<button
-					onClick={handleLogout}
-				>
-					{
-						user
-							? 'logout'
-							: 'login'
-					}
-				</button>
 			</ToolStyle>
 		</HeaderStyle >
 	)
