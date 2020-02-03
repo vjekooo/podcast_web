@@ -122,7 +122,7 @@ const App: React.FC = (): JSX.Element => {
 	// 	}
 	// }, [user])
 
-	const theme = userTheme?.user[0].theme
+	const theme = userTheme?.user[0].theme || 'light'
 
 	return (
 		<ThemeProvider theme={theme === 'light' ? themeLight : themeDark}>
