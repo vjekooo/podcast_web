@@ -66,15 +66,20 @@ export const Home: React.FC = () => {
 			{
 				!user &&
 					<LoginStyle>
-						<Link to="/login">
-							login
-						</Link>
-						<span>
-							or
-						</span>
-						<Link to="/register">
-							register
-						</Link>
+						<h1>
+							Podcast
+						</h1>
+						<div>
+							<Link to="/login">
+								login
+							</Link>
+							<span>
+								or
+							</span>
+							<Link to="/register">
+								register
+							</Link>
+						</div>
 					</LoginStyle>
 			}
 		</div>
