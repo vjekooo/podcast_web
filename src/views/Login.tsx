@@ -1,10 +1,10 @@
 
 import React, { useContext } from 'react'
 import { useMutation } from '@apollo/react-hooks'
-import { RouteComponentProps } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import { setAccessToken } from '../accessToken'
 
-import { LOGIN } from '../query/query'
+import { LOGIN } from '../query/user_query'
 import { FormStyle } from './styles/Login'
 
 import { PlayerContext } from '../UseContext'
@@ -16,7 +16,8 @@ const INITIAL_STATE = {
 	password: ''
 }
 
-export const Login: React.FC<RouteComponentProps> = ({ history }): JSX.Element => {
+export const Login = (): JSX.Element => {
+	const navigate = useNavigate()
 	const { handleUser } = useContext(PlayerContext)
 
 	const {
@@ -45,7 +46,8 @@ export const Login: React.FC<RouteComponentProps> = ({ history }): JSX.Element =
 								if (handleUser) {
 									handleUser(res.data.login.accessToken)
 								}
-								history.push('/')
+
+								navigate('/')
 							}
 						}).catch(err => console.log(err))
 					}}

@@ -39,7 +39,7 @@ export const tokenExpiresIn = (token: any): number => {
 
 export const stripHtmlFromString = (text: string): string => {
 	const doc = new window.DOMParser().parseFromString(text, 'text/html')
-	return doc.body.textContent || ''
+	return doc.body.textContent ?? ''
 }
 
 interface TokenResponse {

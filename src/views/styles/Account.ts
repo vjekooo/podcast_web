@@ -6,7 +6,8 @@ export const AccountContent = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    div {
+    > div {
+        width: 100%;
         margin-bottom: 2rem;
     }
     span {
@@ -16,4 +17,13 @@ export const AccountContent = styled.div`
 		color: white;
 		background-color: blueviolet;
     }
+`
+
+export const AccountTop = styled.div`
+    display: flex;
+    align-items: center;
+`
+export const AccountMain = styled.div`
+    display: flex;
+    flex-direction: column;
 `

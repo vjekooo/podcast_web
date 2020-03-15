@@ -5,13 +5,13 @@ import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
 import { CustomPlayer } from './components/CustomPlayer'
 
 import { hot } from 'react-hot-loader/root'
-import { Routes } from './Routes'
+import { Router } from './Routes'
 import { setAccessToken } from './accessToken'
 import { PlayerContext } from './UseContext'
 import { refreshToken } from './helpers'
 import { Episode } from './models/models'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
-import { GET_USER, SET_THEME } from './query/query'
+import { USER_SETTINGS, SET_THEME } from './query/user_query'
 import useTimeout from './hooks/useTimeout'
 
 const GlobalStyle = createGlobalStyle`	
@@ -21,6 +21,10 @@ const GlobalStyle = createGlobalStyle`
 	body {
 		background-color: #F7F7F7;
 		margin: 0;
+	}
+	ul {
+		list-style-type: none;
+		padding-left: 0;
 	}
 `
 
@@ -57,14 +61,14 @@ interface PlayerState {
 	isPlayerVisible: boolean;
 }
 
-const App: React.FC = (): JSX.Element => {
+const App = (): JSX.Element => {
 	const [user, setUser] = useState<string>('')
 	const [{ episode, isPlayerVisible }, setPlayerValues] = useState<PlayerState>({
 		episode: null,
 		isPlayerVisible: false
 	})
 
-	const [loadUser, { data: userTheme }] = useLazyQuery(GET_USER)
+	const [loadUser, { data: userTheme }] = useLazyQuery(USER_SETTINGS)
 	const [setTheme] = useMutation(SET_THEME)
 
 	useTimeout((): any =>
@@ -73,7 +77,7 @@ const App: React.FC = (): JSX.Element => {
 				setAccessToken(data.accessToken)
 				setUser(data.accessToken)
 			})
-	, 840000)
+	, 780000)
 
 	const handleUser = (value: string): void => {
 		setUser(value)
@@ -84,7 +88,7 @@ const App: React.FC = (): JSX.Element => {
 			variables: {
 				theme: 'aaa'
 			},
-			refetchQueries: [{ query: GET_USER }]
+			refetchQueries: [{ query: USER_SETTINGS }]
 		})
 	}
 
@@ -102,27 +106,7 @@ const App: React.FC = (): JSX.Element => {
 		}
 	}, [user])
 
-	// useEffect(() => {
-	// 	if (user) {
-	// 		loadUser()
-	// 		refreshToken()
-	// 			.then(data => {
-	// 				setAccessToken(data.accessToken)
-	// 				setUser(data.accessToken)
-	// 			})
-	// 		const token = JSON.parse(window.atob(user.split('.')[1]))
-	// 		const timeout = tokenExpiresIn(token)
-	// 		setTimeout(() => {
-	// 			refreshToken()
-	// 				.then(data => {
-	// 					setAccessToken(data.accessToken)
-	// 					setUser(data.accessToken)
-	// 				})
-	// 		}, timeout - 2000)
-	// 	}
-	// }, [user])
-
-	const theme = userTheme?.user[0].theme || 'light'
+	const theme = userTheme?.userSettings[0].theme ?? 'light'
 
 	return (
 		<ThemeProvider theme={theme === 'light' ? themeLight : themeDark}>
@@ -136,7 +120,7 @@ const App: React.FC = (): JSX.Element => {
 						changeTheme
 					}}
 				>
-					<Routes />
+					<Router />
 				</PlayerContext.Provider>
 				{
 					isPlayerVisible &&

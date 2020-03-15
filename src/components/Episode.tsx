@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 
-import { SET_FAVORITE, GET_FAVORITES, REMOVE_FAVORITE } from '../query/query'
+import { SET_FAVORITE, GET_FAVORITES, REMOVE_FAVORITE } from '../query/podcast_query'
 import { Episode, Favorite } from '../models/models'
 import { PlayerContext } from '../UseContext'
 
@@ -14,7 +14,7 @@ interface Props {
 	onClick: () => void;
 }
 
-export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
+export const EpisodeView = ({ currentEpisode, onClick }: Props): JSX.Element => {
 	const { setPlayerValues, theme } = useContext(PlayerContext)
 
 	const [setFavorite] = useMutation(SET_FAVORITE)
@@ -124,7 +124,7 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 				</HeaderStyle>
 				<div>
 					{
-						stripHtmlFromString(currentEpisode?.description || '')
+						stripHtmlFromString(currentEpisode?.description ?? '')
 					}
 				</div>
 			</ContentStyle>

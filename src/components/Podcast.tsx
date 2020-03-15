@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { RouteComponentProps } from 'react-router'
+import { useLocation } from 'react-router-dom'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 
 import { PlayerContext } from '../UseContext'
@@ -12,7 +12,7 @@ import {
 	GET_PODCASTS,
 	UNSUBSCRIBE,
 	FETCH_PODCASTS_EPISODES
-} from '../query/query'
+} from '../query/podcast_query'
 
 import {
 	InfoStyle,
@@ -41,8 +41,12 @@ interface PodcastState {
 	image: string;
 }
 
-export const Podcast: React.FC<RouteComponentProps> = (props) => {
-	const { feedUrl } = props.location.state
+export const Podcast = (): JSX.Element => {
+	const location = useLocation()
+
+	const hash = location.hash.split('#')
+
+	const feedUrl = hash[1]
 
 	const { setPlayerValues, theme } = useContext(PlayerContext)
 

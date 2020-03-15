@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Home } from './views/Home'
 import { Search } from './views/Search'
 import { Podcast } from './components/Podcast'
@@ -8,21 +8,25 @@ import { Login } from './views/Login'
 import { Register } from './views/Register'
 import { Favorites } from './views/Favorites'
 import { Account } from './views/Account'
+import { Friends } from './views/Friends'
+import { History } from './views/History'
 
-export const Routes: React.FC = () => {
+export const Router = (): JSX.Element => {
 	return (
-		<Router>
+		<BrowserRouter>
 			<Header />
-			<Switch>
-				<Route exact path="/" component={Home} />
-				<Route exact path="/login" component={Login} />
-				<Route exact path="/register" component={Register} />
-				<Route exact path="/search" component={Search} />
-				<Route exact path="/podcast" component={Podcast} />
-				<Route exact path="/favorites" component={Favorites} />
-				<Route exact path="/account" component={Account} />
-				<Route component={(): JSX.Element => <div>404</div>} />
-			</Switch>
-		</Router>
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="/login" element={<Login />} />
+				<Route path="/register" element={<Register />} />
+				<Route path="/search" element={<Search />} />
+				<Route path="/podcast" element={<Podcast />} />
+				<Route path="/favorites" element={<Favorites />} />
+				<Route path="/account" element={<Account />} />
+				<Route path="/friends" element={<Friends />} />
+				<Route path="/history" element={<History />} />
+				{/* <Route element={(): JSX.Element => <div>404</div>} /> */}
+			</Routes>
+		</BrowserRouter>
 	)
 }

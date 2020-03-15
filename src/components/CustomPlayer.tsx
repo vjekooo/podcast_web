@@ -1,9 +1,23 @@
 
 import React, { useState, useRef, useEffect } from 'react'
+import { useMutation } from '@apollo/react-hooks'
+
 import { Episode } from '../models/models'
-import { PlayerStyle, TopStyle, MainStyle, ControlsStyle, ArtworkStyleSmall, ArtworkStyleBig, ButtonStyle, BigImage } from './styles/CustomPlayer'
 import { calculateTime } from '../helpers'
+
+import {
+	PlayerStyle,
+	TopStyle,
+	MainStyle,
+	ControlsStyle,
+	ArtworkStyleSmall,
+	ArtworkStyleBig,
+	ButtonStyle,
+	BigImage
+} from './styles/CustomPlayer'
 import { ForwardIcon, RewindIcon, PauseIcon, PlayIcon, Arrow } from '../svgs'
+
+import { SET_TO_HISTORY, FETCH_HISTORY } from '../query/podcast_query'
 
 interface Props {
 	episode: Episode | null;
@@ -14,16 +28,31 @@ interface AudioRef {
 	current: HTMLAudioElement;
 }
 
-export const CustomPlayer: React.FC<Props> = ({ episode, theme }) => {
+export const CustomPlayer = ({ episode, theme }: Props): JSX.Element => {
 	const player = useRef<AudioRef>({})
 	const [play, setPlay] = useState(false)
 	const [isPlayerSmall, setPlayerSize] = useState(true)
 	const [playTime, setPlayTime] = useState(0)
+	const [setHistory] = useMutation(SET_TO_HISTORY)
 
 	useEffect(() => {
 		try {
 			player.current.src = episode?.url
 			player.current.play()
+			if (episode?.url) {
+				const { title, description, url, duration, pubDate, image } = episode
+				setHistory({
+					variables: {
+						title,
+						description,
+						url,
+						duration,
+						pubDate,
+						image
+					},
+					refetchQueries: [{ query: FETCH_HISTORY }]
+				})
+			}
 		} catch (error) {
 			console.log(error)
 		}

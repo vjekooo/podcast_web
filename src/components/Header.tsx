@@ -1,11 +1,11 @@
 
 import React, { useContext } from 'react'
-import { NavLink, withRouter } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { HeaderStyle, NavStyle, ToolStyle, ThemeSwitch } from './styles/Header'
 
 import { PlayerContext } from '../UseContext'
 
-const Header: React.FC = () => {
+const Header = (): JSX.Element => {
 	const { changeTheme } = useContext(PlayerContext)
 
 	const handleTheme = (): void => {
@@ -19,7 +19,6 @@ const Header: React.FC = () => {
 			<NavStyle>
 				<NavLink
 					to="/"
-					exact
 					activeClassName="link-active"
 				>
 					Home
@@ -53,4 +52,4 @@ const Header: React.FC = () => {
 	)
 }
 
-export default (withRouter(Header))
+export default Header

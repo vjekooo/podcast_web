@@ -2,7 +2,7 @@
 import React, { useEffect, useContext } from 'react'
 import { useLazyQuery } from '@apollo/react-hooks'
 import { Link } from 'react-router-dom'
-import { GET_PODCASTS, FETCH_PODCASTS } from '../query/query'
+import { GET_PODCASTS, FETCH_PODCASTS } from '../query/podcast_query'
 import { ContentStyle, LoginStyle } from './styles/Home'
 import { PlayerContext } from '../UseContext'
 
@@ -21,7 +21,7 @@ interface UrlObj {
 	[key: string]: string;
 }
 
-export const Home: React.FC = () => {
+export const Home = (): JSX.Element => {
 	const { user } = useContext(PlayerContext)
 
 	const [fetchPodcasts, { data: podcasts }] = useLazyQuery(GET_PODCASTS)
@@ -50,11 +50,9 @@ export const Home: React.FC = () => {
 					subscriptions?.fetchPodcasts
 						.map((podcast: Podcast, index: number): JSX.Element => (
 							<Link
-								to={{
+								to= {{
 									pathname: '/podcast',
-									state: {
-										feedUrl: podcast.url
-									}
+									hash: `#${podcast.url}`
 								}}
 								key={index}
 							>

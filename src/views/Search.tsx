@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect } from 'react'
-import { RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 
 import { Podcast } from '../models/models'
@@ -11,7 +10,7 @@ interface State {
 	isLoading: boolean;
 }
 
-export const Search: React.FC<RouteComponentProps> = (): JSX.Element => {
+export const Search = (): JSX.Element => {
 	const [searchQuery, setSearchQuery] = useState('')
 	const [{ data, isLoading }, setData] = useState<State>({
 		data: [],

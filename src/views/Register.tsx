@@ -1,9 +1,9 @@
 
 import React from 'react'
 import { useMutation } from '@apollo/react-hooks'
-import { RouteComponentProps } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-import { REGISTER } from '../query/query'
+import { REGISTER } from '../query/user_query'
 
 import { FormStyle } from './styles/Login'
 import { UseFormWithReact } from '../hooks/useFormWIthValidation'
@@ -15,7 +15,9 @@ const INITIAL_STATE = {
 	password: ''
 }
 
-export const Register: React.FC<RouteComponentProps> = ({ history }): JSX.Element => {
+export const Register = (): JSX.Element => {
+	const navigate = useNavigate()
+
 	const {
 		values,
 		handleChange,
@@ -39,7 +41,7 @@ export const Register: React.FC<RouteComponentProps> = ({ history }): JSX.Elemen
 								variables: { email, password }
 							})
 							if (data) {
-								history.push('/')
+								navigate('/')
 							}
 						} catch (error) {
 							console.log(error)
