@@ -51,10 +51,8 @@ export const Search = (): JSX.Element => {
 						return (
 							<Link
 								to={{
-									pathname: `/podcast#url=${item.feedUrl}`,
-									state: {
-										feedUrl: item.feedUrl
-									}
+									pathname: `/podcast#`,
+									hash: item.feedUrl
 								}}
 								key={item.collectionId}
 							>

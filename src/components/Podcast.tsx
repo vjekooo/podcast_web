@@ -39,7 +39,7 @@ interface PodcastState {
 export const Podcast = (): JSX.Element => {
 	const location = useLocation()
 
-	const hash = location.hash.split('=')
+	const hash = location.hash.split('#')
 
 	const feedUrl = hash[1]
 
