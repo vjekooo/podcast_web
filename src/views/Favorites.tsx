@@ -15,9 +15,7 @@ export const Favorites = (): JSX.Element => {
 	const [currentFavorite, setCurrentFavorite] = useState<Favorite | null>(null)
 
 	const handleEpisode = (): void => {
-		setEpisodeVisibilityState(
-			currentState => !currentState
-		)
+		setEpisodeVisibilityState((currentState) => !currentState)
 	}
 
 	const handleClickEvent = (currentFavorite: Favorite): void => {
@@ -31,17 +29,10 @@ export const Favorites = (): JSX.Element => {
 
 	return (
 		<FavoriteStyle>
-			<FavoriteItem
-				list={favorites?.favorites}
-				onClick={handleClickEvent}
-			/>
-			{
-				isEpisodeVisible && currentFavorite &&
-					<EpisodeView
-						currentEpisode={currentFavorite}
-						onClick={handleEpisode}
-					/>
-			}
+			<FavoriteItem list={favorites?.favorites} onClick={handleClickEvent} />
+			{isEpisodeVisible && currentFavorite && (
+				<EpisodeView currentEpisode={currentFavorite} onClick={handleEpisode} />
+			)}
 		</FavoriteStyle>
 	)
 }

@@ -1,10 +1,9 @@
-
 const commonPaths = require('./common-paths')
 const webpack = require('webpack')
 
 const port = process.env.PORT || 3000
 
-module.exports = env => ({
+module.exports = (env) => ({
 	mode: env.mode,
 	entry: {
 		app: [`${commonPaths.appEntry}/index.tsx`]
@@ -35,7 +34,5 @@ module.exports = env => ({
 			warnings: false
 		}
 	},
-	plugins: [
-		new webpack.HotModuleReplacementPlugin()
-	]
+	plugins: [new webpack.HotModuleReplacementPlugin()]
 })

@@ -1,24 +1,13 @@
-
 import React, { useState, useEffect } from 'react'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
-import {
-	REQUEST_FRIEND,
-	HANDLE_REQUEST,
-	FETCH_FRIENDS,
-	FETCH_REQUESTEE,
-	FETCH_REQUESTOR
-} from '../query/friends_query'
+import { REQUEST_FRIEND, HANDLE_REQUEST, FETCH_FRIENDS, FETCH_REQUESTEE, FETCH_REQUESTOR } from '../query/friends_query'
 import { FETCH_USERS } from '../query/user_query'
 
-import {
-	FriendsContainer,
-	SearchDropdown,
-	SearchPosition
-} from './styles/Friends'
+import { FriendsContainer, SearchDropdown, SearchPosition } from './styles/Friends'
 import { Requests } from '../components/Requests'
 
 interface User {
-	email: string;
+	email: string
 }
 
 export const Friends = (): JSX.Element => {
@@ -56,11 +45,7 @@ export const Friends = (): JSX.Element => {
 			variables: {
 				friend: email
 			},
-			refetchQueries: [
-				{ query: FETCH_REQUESTEE },
-				{ query: FETCH_REQUESTOR },
-				{ query: FETCH_FRIENDS }
-			]
+			refetchQueries: [{ query: FETCH_REQUESTEE }, { query: FETCH_REQUESTOR }, { query: FETCH_FRIENDS }]
 		})
 	}
 
@@ -77,73 +62,48 @@ export const Friends = (): JSX.Element => {
 
 	return (
 		<FriendsContainer>
-			<input
-				onChange={(e): void => handleInputChange(e)}
-				value={searchTerm}
-				placeholder="search for friends"
-			/>
+			<input onChange={(e): void => handleInputChange(e)} value={searchTerm} placeholder="search for friends" />
 			<SearchPosition>
-				{
-					searchTerm?.length > 0 &&
-						<SearchDropdown>
-							<ul>
-								{
-									users?.fetchUsers.map((user: User, index: number) => {
-										return (
-											<li key={index}>
-												<span>
-													{
-														user.email
-													}
-												</span>
-												<button
-													type="button"
-													onClick={(): void => handleFriendRequest(user.email)}
-													disabled={requestees.fetchRequestee.some((i: any) => i.requestee === user.email)}
-												>
-													{
-														requestees.fetchRequestee.some((i: any) => i.requestee === user.email)
-															? 'pending'
-															: 'add'
-													}
-												</button>
-											</li>
-										)
-									})
-								}
-							</ul>
-						</SearchDropdown>
-				}
+				{searchTerm?.length > 0 && (
+					<SearchDropdown>
+						<ul>
+							{users?.fetchUsers.map((user: User, index: number) => {
+								return (
+									<li key={index}>
+										<span>{user.email}</span>
+										<button
+											type="button"
+											onClick={(): void => handleFriendRequest(user.email)}
+											disabled={requestees.fetchRequestee.some(
+												(i: any) => i.requestee === user.email
+											)}
+										>
+											{requestees.fetchRequestee.some((i: any) => i.requestee === user.email)
+												? 'pending'
+												: 'add'}
+										</button>
+									</li>
+								)
+							})}
+						</ul>
+					</SearchDropdown>
+				)}
 			</SearchPosition>
 			<div>
 				<h5>Friends</h5>
 				<ul>
-					{
-						friends?.fetchFriends.map((friend: User, index: number) => {
-							return (
-								<li key={index} >
-									{friend.email}
-								</li>
-							)
-						})
-					}
+					{friends?.fetchFriends.map((friend: User, index: number) => {
+						return <li key={index}>{friend.email}</li>
+					})}
 				</ul>
 			</div>
 			<div>
 				<h5>Waiting for reply</h5>
-				<Requests
-					list={requestees?.fetchRequestee}
-					handleClick={handleRequestClick}
-					target='requestee'
-				/>
+				<Requests list={requestees?.fetchRequestee} handleClick={handleRequestClick} target="requestee" />
 			</div>
 			<div>
 				<h5>Friend requests</h5>
-				<Requests
-					list={requestors?.fetchRequestor}
-					handleClick={handleRequestClick}
-					target='requestor'
-				/>
+				<Requests list={requestors?.fetchRequestor} handleClick={handleRequestClick} target="requestor" />
 			</div>
 		</FriendsContainer>
 	)

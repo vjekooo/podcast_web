@@ -1,4 +1,3 @@
-
 import { gql } from 'apollo-boost'
 
 export const REQUEST_FRIEND = gql`
@@ -18,7 +17,7 @@ export const FETCH_FRIENDS = gql`
 export const FETCH_REQUESTEE = gql`
 	query FetchRequestee {
 		fetchRequestee {
-			id,
+			id
 			requestee
 		}
 	}
@@ -27,7 +26,7 @@ export const FETCH_REQUESTEE = gql`
 export const FETCH_REQUESTOR = gql`
 	query FetchRequestor {
 		fetchRequestor {
-			id,
+			id
 			requestor
 		}
 	}

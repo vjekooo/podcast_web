@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 
 export const SearchContainerStyle = styled.div`
-	padding: 0 .5rem;
+	padding: 0 0.5rem;
 `
 
 export const TitleStyle = styled.div`
-	padding: .5rem 0%;
+	padding: 0.5rem 0%;
 `
 
 export const SearchStyle = styled.div`
@@ -14,7 +14,7 @@ export const SearchStyle = styled.div`
 		width: 100%;
 		min-height: 20px;
 		text-transform: uppercase;
-		padding: .5rem;
+		padding: 0.5rem;
 		font-size: 14px;
 		&:focus {
 			outline: none;
@@ -30,7 +30,7 @@ export const ListStyle = styled.div`
 	flex-wrap: wrap;
 	a {
 		width: 18%;
-		padding-bottom: .2rem;
+		padding-bottom: 0.2rem;
 	}
 	img {
 		width: 100%;

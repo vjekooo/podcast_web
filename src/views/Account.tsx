@@ -1,4 +1,3 @@
-
 import React, { useContext, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
@@ -38,34 +37,14 @@ export const Account = (): JSX.Element => {
 	return (
 		<AccountContent>
 			<AccountTop>
-				<h5>
-					{
-						profile?.userProfile.email
-					}
-				</h5>
+				<h5>{profile?.userProfile.email}</h5>
 				<div>
-					<span
-						onClick={handleLogout}
-					>
-						{
-							user
-								? 'logout'
-								: 'login'
-						}
-					</span>
+					<span onClick={handleLogout}>{user ? 'logout' : 'login'}</span>
 				</div>
 			</AccountTop>
 			<AccountMain>
-				<Link
-					to="/friends"
-				>
-					Find friends
-				</Link>
-				<Link
-					to="/history"
-				>
-					Listeining history
-				</Link>
+				<Link to="/friends">Find friends</Link>
+				<Link to="/history">Listeining history</Link>
 			</AccountMain>
 		</AccountContent>
 	)

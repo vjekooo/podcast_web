@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react'
 
 import { HistoryContainer } from './styles/History'
@@ -16,9 +15,7 @@ export const History = (): JSX.Element => {
 	const [currentFavorite, setCurrentFavorite] = useState<Favorite | null>(null)
 
 	const handleEpisode = (): void => {
-		setEpisodeVisibilityState(
-			currentState => !currentState
-		)
+		setEpisodeVisibilityState((currentState) => !currentState)
 	}
 
 	const handleClickEvent = (currentFavorite: Favorite): void => {
@@ -32,17 +29,10 @@ export const History = (): JSX.Element => {
 
 	return (
 		<HistoryContainer>
-			<FavoriteItem
-				list={history?.fetchHistory}
-				onClick={handleClickEvent}
-			/>
-			{
-				isEpisodeVisible && currentFavorite &&
-					<EpisodeView
-						currentEpisode={currentFavorite}
-						onClick={handleEpisode}
-					/>
-			}
+			<FavoriteItem list={history?.fetchHistory} onClick={handleClickEvent} />
+			{isEpisodeVisible && currentFavorite && (
+				<EpisodeView currentEpisode={currentFavorite} onClick={handleEpisode} />
+			)}
 		</HistoryContainer>
 	)
 }

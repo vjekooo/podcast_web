@@ -1,4 +1,3 @@
-
 import styled from 'styled-components'
 
 export const ContentStyle = styled.div`
@@ -24,7 +23,7 @@ export const LoginStyle = styled.div`
 		justify-content: center;
 	}
 	a {
-		padding: .5rem;
+		padding: 0.5rem;
 		margin: 0 1rem;
 		text-decoration: none;
 		color: white;

@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 
@@ -20,12 +19,12 @@ import { ForwardIcon, RewindIcon, PauseIcon, PlayIcon, Arrow } from '../svgs'
 import { SET_TO_HISTORY, FETCH_HISTORY } from '../query/podcast_query'
 
 interface Props {
-	episode: Episode | null;
-	theme: string;
+	episode: Episode | null
+	theme: string
 }
 
 interface AudioRef {
-	current: HTMLAudioElement;
+	current: HTMLAudioElement
 }
 
 export const CustomPlayer = ({ episode, theme }: Props): JSX.Element => {
@@ -73,7 +72,7 @@ export const CustomPlayer = ({ episode, theme }: Props): JSX.Element => {
 		const duration = player.current.duration
 		const value = Number(event.currentTarget.value)
 
-		player.current.currentTime = duration / 100 * value
+		player.current.currentTime = (duration / 100) * value
 	}
 
 	const handleSkipping = (value: string): void => {
@@ -88,7 +87,7 @@ export const CustomPlayer = ({ episode, theme }: Props): JSX.Element => {
 	const handleAudioChange = (event: any): void => {
 		const currentTime = event.currentTarget.currentTime
 		const duration = player.current.duration
-		setPlayTime(currentTime / duration * 100)
+		setPlayTime((currentTime / duration) * 100)
 	}
 
 	// let xDown: number | null = null
@@ -131,95 +130,60 @@ export const CustomPlayer = ({ episode, theme }: Props): JSX.Element => {
 	// }
 
 	return (
-		<PlayerStyle
-			size={isPlayerSmall}
-		>
+		<PlayerStyle size={isPlayerSmall}>
 			<TopStyle size={isPlayerSmall}>
-				<audio
-					ref={player}
-					onTimeUpdate={handleAudioChange}
-				/>
-				{
-					!isPlayerSmall &&
-						<ArtworkStyleBig size={isPlayerSmall}>
-							<BigImage>
-								<img src={episode?.image} />
-							</BigImage>
-							<div>
-								{
-									episode?.title
-								}
-							</div>
-							<input
-								type="range"
-								onChange={(e): void => handleProgressChange(e)}
-								value={playTime}
-							/>
+				<audio ref={player} onTimeUpdate={handleAudioChange} />
+				{!isPlayerSmall && (
+					<ArtworkStyleBig size={isPlayerSmall}>
+						<BigImage>
+							<img src={episode?.image} />
+						</BigImage>
+						<div>{episode?.title}</div>
+						<input type="range" onChange={(e): void => handleProgressChange(e)} value={playTime} />
+						<span>
+							<span>{player.current.duration && calculateTime(player.current.currentTime)}</span>
 							<span>
-								<span>
-									{
-										player.current.duration &&
-											calculateTime(player.current.currentTime)
-									}
-								</span>
-								<span>
-									-
-									{
-										player.current.duration &&
-											calculateTime(
-												player.current.duration - player.current.currentTime
-											)
-									}
-								</span>
+								-
+								{player.current.duration &&
+									calculateTime(player.current.duration - player.current.currentTime)}
 							</span>
-						</ArtworkStyleBig>
-				}
+						</span>
+					</ArtworkStyleBig>
+				)}
 			</TopStyle>
-			<MainStyle size={isPlayerSmall} >
-				<ArtworkStyleSmall size={isPlayerSmall} >
+			<MainStyle size={isPlayerSmall}>
+				<ArtworkStyleSmall size={isPlayerSmall}>
 					<img src={episode?.image} />
 				</ArtworkStyleSmall>
 				<ControlsStyle>
-					<span
-						onClick={(): void => handleSkipping('rwd')}
-					>
+					<span onClick={(): void => handleSkipping('rwd')}>
 						<RewindIcon
 							width={isPlayerSmall ? '30px' : '40px'}
 							fill={theme === 'light' ? '#000' : '#fff'}
 						/>
 					</span>
-					<span
-						onClick={(): void => handlePlayPauseClick()}
-					>
-						{
-							!play
-								? <PauseIcon
-									width={isPlayerSmall ? '40px' : '60px'}
-									fill={theme === 'light' ? '#000' : '#fff'}
-								/>
-								: <PlayIcon
-									width={isPlayerSmall ? '40px' : '60px'}
-									fill={theme === 'light' ? '#000' : '#fff'}
-								/>
-						}
+					<span onClick={(): void => handlePlayPauseClick()}>
+						{!play ? (
+							<PauseIcon
+								width={isPlayerSmall ? '40px' : '60px'}
+								fill={theme === 'light' ? '#000' : '#fff'}
+							/>
+						) : (
+							<PlayIcon
+								width={isPlayerSmall ? '40px' : '60px'}
+								fill={theme === 'light' ? '#000' : '#fff'}
+							/>
+						)}
 					</span>
-					<span
-						onClick={(): void => handleSkipping('fwd')}
-					>
+					<span onClick={(): void => handleSkipping('fwd')}>
 						<ForwardIcon
 							width={isPlayerSmall ? '30px' : '40px'}
 							fill={theme === 'light' ? '#000' : '#fff'}
 						/>
 					</span>
 				</ControlsStyle>
-				<ButtonStyle
-					size={isPlayerSmall}
-					onClick={(): void => setPlayerSize(!isPlayerSmall)}
-				>
-					<Arrow
-						width='30px'
-						fill={theme === 'light' ? '#000' : '#fff'}
-					/>
+				<ButtonStyle size={isPlayerSmall} onClick={(): void => setPlayerSize(!isPlayerSmall)}>
+					<Arrow width="30px" fill={theme === 'light' ? '#000' : '#fff'} />
 				</ButtonStyle>
 			</MainStyle>
 		</PlayerStyle>

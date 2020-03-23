@@ -1,4 +1,3 @@
-
 import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 import { HeaderStyle, NavStyle, ToolStyle, ThemeSwitch } from './styles/Header'
@@ -17,38 +16,23 @@ const Header = (): JSX.Element => {
 	return (
 		<HeaderStyle>
 			<NavStyle>
-				<NavLink
-					to="/"
-					activeClassName="link-active"
-				>
+				<NavLink to="/" activeClassName="link-active">
 					Home
 				</NavLink>
-				<NavLink
-					to="/search"
-					activeClassName="link-active"
-				>
+				<NavLink to="/search" activeClassName="link-active">
 					Search
 				</NavLink>
-				<NavLink
-					to="/favorites"
-					activeClassName="link-active"
-				>
+				<NavLink to="/favorites" activeClassName="link-active">
 					Favorites
 				</NavLink>
-				<NavLink
-					to="/account"
-					activeClassName="link-active"
-				>
+				<NavLink to="/account" activeClassName="link-active">
 					Account
 				</NavLink>
 			</NavStyle>
 			<ToolStyle>
-				<ThemeSwitch
-					onClick={handleTheme}
-				>
-				</ThemeSwitch>
+				<ThemeSwitch onClick={handleTheme}></ThemeSwitch>
 			</ToolStyle>
-		</HeaderStyle >
+		</HeaderStyle>
 	)
 }
 

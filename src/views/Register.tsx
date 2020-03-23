@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { useNavigate } from 'react-router-dom'
@@ -18,13 +17,7 @@ const INITIAL_STATE = {
 export const Register = (): JSX.Element => {
 	const navigate = useNavigate()
 
-	const {
-		values,
-		handleChange,
-		handleBlur,
-		errors,
-		isSubmitting
-	} = UseFormWithReact(INITIAL_STATE, validate)
+	const { values, handleChange, handleBlur, errors, isSubmitting } = UseFormWithReact(INITIAL_STATE, validate)
 
 	const [register] = useMutation(REGISTER)
 
@@ -57,12 +50,7 @@ export const Register = (): JSX.Element => {
 							onBlur={handleBlur}
 							className={errors.email && 'input-error'}
 						/>
-						{
-							errors.email &&
-								<div className="text-error">
-									{errors.email}
-								</div>
-						}
+						{errors.email && <div className="text-error">{errors.email}</div>}
 					</div>
 					<div>
 						<input
@@ -73,18 +61,9 @@ export const Register = (): JSX.Element => {
 							onBlur={handleBlur}
 							className={errors.email && 'input-error'}
 						/>
-						{
-							errors.password &&
-								<div className="text-error">
-									{errors.password}
-								</div>
-						}
+						{errors.password && <div className="text-error">{errors.password}</div>}
 					</div>
-					<button
-						disabled={isSubmitting}
-					>
-						Register
-					</button>
+					<button disabled={isSubmitting}>Register</button>
 				</FormStyle>
 			</div>
 		</div>

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -6,8 +5,8 @@ import { Podcast } from '../models/models'
 import { TitleStyle, SearchStyle, ListStyle, SearchContainerStyle } from './styles/Search'
 
 interface State {
-	data: Podcast[];
-	isLoading: boolean;
+	data: Podcast[]
+	isLoading: boolean
 }
 
 export const Search = (): JSX.Element => {
@@ -22,15 +21,16 @@ export const Search = (): JSX.Element => {
 			data: [],
 			isLoading: true
 		})
-		window.fetch(`https://itunes.apple.com/search?term=${searchQuery}&entity=podcast`)
-			.then(x => x.json())
-			.then(y => {
+		window
+			.fetch(`https://itunes.apple.com/search?term=${searchQuery}&entity=podcast`)
+			.then((x) => x.json())
+			.then((y) => {
 				setData({
 					data: y.results,
 					isLoading: false
 				})
 			})
-			.catch(error => {
+			.catch((error) => {
 				console.log(error)
 				setData({
 					data: [],
@@ -41,36 +41,28 @@ export const Search = (): JSX.Element => {
 
 	return (
 		<SearchContainerStyle>
-			<TitleStyle>
-				{
-					isLoading
-						? 'Searching...'
-						: 'Search'
-				}
-			</TitleStyle>
+			<TitleStyle>{isLoading ? 'Searching...' : 'Search'}</TitleStyle>
 			<SearchStyle>
-				<input
-					type="text"
-					value={searchQuery}
-					onChange={(ev): void => setSearchQuery(ev.target.value)}
-				/>
+				<input type="text" value={searchQuery} onChange={(ev): void => setSearchQuery(ev.target.value)} />
 			</SearchStyle>
 			<ListStyle>
-				{
-					data.map((item: Podcast): JSX.Element => (
-						<Link
-							to={{
-								pathname: '/podcast',
-								state: {
-									feedUrl: item.feedUrl
-								}
-							}}
-							key={item.collectionId}
-						>
-							<img src={item.artworkUrl100} />
-						</Link>
-					))
-				}
+				{data.map(
+					(item: Podcast): JSX.Element => {
+						return (
+							<Link
+								to={{
+									pathname: `/podcast#url=${item.feedUrl}`,
+									state: {
+										feedUrl: item.feedUrl
+									}
+								}}
+								key={item.collectionId}
+							>
+								<img src={item.artworkUrl100} />
+							</Link>
+						)
+					}
+				)}
 			</ListStyle>
 		</SearchContainerStyle>
 	)

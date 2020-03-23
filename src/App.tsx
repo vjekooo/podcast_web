@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react'
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
 
@@ -47,18 +46,18 @@ const themeDark = {
 }
 
 const Wrapper = styled.div`
-  margin-right: auto;
-  margin-left: auto;
-  max-width: 600px;
-  font-family: 'Avenir';
-  background-color: ${(props): string => props.theme.bg};
-  color: ${(props): string => props.theme.fontColor};
-  min-height: 100vh;
+	margin-right: auto;
+	margin-left: auto;
+	max-width: 600px;
+	font-family: 'Avenir';
+	background-color: ${(props): string => props.theme.bg};
+	color: ${(props): string => props.theme.fontColor};
+	min-height: 100vh;
 `
 
 interface PlayerState {
-	episode: Episode | null;
-	isPlayerVisible: boolean;
+	episode: Episode | null
+	isPlayerVisible: boolean
 }
 
 const App = (): JSX.Element => {
@@ -71,13 +70,14 @@ const App = (): JSX.Element => {
 	const [loadUser, { data: userTheme }] = useLazyQuery(USER_SETTINGS)
 	const [setTheme] = useMutation(SET_THEME)
 
-	useTimeout((): any =>
-		refreshToken()
-			.then(data => {
+	useTimeout(
+		() =>
+			refreshToken().then((data) => {
 				setAccessToken(data.accessToken)
 				setUser(data.accessToken)
-			})
-	, 780000)
+			}),
+		780000
+	)
 
 	const handleUser = (value: string): void => {
 		setUser(value)
@@ -93,11 +93,10 @@ const App = (): JSX.Element => {
 	}
 
 	useEffect(() => {
-		refreshToken()
-			.then(data => {
-				setAccessToken(data.accessToken)
-				setUser(data.accessToken)
-			})
+		refreshToken().then((data) => {
+			setAccessToken(data.accessToken)
+			setUser(data.accessToken)
+		})
 	}, [])
 
 	useEffect(() => {
@@ -122,13 +121,7 @@ const App = (): JSX.Element => {
 				>
 					<Router />
 				</PlayerContext.Provider>
-				{
-					isPlayerVisible &&
-						<CustomPlayer
-							episode={episode}
-							theme={theme}
-						/>
-				}
+				{isPlayerVisible && <CustomPlayer episode={episode} theme={theme} />}
 			</Wrapper>
 			<GlobalStyle />
 		</ThemeProvider>

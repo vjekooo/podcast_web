@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react'
 
 export const UseFormWithReact = (initialState: any, validate: any): any => {
@@ -17,19 +16,19 @@ export const UseFormWithReact = (initialState: any, validate: any): any => {
 		}
 	}, [errors])
 
-	function handleChange (event: React.FormEvent<HTMLInputElement>): void {
+	function handleChange(event: React.FormEvent<HTMLInputElement>): void {
 		setValues({
 			...values,
 			[event.currentTarget.name]: event.currentTarget.value
 		})
 	}
 
-	function handleBlur (): void {
+	function handleBlur(): void {
 		const validationErrors = validate(values)
 		setErrors(validationErrors)
 	}
 
-	function handleSubmit (event: React.FormEvent): void {
+	function handleSubmit(event: React.FormEvent): void {
 		event.preventDefault()
 		const validationErrors = validate(values)
 		setErrors(validationErrors)
