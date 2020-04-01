@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react'
 
 export const PlayIcon = ({ width = '30px', fill = '#000', style = {}, className = '', viewBox = '0 0 32 32' }): any => (
