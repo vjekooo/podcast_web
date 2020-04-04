@@ -1,5 +1,6 @@
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const Dotenv = require('dotenv-webpack')
 
 const webpackMerge = require('webpack-merge')
 const modeConfig = (env) => require(`./build-utils/webpack.${env}`)(env)
@@ -83,6 +84,9 @@ module.exports = ({ mode, presets } = { mode: 'production', presets: [] }) => {
 				}
 			},
 			plugins: [
+				new Dotenv({
+					path: './.env'
+				}),
 				new HtmlWebpackPlugin({
 					title: 'Podcast',
 					template: 'public/index.html',
