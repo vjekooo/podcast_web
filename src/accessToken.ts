@@ -1,4 +1,3 @@
-
 export let accessToken = ''
 
 export const setAccessToken = (value: string): void => {

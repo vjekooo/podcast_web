@@ -1,10 +1,9 @@
-
 import React, { useContext } from 'react'
 import { useMutation } from '@apollo/react-hooks'
-import { RouteComponentProps } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import { setAccessToken } from '../accessToken'
 
-import { LOGIN } from '../query/query'
+import { LOGIN } from '../query/user_query'
 import { FormStyle } from './styles/Login'
 
 import { PlayerContext } from '../UseContext'
@@ -16,16 +15,11 @@ const INITIAL_STATE = {
 	password: ''
 }
 
-export const Login: React.FC<RouteComponentProps> = ({ history }): JSX.Element => {
+export const Login = (): JSX.Element => {
+	const navigate = useNavigate()
 	const { handleUser } = useContext(PlayerContext)
 
-	const {
-		values,
-		handleChange,
-		handleBlur,
-		errors,
-		isSubmitting
-	} = UseFormWithReact(INITIAL_STATE, validate)
+	const { values, handleChange, handleBlur, errors, isSubmitting } = UseFormWithReact(INITIAL_STATE, validate)
 
 	const [login] = useMutation(LOGIN)
 
@@ -39,15 +33,18 @@ export const Login: React.FC<RouteComponentProps> = ({ history }): JSX.Element =
 						const password = values.password
 						login({
 							variables: { email, password }
-						}).then(res => {
-							if (res && res.data) {
-								setAccessToken(res.data.login.accessToken)
-								if (handleUser) {
-									handleUser(res.data.login.accessToken)
+						})
+							.then((res) => {
+								if (res && res.data) {
+									setAccessToken(res.data.login.accessToken)
+									if (handleUser) {
+										handleUser(res.data.login.accessToken)
+									}
+
+									navigate('/')
 								}
-								history.push('/')
-							}
-						}).catch(err => console.log(err))
+							})
+							.catch((err) => console.log(err))
 					}}
 				>
 					<div>
@@ -59,12 +56,7 @@ export const Login: React.FC<RouteComponentProps> = ({ history }): JSX.Element =
 							onBlur={handleBlur}
 							className={errors.email && 'input-error'}
 						/>
-						{
-							errors.email &&
-								<div className="text-error">
-									{errors.email}
-								</div>
-						}
+						{errors.email && <div className="text-error">{errors.email}</div>}
 					</div>
 					<div>
 						<input
@@ -75,18 +67,9 @@ export const Login: React.FC<RouteComponentProps> = ({ history }): JSX.Element =
 							onBlur={handleBlur}
 							className={errors.password && 'input-error'}
 						/>
-						{
-							errors.password &&
-								<div className="text-error">
-									{errors.password}
-								</div>
-						}
+						{errors.password && <div className="text-error">{errors.password}</div>}
 					</div>
-					<button
-						disabled={isSubmitting}
-					>
-						Login
-					</button>
+					<button disabled={isSubmitting}>Login</button>
 				</FormStyle>
 			</div>
 		</div>

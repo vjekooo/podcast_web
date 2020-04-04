@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 
-import { SET_FAVORITE, GET_FAVORITES, REMOVE_FAVORITE } from '../query/query'
+import { SET_FAVORITE, GET_FAVORITES, REMOVE_FAVORITE } from '../query/podcast_query'
 import { Episode, Favorite } from '../models/models'
 import { PlayerContext } from '../UseContext'
 
@@ -10,11 +10,11 @@ import { EpisodeStyle, TopStyle, ImageStyle, HeaderStyle, TitleStyle, ContentSty
 import { CloseIcon, PlayIcon, FavoriteIcon } from '../svgs'
 
 interface Props {
-	currentEpisode: Episode | Favorite;
-	onClick: () => void;
+	currentEpisode: Episode | Favorite
+	onClick: () => void
 }
 
-export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
+export const EpisodeView = ({ currentEpisode, onClick }: Props): JSX.Element => {
 	const { setPlayerValues, theme } = useContext(PlayerContext)
 
 	const [setFavorite] = useMutation(SET_FAVORITE)
@@ -41,32 +41,25 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 		checkIfEpisodeFavorite()
 	}, [favorites])
 
-	const setEpisodeFavoriteStatus = ({
-		id, title, description, url, duration, pubDate, image
-	}: Episode): void => {
+	const setEpisodeFavoriteStatus = ({ id, title, description, url, duration, pubDate, image }: Episode): void => {
 		if (isFavorite) {
 			removeFavorite({
 				variables: { id },
 				refetchQueries: [{ query: GET_FAVORITES }]
-			}).catch(err => console.log(err))
+			}).catch((err) => console.log(err))
 		} else {
 			setFavorite({
 				variables: { title, description, url, duration, pubDate, image },
 				refetchQueries: [{ query: GET_FAVORITES }]
-			}).catch(err => console.log(err))
+			}).catch((err) => console.log(err))
 		}
 	}
 
 	return (
 		<EpisodeStyle>
 			<TopStyle>
-				<span
-					onClick={onClick}
-				>
-					<CloseIcon
-						width='30px'
-						fill={theme === 'light' ? '#000' : '#fff'}
-					/>
+				<span onClick={onClick}>
+					<CloseIcon width="30px" fill={theme === 'light' ? '#000' : '#fff'} />
 				</span>
 			</TopStyle>
 			<ContentStyle>
@@ -75,21 +68,9 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 						<img src={currentEpisode.image} />
 					</ImageStyle>
 					<TitleStyle>
-						<h3>
-							{
-								currentEpisode.title
-							}
-						</h3>
-						<p>
-							{
-								calculateTime(currentEpisode.duration)
-							}
-						</p>
-						<p>
-							{
-								handleDate(currentEpisode.pubDate)
-							}
-						</p>
+						<h3>{currentEpisode.title}</h3>
+						<p>{calculateTime(currentEpisode.duration)}</p>
+						<p>{handleDate(currentEpisode.pubDate)}</p>
 						<div>
 							<span
 								onClick={(): void => {
@@ -99,7 +80,7 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 								}}
 							>
 								<FavoriteIcon
-									width='30px'
+									width="30px"
 									fill={isFavorite ? '#FFC300' : '#fff'}
 									fill2={theme === 'light' ? '#FFC300' : '#FFC300'}
 								/>
@@ -114,19 +95,12 @@ export const EpisodeView: React.FC<Props> = ({ currentEpisode, onClick }) => {
 									}
 								}}
 							>
-								<PlayIcon
-									width='30px'
-									fill={theme === 'light' ? '#000' : '#fff'}
-								/>
+								<PlayIcon width="30px" fill={theme === 'light' ? '#000' : '#fff'} />
 							</span>
 						</div>
 					</TitleStyle>
 				</HeaderStyle>
-				<div>
-					{
-						stripHtmlFromString(currentEpisode?.description || '')
-					}
-				</div>
+				<div>{stripHtmlFromString(currentEpisode?.description ?? '')}</div>
 			</ContentStyle>
 		</EpisodeStyle>
 	)

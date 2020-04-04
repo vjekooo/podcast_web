@@ -1,4 +1,3 @@
-
 export const calculateTime = (value: number | string): string => {
 	if (typeof value === 'string' && value.indexOf(':') > -1) {
 		return value
@@ -6,8 +5,8 @@ export const calculateTime = (value: number | string): string => {
 
 	const num = Number(value)
 	const hours = Math.floor(num / 3600)
-	const minutes = Math.floor(num % 3600 / 60)
-	const seconds = Math.floor(num % 3600 % 60)
+	const minutes = Math.floor((num % 3600) / 60)
+	const seconds = Math.floor((num % 3600) % 60)
 
 	const hoursDisplay = hours > 0 ? `0${hours}:` : ''
 	const minutesDisplay = minutes < 10 ? `0${minutes}` : minutes
@@ -23,9 +22,15 @@ export const handleDate = (value: string): string => {
 export const parseJwt = (token: string): string => {
 	const base64Url = token.split('.')[1]
 	const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
-	const jsonPayload = decodeURIComponent(window.atob(base64).split('').map((c) => {
-		return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
-	}).join(''))
+	const jsonPayload = decodeURIComponent(
+		window
+			.atob(base64)
+			.split('')
+			.map((c) => {
+				return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+			})
+			.join('')
+	)
 
 	return JSON.parse(jsonPayload)
 }
@@ -39,24 +44,26 @@ export const tokenExpiresIn = (token: any): number => {
 
 export const stripHtmlFromString = (text: string): string => {
 	const doc = new window.DOMParser().parseFromString(text, 'text/html')
-	return doc.body.textContent || ''
+	return doc.body.textContent ?? ''
 }
 
 interface TokenResponse {
-	ok: boolean;
-	accessToken: string;
+	ok: boolean
+	accessToken: string
 }
 
 export const refreshToken = (): Promise<TokenResponse> => {
+	const URL = process.env.NODE_ENV === 'development' ? process.env.REFRESH_DEV : process.env.REFRESH_PROD
+
 	return new Promise((resolve, reject) => {
-		// const data = window.fetch('http://localhost:4000/refresh_token', {
-		const data = window.fetch('http://34.242.87.37:4000/refresh_token', {
-			method: 'POST',
-			credentials: 'include'
-		})
-			.then(res => res.json())
-			.then(data => data)
-			.catch(err => console.log(err))
+		const data = window
+			.fetch(`${URL}`, {
+				method: 'POST',
+				credentials: 'include'
+			})
+			.then((res) => res.json())
+			.then((data) => data)
+			.catch((err) => console.log(err))
 
 		if (!data) {
 			reject(new Error('Whoops'))

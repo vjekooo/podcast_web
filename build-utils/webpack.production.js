@@ -1,8 +1,7 @@
-
 const commonPaths = require('./common-paths')
 const TerserPlugin = require('terser-webpack-plugin')
 
-module.exports = env => ({
+module.exports = (env) => ({
 	mode: env.mode,
 	entry: {
 		app: [`${commonPaths.appEntry}/index.tsx`]

@@ -1,13 +1,10 @@
-
 import { KeyValue } from '../models/models'
 
-export default function validate (values: any): any {
+export default function validate(values: any): any {
 	const errors: KeyValue = {}
 	if (!values.email) {
 		errors.email = 'Required'
-	} else if (
-		!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-	) {
+	} else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
 		errors.email = 'Invalid email address'
 	}
 

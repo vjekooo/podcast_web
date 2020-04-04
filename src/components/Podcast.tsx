@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { RouteComponentProps } from 'react-router'
+import { useLocation } from 'react-router-dom'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 
 import { PlayerContext } from '../UseContext'
@@ -7,12 +7,7 @@ import { PlayerContext } from '../UseContext'
 import { EpisodeView } from './Episode'
 
 import { Episode } from '../models/models'
-import {
-	SUBSCRIBE,
-	GET_PODCASTS,
-	UNSUBSCRIBE,
-	FETCH_PODCASTS_EPISODES
-} from '../query/query'
+import { SUBSCRIBE, GET_PODCASTS, UNSUBSCRIBE, FETCH_PODCASTS_EPISODES } from '../query/podcast_query'
 
 import {
 	InfoStyle,
@@ -30,19 +25,23 @@ import { Modal } from './Modal'
 import { Loading } from './Loading'
 
 interface EpisodeState {
-	episodeList: Episode[];
-	isLoading: boolean;
+	episodeList: Episode[]
+	isLoading: boolean
 }
 
 interface PodcastState {
-	title: string;
-	url: string;
-	description: string;
-	image: string;
+	title: string
+	url: string
+	description: string
+	image: string
 }
 
-export const Podcast: React.FC<RouteComponentProps> = (props) => {
-	const { feedUrl } = props.location.state
+export const Podcast = (): JSX.Element => {
+	const location = useLocation()
+
+	const hash = location.hash.split('#')
+
+	const feedUrl = hash[1]
 
 	const { setPlayerValues, theme } = useContext(PlayerContext)
 
@@ -60,9 +59,7 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 	// const [searchValue, setSearchValue] = useState('')
 
 	const handleEpisode = (): void => {
-		setEpisodeVisibilityState(
-			currentState => !currentState
-		)
+		setEpisodeVisibilityState((currentState) => !currentState)
 	}
 
 	const handleClickOnPodcast = (currentEpisode: Episode): void => {
@@ -75,20 +72,19 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 			unsubscribe({
 				variables: { url },
 				refetchQueries: [{ query: GET_PODCASTS }]
-			}).catch(err => console.log(err))
+			}).catch((err) => console.log(err))
 		} else {
 			subscribe({
 				variables: { url },
 				refetchQueries: [{ query: GET_PODCASTS }]
-			}).catch(err => console.log(err))
+			}).catch((err) => console.log(err))
 		}
 	}
 
 	const checkIfPodcastSubscribed = (): void => {
 		const currentPodcast = podcast?.fetchPodcastEpisodes
 		if (currentPodcast) {
-			const value = podcasts.podcasts
-				.find((cast: PodcastState) => cast.url === currentPodcast.url)
+			const value = podcasts.podcasts.find((cast: PodcastState) => cast.url === currentPodcast.url)
 			if (value) {
 				setIsSubscribed(true)
 			} else {
@@ -127,47 +123,26 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 		<PodcastContainer>
 			<InfoStyle>
 				<div className="info-header">
-					<img src={
-						podcast?.fetchPodcastEpisodes.image
-					} />
+					<img src={podcast?.fetchPodcastEpisodes.image} />
 					<div>
-						<h3>
-							{
-								podcast?.fetchPodcastEpisodes.title
-							}
-						</h3>
+						<h3>{podcast?.fetchPodcastEpisodes.title}</h3>
 						<span
-							onClick={(): void => setPodcastSubscriptionStatus(
-								podcast?.fetchPodcastEpisodes.url
-							)}
-							className={
-								subscribeLoading || unsubscribeLoading
-									? 'kill-button'
-									: ''
-							}
+							onClick={(): void => setPodcastSubscriptionStatus(podcast?.fetchPodcastEpisodes.url)}
+							className={subscribeLoading || unsubscribeLoading ? 'kill-button' : ''}
 						>
 							{
 								<Star
-									width='50px'
+									width="50px"
 									fill={isSubscribed ? '#FFC300' : '#ECF0F1'}
 									fill2={isSubscribed ? '#FFC300' : '#fff'}
 								/>
 							}
 						</span>
-						{
-							(subscribeError || unsubscribeError) &&
-								<div>error</div>
-						}
+						{(subscribeError || unsubscribeError) && <div>error</div>}
 					</div>
 				</div>
 				<div>
-					<p>
-						{
-							stripHtmlFromString(
-								podcast?.fetchPodcastEpisodes.description
-							)
-						}
-					</p>
+					<p>{stripHtmlFromString(podcast?.fetchPodcastEpisodes.description)}</p>
 				</div>
 			</InfoStyle>
 			{/* <SearchStyle>
@@ -178,72 +153,43 @@ export const Podcast: React.FC<RouteComponentProps> = (props) => {
 					value={searchValue}
 				/>
 			</SearchStyle> */}
-			{
-				isEpisodeVisible && currentEpisode &&
-					<EpisodeView
-						currentEpisode={currentEpisode}
-						onClick={handleEpisode}
-					/>
-			}
+			{isEpisodeVisible && currentEpisode && (
+				<EpisodeView currentEpisode={currentEpisode} onClick={handleEpisode} />
+			)}
 			<ListStyle>
 				<ul>
-					{
-						podcast?.fetchPodcastEpisodes.episodes
-							.map((item: Episode, index: number): JSX.Element => {
-								const episodeWithImage = item
-								episodeWithImage.image = podcast?.fetchPodcastEpisodes.image
-								return (
-									<ListItemStyle
-										key={index}
-									>
-										<div
-											onClick={(): void => handleClickOnPodcast(episodeWithImage)}
+					{podcast?.fetchPodcastEpisodes.episodes.map(
+						(item: Episode, index: number): JSX.Element => {
+							const episodeWithImage = item
+							episodeWithImage.image = podcast?.fetchPodcastEpisodes.image
+							return (
+								<ListItemStyle key={index}>
+									<div onClick={(): void => handleClickOnPodcast(episodeWithImage)}>
+										<ListItemTitleStyle>{item.title}</ListItemTitleStyle>
+										<ListItemTimeStyle>{calculateTime(item.duration)}</ListItemTimeStyle>
+									</div>
+									<div>
+										<span
+											onClick={(): void => {
+												if (setPlayerValues) {
+													setPlayerValues({
+														episode: episodeWithImage,
+														isPlayerVisible: true
+													})
+												}
+											}}
 										>
-											<ListItemTitleStyle>
-												{
-													item.title
-												}
-											</ListItemTitleStyle>
-											<ListItemTimeStyle>
-												{
-													calculateTime(item.duration)
-												}
-											</ListItemTimeStyle>
-										</div>
-										<div>
-											<span
-												onClick={(): void => {
-													if (setPlayerValues) {
-														setPlayerValues({
-															episode: episodeWithImage,
-															isPlayerVisible: true
-														})
-													}
-												}}
-											>
-												<PlayIcon
-													width='20px'
-													fill={theme === 'light' ? '#000' : '#fff'}
-												/>
-											</span>
-										</div>
-									</ListItemStyle>
-								)
-							})
-					}
+											<PlayIcon width="20px" fill={theme === 'light' ? '#000' : '#fff'} />
+										</span>
+									</div>
+								</ListItemStyle>
+							)
+						}
+					)}
 				</ul>
 			</ListStyle>
-			{
-				loading &&
-					<Loading />
-			}
-			{
-				isModalActive &&
-					<Modal
-						setModalStatus={setModalStatus}
-						value={subscribeError || unsubscribeError}
-					/>
-			}
+			{loading && <Loading />}
+			{isModalActive && <Modal setModalStatus={setModalStatus} value={subscribeError || unsubscribeError} />}
 		</PodcastContainer>
 	)
 }

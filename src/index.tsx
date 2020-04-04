@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { render } from 'react-dom'
 import ApolloClient from 'apollo-boost'
@@ -7,9 +6,10 @@ import { ApolloProvider } from '@apollo/react-hooks'
 import App from './App'
 import { getAccessToken } from './accessToken'
 
+const uri = process.env.NODE_ENV === 'development' ? process.env.URI_DEV : process.env.URI_PROD
+
 const client = new ApolloClient({
-	// uri: 'http://localhost:4000/graphql',
-	uri: 'http://34.242.87.37:4000/graphql',
+	uri: uri,
 	credentials: 'include',
 	request: (operation): void => {
 		const accessToken = getAccessToken()

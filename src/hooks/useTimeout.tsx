@@ -1,11 +1,7 @@
-
 // eslint-disable-next-line
 import React, { useEffect, useRef } from 'react'
 
-function useTimeout<T> (
-	callback: () => Promise<T> | (() => void),
-	delay: number | null
-): any {
+function useTimeout<T>(callback: () => Promise<T> | (() => void), delay: number | null): void {
 	const savedCallback = useRef(callback)
 
 	// Remember the latest callback.
@@ -16,8 +12,8 @@ function useTimeout<T> (
 	// Set up the timeout loop.
 	useEffect(() => {
 		// let id: NodeJS.Timeout
-		let id: any
-		function tick (): any {
+		let id: number
+		function tick(): void {
 			const ret = savedCallback.current()
 
 			if (ret instanceof Promise) {

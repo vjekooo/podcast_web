@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
+
+import { HistoryContainer } from './styles/History'
 import { useLazyQuery } from '@apollo/react-hooks'
-
-import { EpisodeView } from '../components/Episode'
+import { FETCH_HISTORY } from '../query/podcast_query'
+// import { Favorite } from '../models/models'
 import { FavoriteItem } from '../components/FavoriteItem'
-
-import { GET_FAVORITES } from '../query/podcast_query'
 import { Favorite } from '../models/models'
+import { EpisodeView } from '../components/Episode'
 
-import { FavoriteStyle } from './styles/Favorites'
+export const History = (): JSX.Element => {
+	const [fetchHistory, { data: history }] = useLazyQuery(FETCH_HISTORY)
 
-export const Favorites = (): JSX.Element => {
-	const [fetchFavorites, { data: favorites }] = useLazyQuery(GET_FAVORITES)
 	const [isEpisodeVisible, setEpisodeVisibilityState] = useState(false)
 	const [currentFavorite, setCurrentFavorite] = useState<Favorite | null>(null)
 
@@ -24,15 +24,15 @@ export const Favorites = (): JSX.Element => {
 	}
 
 	useEffect(() => {
-		fetchFavorites()
-	}, [favorites])
+		fetchHistory()
+	}, [])
 
 	return (
-		<FavoriteStyle>
-			<FavoriteItem list={favorites?.favorites} onClick={handleClickEvent} />
+		<HistoryContainer>
+			<FavoriteItem list={history?.fetchHistory} onClick={handleClickEvent} />
 			{isEpisodeVisible && currentFavorite && (
 				<EpisodeView currentEpisode={currentFavorite} onClick={handleEpisode} />
 			)}
-		</FavoriteStyle>
+		</HistoryContainer>
 	)
 }

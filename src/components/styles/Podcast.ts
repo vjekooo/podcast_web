@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const PodcastContainer = styled.div`
-	padding: 0 .5rem;
+	padding: 0 0.5rem;
 `
 
 export const InfoStyle = styled.div`
@@ -18,7 +18,7 @@ export const InfoStyle = styled.div`
 		margin-top: 0;
 	}
 	.kill-button {
-		opacity: .5;
+		opacity: 0.5;
 		pointer-events: none;
 	}
 `
@@ -41,7 +41,7 @@ export const ListStyle = styled.div`
 export const ListItemStyle = styled.li`
 	display: flex;
 	justify-content: space-between;
-	margin-bottom: .5rem;
+	margin-bottom: 0.5rem;
 	div:first-child {
 		display: flex;
 		flex-direction: column;
@@ -57,10 +57,8 @@ export const ListItemStyle = styled.li`
 	}
 `
 
-export const ListItemTitleStyle = styled.span`
-
-`
+export const ListItemTitleStyle = styled.span``
 
 export const ListItemTimeStyle = styled.span`
-	font-size: .7rem;
+	font-size: 0.7rem;
 `

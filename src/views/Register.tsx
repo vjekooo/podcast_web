@@ -1,9 +1,8 @@
-
 import React from 'react'
 import { useMutation } from '@apollo/react-hooks'
-import { RouteComponentProps } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-import { REGISTER } from '../query/query'
+import { REGISTER } from '../query/user_query'
 
 import { FormStyle } from './styles/Login'
 import { UseFormWithReact } from '../hooks/useFormWIthValidation'
@@ -15,14 +14,10 @@ const INITIAL_STATE = {
 	password: ''
 }
 
-export const Register: React.FC<RouteComponentProps> = ({ history }): JSX.Element => {
-	const {
-		values,
-		handleChange,
-		handleBlur,
-		errors,
-		isSubmitting
-	} = UseFormWithReact(INITIAL_STATE, validate)
+export const Register = (): JSX.Element => {
+	const navigate = useNavigate()
+
+	const { values, handleChange, handleBlur, errors, isSubmitting } = UseFormWithReact(INITIAL_STATE, validate)
 
 	const [register] = useMutation(REGISTER)
 
@@ -39,7 +34,7 @@ export const Register: React.FC<RouteComponentProps> = ({ history }): JSX.Elemen
 								variables: { email, password }
 							})
 							if (data) {
-								history.push('/')
+								navigate('/')
 							}
 						} catch (error) {
 							console.log(error)
@@ -55,12 +50,7 @@ export const Register: React.FC<RouteComponentProps> = ({ history }): JSX.Elemen
 							onBlur={handleBlur}
 							className={errors.email && 'input-error'}
 						/>
-						{
-							errors.email &&
-								<div className="text-error">
-									{errors.email}
-								</div>
-						}
+						{errors.email && <div className="text-error">{errors.email}</div>}
 					</div>
 					<div>
 						<input
@@ -71,18 +61,9 @@ export const Register: React.FC<RouteComponentProps> = ({ history }): JSX.Elemen
 							onBlur={handleBlur}
 							className={errors.email && 'input-error'}
 						/>
-						{
-							errors.password &&
-								<div className="text-error">
-									{errors.password}
-								</div>
-						}
+						{errors.password && <div className="text-error">{errors.password}</div>}
 					</div>
-					<button
-						disabled={isSubmitting}
-					>
-						Register
-					</button>
+					<button disabled={isSubmitting}>Register</button>
 				</FormStyle>
 			</div>
 		</div>
