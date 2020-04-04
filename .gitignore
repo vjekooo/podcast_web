@@ -3,5 +3,3 @@ node_modules/
 .AppleDouble
 .LSOverride
 dist/
-.env
-.env.development
