@@ -73,8 +73,10 @@ const App = (): JSX.Element => {
 	useTimeout(
 		() =>
 			refreshToken().then((data) => {
-				setAccessToken(data.accessToken)
-				setUser(data.accessToken)
+				if (data.accessToken) {
+					setAccessToken(data.accessToken)
+					setUser(data.accessToken)
+				}
 			}),
 		780000
 	)
