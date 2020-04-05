@@ -1,17 +1,20 @@
 --- 
-  files: 
-    - 
+  files:
+    -
       destination: /home/ubuntu/podcast/web/
       source: /
-  hooks: 
+  hooks:
     ApplicationStop:
       -
         location: /codedeploy/stop_app.sh
-    ApplicationStart: 
-      - 
-        location: /codedeploy/start_app.sh  
-    BeforeInstall: 
-      - 
+        timeout: 180
+    ApplicationStart:
+      -
+        location: /codedeploy/start_app.sh
+        timeout: 180
+    BeforeInstall:
+      -
         location: /codedeploy/install_dependencies.sh
+        timeout: 180
   os: linux
   version: 0.0
