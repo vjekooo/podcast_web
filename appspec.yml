@@ -8,13 +8,13 @@
       -
         location: /codedeploy/stop_app.sh
         timeout: 180
-    ApplicationStart:
-      -
-        location: /codedeploy/start_app.sh
-        timeout: 180
     BeforeInstall:
       -
         location: /codedeploy/install_dependencies.sh
-        timeout: 180
+        timeout: 360
+    ApplicationStart:
+      -
+        location: /codedeploy/start_app.sh
+        timeout: 360
   os: linux
   version: 0.0
