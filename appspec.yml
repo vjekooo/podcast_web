@@ -1,4 +1,4 @@
---- 
+---
   files:
     -
       destination: /home/ubuntu/podcast/web/
@@ -7,14 +7,14 @@
     ApplicationStop:
       -
         location: /codedeploy/stop_app.sh
-        timeout: 1000
+        timeout: 120
     BeforeInstall:
       -
         location: /codedeploy/install_dependencies.sh
-        timeout: 1000
+        timeout: 360
     ApplicationStart:
       -
         location: /codedeploy/start_app.sh
-        timeout: 1000
+        timeout: 120
   os: linux
   version: 0.0
