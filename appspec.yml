@@ -11,10 +11,10 @@
     BeforeInstall:
       -
         location: /codedeploy/install_dependencies.sh
-        timeout: 360
+        timeout: 860
     ApplicationStart:
       -
         location: /codedeploy/start_app.sh
-        timeout: 360
+        timeout: 1000
   os: linux
   version: 0.0
