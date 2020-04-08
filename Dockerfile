@@ -3,9 +3,7 @@ FROM node as build
 WORKDIR /app
 COPY . /app/
 
-RUN npm config set ignore-scripts true
 RUN npm install --silent
-RUN npm config set ignore-scripts false
 
 RUN npm run build
 
