@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 
-import { PlayIcon } from '../svgs'
-import { FavItem, FavoriteMain } from './styles/FavoriteItem'
-import { Favorite } from '../models/models'
-import { PlayerContext } from '../UseContext'
+import { PlayIcon } from '../../svgs'
+import { FavItem, FavoriteMain } from './style'
+import { Favorite } from '../../models/models'
+import { PlayerContext } from '../../UseContext'
 
 interface Props {
 	list: Favorite[]

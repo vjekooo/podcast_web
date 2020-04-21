@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
-import { HeaderStyle, NavStyle, ToolStyle, ThemeSwitch } from './styles/Header'
+import { HeaderStyle, NavStyle, ToolStyle, ThemeSwitch } from './style'
 
-import { PlayerContext } from '../UseContext'
+import { PlayerContext } from '../../UseContext'
 
 const Header = (): JSX.Element => {
 	const { changeTheme } = useContext(PlayerContext)

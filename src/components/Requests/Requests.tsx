@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { RequestsMain } from './styles/Requests'
+import { RequestsMain } from './style'
 
 interface Requests {
 	id: string

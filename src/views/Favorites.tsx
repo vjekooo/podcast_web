@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useLazyQuery } from '@apollo/react-hooks'
 
-import { EpisodeView } from '../components/Episode'
-import { FavoriteItem } from '../components/FavoriteItem'
+import { EpisodeView } from '../components/Episode/Episode'
+import { FavoriteItem } from '../components/Favorite/FavoriteItem'
 
 import { GET_FAVORITES } from '../query/podcast_query'
 import { Favorite } from '../models/models'

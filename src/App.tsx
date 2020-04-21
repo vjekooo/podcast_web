@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
 
-import { CustomPlayer } from './components/CustomPlayer'
+import { CustomPlayer } from './components/Player/CustomPlayer'
 
 import { hot } from 'react-hot-loader/root'
 import { Router } from './Routes'

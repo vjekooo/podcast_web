@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 
-import { Episode } from '../models/models'
-import { calculateTime } from '../helpers'
+import { Episode } from '../../models/models'
+import { calculateTime } from '../../helpers'
 
 import {
 	PlayerStyle,
@@ -13,10 +13,10 @@ import {
 	ArtworkStyleBig,
 	ButtonStyle,
 	BigImage
-} from './styles/CustomPlayer'
-import { ForwardIcon, RewindIcon, PauseIcon, PlayIcon, Arrow } from '../svgs'
+} from './style'
+import { ForwardIcon, RewindIcon, PauseIcon, PlayIcon, Arrow } from '../../svgs'
 
-import { SET_TO_HISTORY, FETCH_HISTORY } from '../query/podcast_query'
+import { SET_TO_HISTORY, FETCH_HISTORY } from '../../query/podcast_query'
 
 interface Props {
 	episode: Episode | null

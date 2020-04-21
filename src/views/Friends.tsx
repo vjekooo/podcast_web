@@ -4,14 +4,14 @@ import { REQUEST_FRIEND, HANDLE_REQUEST, FETCH_FRIENDS, FETCH_REQUESTEE, FETCH_R
 import { FETCH_USERS } from '../query/user_query'
 
 import { FriendsContainer, SearchDropdown, SearchPosition } from './styles/Friends'
-import { Requests } from '../components/Requests'
+import { Requests } from '../components/Requests/Requests'
 
 interface User {
 	email: string
 }
 
 export const Friends = (): JSX.Element => {
-	const [searchTerm, setSearchTerm] = useState()
+	const [searchTerm, setSearchTerm] = useState<string>()
 	const [request] = useMutation(REQUEST_FRIEND)
 	const [getUsers, { data: users }] = useLazyQuery(FETCH_USERS)
 	const [fetchRequestee, { data: requestees }] = useLazyQuery(FETCH_REQUESTEE)
@@ -64,7 +64,7 @@ export const Friends = (): JSX.Element => {
 		<FriendsContainer>
 			<input onChange={(e): void => handleInputChange(e)} value={searchTerm} placeholder="search for friends" />
 			<SearchPosition>
-				{searchTerm?.length > 0 && (
+				{searchTerm && searchTerm.length > 0 && (
 					<SearchDropdown>
 						<ul>
 							{users?.fetchUsers.map((user: User, index: number) => {

@@ -2,12 +2,12 @@ import React, { useState, useEffect, useContext } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 
-import { PlayerContext } from '../UseContext'
+import { PlayerContext } from '../../UseContext'
 
-import { EpisodeView } from './Episode'
+import { EpisodeView } from '../Episode/Episode'
 
-import { Episode } from '../models/models'
-import { SUBSCRIBE, GET_PODCASTS, UNSUBSCRIBE, FETCH_PODCASTS_EPISODES } from '../query/podcast_query'
+import { Episode } from '../../models/models'
+import { SUBSCRIBE, GET_PODCASTS, UNSUBSCRIBE, FETCH_PODCASTS_EPISODES } from '../../query/podcast_query'
 
 import {
 	InfoStyle,
@@ -17,12 +17,12 @@ import {
 	ListItemTimeStyle,
 	PodcastContainer
 	// SearchStyle
-} from './styles/Podcast'
+} from './style'
 
-import { stripHtmlFromString, calculateTime } from '../helpers'
-import { PlayIcon, Star } from '../svgs'
-import { Modal } from './Modal'
-import { Loading } from './Loading'
+import { stripHtmlFromString, calculateTime } from '../../helpers'
+import { PlayIcon, Star } from '../../svgs'
+import { Modal } from '../Modal/Modal'
+import { Loading } from '../Loading/Loading'
 
 interface EpisodeState {
 	episodeList: Episode[]

@@ -4,9 +4,9 @@ import { HistoryContainer } from './styles/History'
 import { useLazyQuery } from '@apollo/react-hooks'
 import { FETCH_HISTORY } from '../query/podcast_query'
 // import { Favorite } from '../models/models'
-import { FavoriteItem } from '../components/FavoriteItem'
+import { FavoriteItem } from '../components/Favorite/FavoriteItem'
 import { Favorite } from '../models/models'
-import { EpisodeView } from '../components/Episode'
+import { EpisodeView } from '../components/Episode/Episode'
 
 export const History = (): JSX.Element => {
 	const [fetchHistory, { data: history }] = useLazyQuery(FETCH_HISTORY)

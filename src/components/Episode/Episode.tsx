@@ -1,13 +1,13 @@
 import React, { useEffect, useContext, useState } from 'react'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 
-import { SET_FAVORITE, GET_FAVORITES, REMOVE_FAVORITE } from '../query/podcast_query'
-import { Episode, Favorite } from '../models/models'
-import { PlayerContext } from '../UseContext'
+import { SET_FAVORITE, GET_FAVORITES, REMOVE_FAVORITE } from '../../query/podcast_query'
+import { Episode, Favorite } from '../../models/models'
+import { PlayerContext } from '../../UseContext'
 
-import { handleDate, stripHtmlFromString, calculateTime } from '../helpers'
-import { EpisodeStyle, TopStyle, ImageStyle, HeaderStyle, TitleStyle, ContentStyle } from './styles/Episode'
-import { CloseIcon, PlayIcon, FavoriteIcon } from '../svgs'
+import { handleDate, stripHtmlFromString, calculateTime } from '../../helpers'
+import { EpisodeStyle, TopStyle, ImageStyle, HeaderStyle, TitleStyle, ContentStyle } from './style'
+import { CloseIcon, PlayIcon, FavoriteIcon } from '../../svgs'
 
 interface Props {
 	currentEpisode: Episode | Favorite

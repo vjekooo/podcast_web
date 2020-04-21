@@ -1,5 +1,5 @@
 import React from 'react'
-import { ModalStyle } from './styles/Modal'
+import { ModalStyle } from './style'
 import { ApolloError } from 'apollo-boost'
 
 interface Props {
