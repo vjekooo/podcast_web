@@ -2,10 +2,10 @@ import React, { useContext, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 
-import { LOGOUT, USER_PROFILE } from '../query/user_query'
-import { PlayerContext } from '../UseContext'
-import { getAccessToken } from '../accessToken'
-import { AccountContent, AccountMain, AccountTop } from './styles/Account'
+import { LOGOUT, USER_PROFILE } from '../../query/user_query'
+import { PlayerContext } from '../../UseContext'
+import { getAccessToken } from '../../accessToken'
+import { AccountContent, AccountMain, AccountTop } from './style'
 
 export const Account = (): JSX.Element => {
 	const navigate = useNavigate()

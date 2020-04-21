@@ -1,9 +1,9 @@
 import React, { useEffect, useContext } from 'react'
 import { useLazyQuery } from '@apollo/react-hooks'
 import { Link } from 'react-router-dom'
-import { GET_PODCASTS, FETCH_PODCASTS } from '../query/podcast_query'
-import { ContentStyle, LoginStyle } from './styles/Home'
-import { PlayerContext } from '../UseContext'
+import { GET_PODCASTS, FETCH_PODCASTS } from '../../query/podcast_query'
+import { ContentStyle, LoginStyle } from './style'
+import { PlayerContext } from '../../UseContext'
 
 interface Podcast {
 	id: string

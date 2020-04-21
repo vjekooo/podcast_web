@@ -1,56 +1,50 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { useNavigate } from 'react-router-dom'
-import { setAccessToken } from '../accessToken'
 
-import { LOGIN } from '../query/user_query'
-import { FormStyle } from './styles/Login'
+import { REGISTER } from '../../query/user_query'
 
-import { PlayerContext } from '../UseContext'
-import { UseFormWithReact } from '../hooks/useFormWIthValidation'
-import validate from '../hooks/validate'
+import { FormStyle } from '../Login/style'
+import { UseFormWithReact } from '../../hooks/useFormWIthValidation'
+
+import validate from '../../hooks/validate'
 
 const INITIAL_STATE = {
 	email: '',
 	password: ''
 }
 
-export const Login = (): JSX.Element => {
+export const Register = (): JSX.Element => {
 	const navigate = useNavigate()
-	const { handleUser } = useContext(PlayerContext)
 
 	const { values, handleChange, handleBlur, errors, isSubmitting } = UseFormWithReact(INITIAL_STATE, validate)
 
-	const [login] = useMutation(LOGIN)
+	const [register] = useMutation(REGISTER)
 
 	return (
 		<div>
 			<div>
 				<FormStyle
-					onSubmit={(e): void => {
+					onSubmit={async (e): Promise<void> => {
 						e.preventDefault()
 						const email = values.email
 						const password = values.password
-						login({
-							variables: { email, password }
-						})
-							.then((res) => {
-								if (res && res.data) {
-									setAccessToken(res.data.login.accessToken)
-									if (handleUser) {
-										handleUser(res.data.login.accessToken)
-									}
-
-									navigate('/')
-								}
+						try {
+							const data = await register({
+								variables: { email, password }
 							})
-							.catch((err) => console.log(err))
+							if (data) {
+								navigate('/')
+							}
+						} catch (error) {
+							console.log(error)
+						}
 					}}
 				>
 					<div>
 						<input
-							type="email"
 							name="email"
+							type="email"
 							value={values.email}
 							onChange={(e): void => handleChange(e)}
 							onBlur={handleBlur}
@@ -60,16 +54,16 @@ export const Login = (): JSX.Element => {
 					</div>
 					<div>
 						<input
-							type="password"
 							name="password"
+							type="password"
 							value={values.password}
 							onChange={(e): void => handleChange(e)}
 							onBlur={handleBlur}
-							className={errors.password && 'input-error'}
+							className={errors.email && 'input-error'}
 						/>
 						{errors.password && <div className="text-error">{errors.password}</div>}
 					</div>
-					<button disabled={isSubmitting}>Login</button>
+					<button disabled={isSubmitting}>Register</button>
 				</FormStyle>
 			</div>
 		</div>

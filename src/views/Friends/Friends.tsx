@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
-import { REQUEST_FRIEND, HANDLE_REQUEST, FETCH_FRIENDS, FETCH_REQUESTEE, FETCH_REQUESTOR } from '../query/friends_query'
-import { FETCH_USERS } from '../query/user_query'
+import {
+	REQUEST_FRIEND,
+	HANDLE_REQUEST,
+	FETCH_FRIENDS,
+	FETCH_REQUESTEE,
+	FETCH_REQUESTOR
+} from '../../query/friends_query'
+import { FETCH_USERS } from '../../query/user_query'
 
-import { FriendsContainer, SearchDropdown, SearchPosition } from './styles/Friends'
-import { Requests } from '../components/Requests/Requests'
+import { FriendsContainer, SearchDropdown, SearchPosition } from './style'
+import { Requests } from '../../components/Requests/Requests'
 
 interface User {
 	email: string

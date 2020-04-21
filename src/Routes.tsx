@@ -1,15 +1,15 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Home } from './views/Home'
-import { Search } from './views/Search'
+import { Home } from './views/Home/Home'
+import { Search } from './views/Search/Search'
 import { Podcast } from './components/Podcast/Podcast'
 import Header from './components/Header/Header'
-import { Login } from './views/Login'
-import { Register } from './views/Register'
-import { Favorites } from './views/Favorites'
-import { Account } from './views/Account'
-import { Friends } from './views/Friends'
-import { History } from './views/History'
+import { Login } from './views/Login/Login'
+import { Register } from './views/Register/Register'
+import { Favorites } from './views/Favorites/Favorites'
+import { Account } from './views/Account/Account'
+import { Friends } from './views/Friends/Friends'
+import { History } from './views/History/History'
 
 export const Router = (): JSX.Element => {
 	return (
