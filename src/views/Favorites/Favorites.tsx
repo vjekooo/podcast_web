@@ -30,9 +30,7 @@ export const Favorites = (): JSX.Element => {
 	return (
 		<FavoriteStyle>
 			<FavoriteItem list={favorites?.favorites} onClick={handleClickEvent} />
-			{isEpisodeVisible && currentFavorite && (
-				<EpisodeView currentEpisode={currentFavorite} onClick={handleEpisode} />
-			)}
+			{isEpisodeVisible && currentFavorite && <EpisodeView currentEpisode={currentFavorite} onClick={handleEpisode} />}
 		</FavoriteStyle>
 	)
 }

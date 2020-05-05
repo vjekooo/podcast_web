@@ -25,12 +25,8 @@ export const Requests = ({ list, handleClick, target }: Props): JSX.Element => {
 								<span>{item[target]}</span>
 								{target === 'requestor' && (
 									<div>
-										<button onClick={(): void => handleClick(item.id, item[target], 'accept')}>
-											acc
-										</button>
-										<button onClick={(): void => handleClick(item.id, item[target], 'decline')}>
-											dec
-										</button>
+										<button onClick={(): void => handleClick(item.id, item[target], 'accept')}>acc</button>
+										<button onClick={(): void => handleClick(item.id, item[target], 'decline')}>dec</button>
 									</div>
 								)}
 							</div>

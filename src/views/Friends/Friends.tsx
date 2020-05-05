@@ -80,13 +80,9 @@ export const Friends = (): JSX.Element => {
 										<button
 											type="button"
 											onClick={(): void => handleFriendRequest(user.email)}
-											disabled={requestees.fetchRequestee.some(
-												(i: any) => i.requestee === user.email
-											)}
+											disabled={requestees.fetchRequestee.some((i: any) => i.requestee === user.email)}
 										>
-											{requestees.fetchRequestee.some((i: any) => i.requestee === user.email)
-												? 'pending'
-												: 'add'}
+											{requestees.fetchRequestee.some((i: any) => i.requestee === user.email) ? 'pending' : 'add'}
 										</button>
 									</li>
 								)

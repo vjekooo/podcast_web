@@ -153,9 +153,7 @@ export const Podcast = (): JSX.Element => {
 					value={searchValue}
 				/>
 			</SearchStyle> */}
-			{isEpisodeVisible && currentEpisode && (
-				<EpisodeView currentEpisode={currentEpisode} onClick={handleEpisode} />
-			)}
+			{isEpisodeVisible && currentEpisode && <EpisodeView currentEpisode={currentEpisode} onClick={handleEpisode} />}
 			<ListStyle>
 				<ul>
 					{podcast?.fetchPodcastEpisodes.episodes.map(

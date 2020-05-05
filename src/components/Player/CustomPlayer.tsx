@@ -143,9 +143,7 @@ export const CustomPlayer = ({ episode, theme }: Props): JSX.Element => {
 						<span>
 							<span>{player.current.duration && calculateTime(player.current.currentTime)}</span>
 							<span>
-								-
-								{player.current.duration &&
-									calculateTime(player.current.duration - player.current.currentTime)}
+								-{player.current.duration && calculateTime(player.current.duration - player.current.currentTime)}
 							</span>
 						</span>
 					</ArtworkStyleBig>
@@ -157,29 +155,17 @@ export const CustomPlayer = ({ episode, theme }: Props): JSX.Element => {
 				</ArtworkStyleSmall>
 				<ControlsStyle>
 					<span onClick={(): void => handleSkipping('rwd')}>
-						<RewindIcon
-							width={isPlayerSmall ? '30px' : '40px'}
-							fill={theme === 'light' ? '#000' : '#fff'}
-						/>
+						<RewindIcon width={isPlayerSmall ? '30px' : '40px'} fill={theme === 'light' ? '#000' : '#fff'} />
 					</span>
 					<span onClick={(): void => handlePlayPauseClick()}>
 						{!play ? (
-							<PauseIcon
-								width={isPlayerSmall ? '40px' : '60px'}
-								fill={theme === 'light' ? '#000' : '#fff'}
-							/>
+							<PauseIcon width={isPlayerSmall ? '40px' : '60px'} fill={theme === 'light' ? '#000' : '#fff'} />
 						) : (
-							<PlayIcon
-								width={isPlayerSmall ? '40px' : '60px'}
-								fill={theme === 'light' ? '#000' : '#fff'}
-							/>
+							<PlayIcon width={isPlayerSmall ? '40px' : '60px'} fill={theme === 'light' ? '#000' : '#fff'} />
 						)}
 					</span>
 					<span onClick={(): void => handleSkipping('fwd')}>
-						<ForwardIcon
-							width={isPlayerSmall ? '30px' : '40px'}
-							fill={theme === 'light' ? '#000' : '#fff'}
-						/>
+						<ForwardIcon width={isPlayerSmall ? '30px' : '40px'} fill={theme === 'light' ? '#000' : '#fff'} />
 					</span>
 				</ControlsStyle>
 				<ButtonStyle size={isPlayerSmall} onClick={(): void => setPlayerSize(!isPlayerSmall)}>

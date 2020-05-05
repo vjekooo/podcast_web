@@ -30,9 +30,7 @@ export const History = (): JSX.Element => {
 	return (
 		<HistoryContainer>
 			<FavoriteItem list={history?.fetchHistory} onClick={handleClickEvent} />
-			{isEpisodeVisible && currentFavorite && (
-				<EpisodeView currentEpisode={currentFavorite} onClick={handleEpisode} />
-			)}
+			{isEpisodeVisible && currentFavorite && <EpisodeView currentEpisode={currentFavorite} onClick={handleEpisode} />}
 		</HistoryContainer>
 	)
 }

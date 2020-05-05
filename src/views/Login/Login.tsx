@@ -19,7 +19,7 @@ export const Login = (): JSX.Element => {
 	const navigate = useNavigate()
 	const { handleUser } = useContext(PlayerContext)
 
-	const { values, handleChange, handleBlur, errors, isSubmitting } = UseFormWithReact(INITIAL_STATE, validate)
+	const { values, handleChange, errors, isSubmitting } = UseFormWithReact(INITIAL_STATE, validate)
 
 	const [login] = useMutation(LOGIN)
 
@@ -53,7 +53,6 @@ export const Login = (): JSX.Element => {
 							name="email"
 							value={values.email}
 							onChange={(e): void => handleChange(e)}
-							onBlur={handleBlur}
 							className={errors.email && 'input-error'}
 						/>
 						{errors.email && <div className="text-error">{errors.email}</div>}
@@ -64,12 +63,11 @@ export const Login = (): JSX.Element => {
 							name="password"
 							value={values.password}
 							onChange={(e): void => handleChange(e)}
-							onBlur={handleBlur}
 							className={errors.password && 'input-error'}
 						/>
 						{errors.password && <div className="text-error">{errors.password}</div>}
 					</div>
-					<button disabled={isSubmitting}>Login</button>
+					<button disabled={isSubmitting || Object.keys(errors).length}>Login</button>
 				</FormStyle>
 			</div>
 		</div>

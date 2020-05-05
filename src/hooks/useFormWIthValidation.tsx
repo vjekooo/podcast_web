@@ -21,6 +21,8 @@ export const UseFormWithReact = (initialState: any, validate: any): any => {
 			...values,
 			[event.currentTarget.name]: event.currentTarget.value
 		})
+		const validationErrors = validate(values)
+		setErrors(validationErrors)
 	}
 
 	function handleBlur(): void {
