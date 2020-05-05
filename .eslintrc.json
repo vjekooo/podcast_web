@@ -39,6 +39,7 @@
 			}
 		]
 	},
+	"ignorePatterns": ["style.ts", "*config.js", "node_modules/", "dist/", "cypress/", "build-utils"],
 	"settings": {
 		"react": {
 			"version": "detect"
