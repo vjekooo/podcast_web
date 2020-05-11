@@ -7,8 +7,6 @@ import { REGISTER } from '../../query/user_query'
 import { FormStyle } from '../Login/style'
 import { UseFormWithReact } from '../../hooks/useFormWIthValidation'
 
-import validate from '../../hooks/validate'
-
 const INITIAL_STATE = {
 	email: '',
 	password: ''
@@ -17,7 +15,7 @@ const INITIAL_STATE = {
 export const Register = (): JSX.Element => {
 	const navigate = useNavigate()
 
-	const { values, handleChange, handleBlur, errors, isSubmitting } = UseFormWithReact(INITIAL_STATE, validate)
+	const { values, handleChange, handleBlur, errors, isSubmitting } = UseFormWithReact(INITIAL_STATE)
 
 	const [register] = useMutation(REGISTER)
 
@@ -42,28 +40,32 @@ export const Register = (): JSX.Element => {
 					}}
 				>
 					<div>
+						<label>E-mail</label>
 						<input
 							name="email"
 							type="email"
+							placeholder="email"
 							value={values.email}
-							onChange={(e): void => handleChange(e)}
+							onChange={handleChange}
 							onBlur={handleBlur}
-							className={errors.email && 'input-error'}
+							className={errors?.email && 'input-error'}
 						/>
-						{errors.email && <div className="text-error">{errors.email}</div>}
+						{errors?.email && <div className="text-error">{errors?.email}</div>}
 					</div>
 					<div>
+						<label>Password</label>
 						<input
 							name="password"
 							type="password"
+							placeholder="password"
 							value={values.password}
-							onChange={(e): void => handleChange(e)}
+							onChange={handleChange}
 							onBlur={handleBlur}
-							className={errors.email && 'input-error'}
+							className={errors?.email && 'input-error'}
 						/>
-						{errors.password && <div className="text-error">{errors.password}</div>}
+						{errors?.password && <div className="text-error">{errors?.password}</div>}
 					</div>
-					<button disabled={isSubmitting}>Register</button>
+					<button disabled={isSubmitting || Boolean(Object.keys(errors).length)}>Register</button>
 				</FormStyle>
 			</div>
 		</div>

@@ -8,7 +8,6 @@ import { FormStyle } from './style'
 
 import { PlayerContext } from '../../UseContext'
 import { UseFormWithReact } from '../../hooks/useFormWIthValidation'
-import validate from '../../hooks/validate'
 
 const INITIAL_STATE = {
 	email: '',
@@ -19,7 +18,7 @@ export const Login = (): JSX.Element => {
 	const navigate = useNavigate()
 	const { handleUser } = useContext(PlayerContext)
 
-	const { values, handleChange, errors, isSubmitting } = UseFormWithReact(INITIAL_STATE, validate)
+	const { values, handleChange, handleBlur, errors, isSubmitting } = UseFormWithReact(INITIAL_STATE)
 
 	const [login] = useMutation(LOGIN)
 
@@ -48,26 +47,30 @@ export const Login = (): JSX.Element => {
 					}}
 				>
 					<div>
+						<label>E-mail</label>
 						<input
 							type="email"
 							name="email"
 							value={values.email}
-							onChange={(e): void => handleChange(e)}
-							className={errors.email && 'input-error'}
+							onChange={handleChange}
+							onBlur={handleBlur}
+							className={errors?.email && 'input-error'}
 						/>
-						{errors.email && <div className="text-error">{errors.email}</div>}
+						{errors?.email && <div className="text-error">{errors?.email}</div>}
 					</div>
 					<div>
+						<label>Password</label>
 						<input
 							type="password"
 							name="password"
 							value={values.password}
-							onChange={(e): void => handleChange(e)}
-							className={errors.password && 'input-error'}
+							onChange={handleChange}
+							onBlur={handleBlur}
+							className={errors?.password && 'input-error'}
 						/>
-						{errors.password && <div className="text-error">{errors.password}</div>}
+						{errors?.password && <div className="text-error">{errors?.password}</div>}
 					</div>
-					<button disabled={isSubmitting || Object.keys(errors).length}>Login</button>
+					<button disabled={isSubmitting || Boolean(Object.keys(errors).length)}>Login</button>
 				</FormStyle>
 			</div>
 		</div>

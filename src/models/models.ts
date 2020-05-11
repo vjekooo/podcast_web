@@ -24,6 +24,6 @@ export interface Favorite {
 	image?: string
 }
 
-export interface KeyValue {
+export interface LooseObject {
 	[key: string]: string
 }

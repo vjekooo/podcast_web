@@ -1,7 +1,8 @@
-import { KeyValue } from '../models/models'
+import { LooseObject } from '../models/models'
+import { InitialState } from './useFormWIthValidation'
 
-export default function validate(values: any): any {
-	const errors: KeyValue = {}
+export default function validate(values: InitialState, pointer?: string): LooseObject {
+	const errors: LooseObject = {}
 	if (!values.email) {
 		errors.email = 'Required'
 	} else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
@@ -13,5 +14,12 @@ export default function validate(values: any): any {
 	} else if (values.password.length < 5) {
 		errors.password = 'Must be longer than 5'
 	}
-	return errors
+
+	if (pointer && errors[pointer]) {
+		return {
+			[pointer]: errors[pointer]
+		}
+	} else {
+		return {}
+	}
 }
