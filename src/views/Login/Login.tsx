@@ -3,7 +3,8 @@ import { useMutation } from '@apollo/react-hooks'
 import { useNavigate } from 'react-router-dom'
 import { setAccessToken } from '../../accessToken'
 
-import { LOGIN } from '../../query/user_query'
+import { LOGIN, REGISTER } from '../../query/user_query'
+
 import { FormStyle } from './style'
 
 import { PlayerContext } from '../../UseContext'
@@ -21,6 +22,43 @@ export const Login = (): JSX.Element => {
 	const { values, handleChange, handleBlur, errors, isSubmitting } = UseFormWithReact(INITIAL_STATE)
 
 	const [login] = useMutation(LOGIN)
+	const [register] = useMutation(REGISTER)
+
+	const location = window.location.pathname
+
+	const handleLogin = (): void => {
+		const email = values.email
+		const password = values.password
+
+		login({
+			variables: { email, password }
+		})
+			.then((res) => {
+				if (res && res.data) {
+					setAccessToken(res.data.login.accessToken)
+					if (handleUser) {
+						handleUser(res.data.login.accessToken)
+					}
+					navigate('/')
+				}
+			})
+			.catch((err) => console.log(err))
+	}
+
+	const handleRegister = async (): Promise<void> => {
+		const email = values.email
+		const password = values.password
+		try {
+			const data = await register({
+				variables: { email, password }
+			})
+			if (data) {
+				navigate('/')
+			}
+		} catch (error) {
+			console.log(error)
+		}
+	}
 
 	return (
 		<div>
@@ -28,22 +66,11 @@ export const Login = (): JSX.Element => {
 				<FormStyle
 					onSubmit={(e): void => {
 						e.preventDefault()
-						const email = values.email
-						const password = values.password
-						login({
-							variables: { email, password }
-						})
-							.then((res) => {
-								if (res && res.data) {
-									setAccessToken(res.data.login.accessToken)
-									if (handleUser) {
-										handleUser(res.data.login.accessToken)
-									}
-
-									navigate('/')
-								}
-							})
-							.catch((err) => console.log(err))
+						if (location === '/login') {
+							handleLogin()
+						} else {
+							handleRegister()
+						}
 					}}
 				>
 					<div>

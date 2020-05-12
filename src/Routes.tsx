@@ -5,7 +5,6 @@ import { Search } from './views/Search/Search'
 import { Podcast } from './components/Podcast/Podcast'
 import Header from './components/Header/Header'
 import { Login } from './views/Login/Login'
-import { Register } from './views/Register/Register'
 import { Favorites } from './views/Favorites/Favorites'
 import { Account } from './views/Account/Account'
 import { Friends } from './views/Friends/Friends'
@@ -18,7 +17,7 @@ export const Router = (): JSX.Element => {
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/login" element={<Login />} />
-				<Route path="/register" element={<Register />} />
+				<Route path="/register" element={<Login />} />
 				<Route path="/search" element={<Search />} />
 				<Route path="/podcast" element={<Podcast />} />
 				<Route path="/favorites" element={<Favorites />} />
