@@ -1,9 +1,11 @@
 
 FROM node as build
+
+RUN mkdir /app
 WORKDIR /app
 
 COPY package.json yarn.lock ./
-RUN yarn
+RUN yarn install --production --silent --ignore-scripts
 COPY . ./
 RUN yarn build
 
