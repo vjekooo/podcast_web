@@ -11,7 +11,7 @@
     ApplicationStart:
       -
         location: /scripts/applicationStart.sh
-        timeout: 360
+        timeout: 860
     ApplicationStop:
       -
         location: /scripts/applicationStop.sh
