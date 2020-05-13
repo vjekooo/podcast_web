@@ -5,7 +5,7 @@ RUN mkdir /app
 WORKDIR /app
 
 COPY package.json yarn.lock ./
-RUN yarn install --production --silent --ignore-scripts
+RUN yarn install --silent --ignore-scripts
 COPY . ./
 RUN yarn build
 
