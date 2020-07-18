@@ -1,6 +1,8 @@
 
 FROM node:12-alpine as build
 
+RUN npm config set scripts-prepend-node-path true
+
 RUN mkdir /app
 WORKDIR /app
 
