@@ -7,7 +7,7 @@
     BeforeInstall:
       -
         location: /scripts/beforeInstall.sh
-        timeout: 15
+        timeout: 150
     ApplicationStart:
       -
         location: /scripts/applicationStart.sh
@@ -15,6 +15,6 @@
     ApplicationStop:
       -
         location: /scripts/applicationStop.sh
-        timeout: 15
+        timeout: 150
   os: linux
   version: 0.0
