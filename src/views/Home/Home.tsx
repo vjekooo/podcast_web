@@ -1,8 +1,9 @@
 import React, { useEffect, useContext } from 'react'
 import { useLazyQuery } from '@apollo/react-hooks'
+import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+
 import { GET_PODCASTS, FETCH_PODCASTS } from '../../query/podcast_query'
-import { ContentStyle, LoginStyle } from './style'
 import { PlayerContext } from '../../UseContext'
 
 interface Podcast {
@@ -39,7 +40,7 @@ export const Home = (): JSX.Element => {
 	return (
 		<div>
 			<div>{loading && <div>...loading</div>}</div>
-			<ContentStyle>
+			<Content>
 				{subscriptions?.fetchPodcasts.map(
 					(podcast: Podcast, index: number): JSX.Element => (
 						<Link
@@ -53,17 +54,48 @@ export const Home = (): JSX.Element => {
 						</Link>
 					)
 				)}
-			</ContentStyle>
+			</Content>
 			{!user && (
-				<LoginStyle>
+				<Login>
 					<h1>Podcast</h1>
 					<div>
 						<Link to="/login">login</Link>
 						<span>or</span>
 						<Link to="/register">register</Link>
 					</div>
-				</LoginStyle>
+				</Login>
 			)}
 		</div>
 	)
 }
+
+const Content = styled.div`
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: 1rem;
+	a {
+		width: 33.3%;
+	}
+	img {
+		width: 100%;
+		height: 100%;
+	}
+`
+
+const Login = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	div {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	a {
+		padding: 0.5rem;
+		margin: 0 1rem;
+		text-decoration: none;
+		color: white;
+		background-color: blueviolet;
+	}
+`

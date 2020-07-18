@@ -1,16 +1,21 @@
 
-FROM node as build
+FROM node:12-alpine as build
+
+RUN npm config set scripts-prepend-node-path true
+
+RUN mkdir /app
 WORKDIR /app
-COPY . /app/
 
-RUN npm install
+COPY package.json yarn.lock ./
+RUN yarn install --silent --ignore-scripts
+COPY . ./
+RUN yarn build
 
-RUN npm run build
-
-FROM nginx
+FROM nginx:1-alpine
 RUN rm /etc/nginx/conf.d/default.conf
 COPY /nginx.conf /etc/nginx/conf.d 
 COPY --from=build /app/dist usr/share/nginx/html
 
 EXPOSE 80
+
 CMD ["nginx", "-g", "daemon off;"]

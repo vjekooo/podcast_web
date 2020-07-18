@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
-import { HeaderStyle, NavStyle, ToolStyle, ThemeSwitch } from './style'
+import styled from 'styled-components'
 
 import { PlayerContext } from '../../UseContext'
 
@@ -14,8 +14,8 @@ const Header = (): JSX.Element => {
 	}
 
 	return (
-		<HeaderStyle>
-			<NavStyle>
+		<HeaderContainer>
+			<Nav>
 				<NavLink to="/" activeClassName="link-active">
 					Home
 				</NavLink>
@@ -28,12 +28,45 @@ const Header = (): JSX.Element => {
 				<NavLink to="/account" activeClassName="link-active">
 					Account
 				</NavLink>
-			</NavStyle>
-			<ToolStyle>
+			</Nav>
+			<Tool>
 				<ThemeSwitch onClick={handleTheme}></ThemeSwitch>
-			</ToolStyle>
-		</HeaderStyle>
+			</Tool>
+		</HeaderContainer>
 	)
 }
+
+const HeaderContainer = styled.header`
+	display: flex;
+	justify-content: space-between;
+	padding: 0.5rem 0.5rem 0 0.5rem;
+`
+
+const Nav = styled.nav`
+	display: flex;
+	a {
+		margin-right: 0.5rem;
+		color: ${(props): string => props.theme.linkColor};
+	}
+	.link-active {
+		color: ${(props): string => props.theme.linkColorActive};
+	}
+`
+
+const Tool = styled.div`
+	display: flex;
+	button {
+		border-radius: 0;
+		border-image: none;
+	}
+`
+
+const ThemeSwitch = styled.div`
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background-color: ${(props): string => props.theme.switcher};
+	margin-right: 1rem;
+`
 
 export default Header

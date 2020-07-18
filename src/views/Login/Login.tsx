@@ -1,14 +1,13 @@
 import React, { useContext } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { useNavigate } from 'react-router-dom'
+
 import { setAccessToken } from '../../accessToken'
-
 import { LOGIN, REGISTER } from '../../query/user_query'
-
-import { FormStyle } from './style'
 
 import { PlayerContext } from '../../UseContext'
 import { UseFormWithReact } from '../../hooks/useFormWIthValidation'
+import styled from 'styled-components'
 
 const INITIAL_STATE = {
 	email: '',
@@ -21,28 +20,29 @@ export const Login = (): JSX.Element => {
 
 	const { values, handleChange, handleBlur, errors, isSubmitting } = UseFormWithReact(INITIAL_STATE)
 
-	const [login] = useMutation(LOGIN)
-	const [register] = useMutation(REGISTER)
+	const [login, { error: loginError }] = useMutation(LOGIN)
+	const [register, { error: registerError }] = useMutation(REGISTER)
 
 	const location = window.location.pathname
 
-	const handleLogin = (): void => {
+	const handleLogin = async (): Promise<void> => {
 		const email = values.email
 		const password = values.password
 
-		login({
-			variables: { email, password }
-		})
-			.then((res) => {
-				if (res && res.data) {
-					setAccessToken(res.data.login.accessToken)
-					if (handleUser) {
-						handleUser(res.data.login.accessToken)
-					}
-					navigate('/')
-				}
+		try {
+			const data = await login({
+				variables: { email, password }
 			})
-			.catch((err) => console.log(err))
+			if (data) {
+				setAccessToken(data.data.login.accessToken)
+				if (handleUser) {
+					handleUser(data.data.login.accessToken)
+				}
+				navigate('/')
+			}
+		} catch (err) {
+			console.log(err)
+		}
 	}
 
 	const handleRegister = async (): Promise<void> => {
@@ -55,15 +55,15 @@ export const Login = (): JSX.Element => {
 			if (data) {
 				navigate('/')
 			}
-		} catch (error) {
-			console.log(error)
+		} catch (err) {
+			console.log(err)
 		}
 	}
 
 	return (
 		<div>
 			<div>
-				<FormStyle
+				<Form
 					onSubmit={(e): void => {
 						e.preventDefault()
 						if (location === '/login') {
@@ -74,8 +74,8 @@ export const Login = (): JSX.Element => {
 					}}
 				>
 					<div>
-						<label>E-mail</label>
-						<input
+						<Label>E-mail</Label>
+						<Input
 							type="email"
 							name="email"
 							value={values.email}
@@ -86,8 +86,8 @@ export const Login = (): JSX.Element => {
 						{errors?.email && <div className="text-error">{errors?.email}</div>}
 					</div>
 					<div>
-						<label>Password</label>
-						<input
+						<Label>Password</Label>
+						<Input
 							type="password"
 							name="password"
 							value={values.password}
@@ -97,9 +97,43 @@ export const Login = (): JSX.Element => {
 						/>
 						{errors?.password && <div className="text-error">{errors?.password}</div>}
 					</div>
-					<button disabled={isSubmitting || Boolean(Object.keys(errors).length)}>Login</button>
-				</FormStyle>
+					{loginError && <div className="text-error">{loginError}</div>}
+					{registerError && <div className="text-error">{registerError}</div>}
+					<Button disabled={isSubmitting || Boolean(Object.keys(errors).length)}>Login</Button>
+				</Form>
 			</div>
 		</div>
 	)
 }
+
+const Form = styled.form`
+	display: flex;
+	flex-direction: column;
+	padding: 2rem 2rem 0 2rem;
+	> div {
+		margin-bottom: 1rem;
+	}
+	.input-error {
+		border: 1px solid red;
+	}
+	.text-error {
+		color: red;
+		font-size: 12px;
+	}
+`
+
+const Input = styled.input`
+	width: 100%;
+	margin-bottom: 0.3rem;
+	min-height: 30px;
+	font-size: 14px;
+`
+
+const Label = styled.label`
+	font-size: 12px;
+`
+
+const Button = styled.button`
+	margin-top: 0.5rem;
+	height: 30px;
+`

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
+import { hot } from 'react-hot-loader/root'
+import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 
 import { CustomPlayer } from './components/Player/CustomPlayer'
 
-import { hot } from 'react-hot-loader/root'
 import { Router } from './Routes'
 import { setAccessToken } from './accessToken'
 import { PlayerContext } from './UseContext'
 import { refreshToken } from './helpers'
 import { Episode } from './models/models'
-import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 import { USER_SETTINGS, SET_THEME } from './query/user_query'
 import useTimeout from './hooks/useTimeout'
 
@@ -37,11 +37,11 @@ const themeLight = {
 }
 
 const themeDark = {
-	bg: 'black',
+	bg: '#212121',
 	fontColor: 'white',
 	linkColor: 'white',
 	linkColorActive: 'gray',
-	playerBackground: 'black',
+	playerBackground: '#212121',
 	switcher: 'yellow'
 }
 

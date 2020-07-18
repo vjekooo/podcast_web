@@ -1,12 +1,12 @@
 import React, { useEffect, useContext, useState } from 'react'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
+import styled from 'styled-components'
 
 import { SET_FAVORITE, GET_FAVORITES, REMOVE_FAVORITE } from '../../query/podcast_query'
 import { Episode, Favorite } from '../../models/models'
 import { PlayerContext } from '../../UseContext'
 
 import { handleDate, stripHtmlFromString, calculateTime } from '../../helpers'
-import { EpisodeStyle, TopStyle, ImageStyle, HeaderStyle, TitleStyle, ContentStyle } from './style'
 import { CloseIcon, PlayIcon, FavoriteIcon } from '../../svgs'
 
 interface Props {
@@ -56,18 +56,18 @@ export const EpisodeView = ({ currentEpisode, onClick }: Props): JSX.Element => 
 	}
 
 	return (
-		<EpisodeStyle>
-			<TopStyle>
+		<EpisodeContainer>
+			<EpisodeHeader>
 				<span onClick={onClick}>
 					<CloseIcon width="30px" fill={theme === 'light' ? '#000' : '#fff'} />
 				</span>
-			</TopStyle>
-			<ContentStyle>
-				<HeaderStyle>
-					<ImageStyle>
+			</EpisodeHeader>
+			<EpisodeContent>
+				<ContentTop>
+					<Image>
 						<img src={currentEpisode.image} />
-					</ImageStyle>
-					<TitleStyle>
+					</Image>
+					<Title>
 						<h3>{currentEpisode.title}</h3>
 						<p>{calculateTime(currentEpisode.duration)}</p>
 						<p>{handleDate(currentEpisode.pubDate)}</p>
@@ -98,10 +98,55 @@ export const EpisodeView = ({ currentEpisode, onClick }: Props): JSX.Element => 
 								<PlayIcon width="30px" fill={theme === 'light' ? '#000' : '#fff'} />
 							</span>
 						</div>
-					</TitleStyle>
-				</HeaderStyle>
+					</Title>
+				</ContentTop>
 				<div>{stripHtmlFromString(currentEpisode?.description ?? '')}</div>
-			</ContentStyle>
-		</EpisodeStyle>
+			</EpisodeContent>
+		</EpisodeContainer>
 	)
 }
+
+const EpisodeContainer = styled.div`
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: ${(props): string => props.theme.playerBackground};
+	padding: 1rem;
+	z-index: 10;
+	overflow: auto;
+`
+
+const EpisodeHeader = styled.div`
+	display: flex;
+`
+
+const ContentTop = styled.div`
+	margin-bottom: 2rem;
+	display: flex;
+	flex-direction: column;
+	padding-top: 2rem;
+`
+
+const Title = styled.div`
+	text-align: center;
+	div {
+		span {
+			margin-right: 1rem;
+		}
+	}
+`
+const EpisodeContent = styled.div`
+	overflow-y: scroll;
+`
+
+const Image = styled.div`
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	img {
+		width: 40%;
+	}
+`

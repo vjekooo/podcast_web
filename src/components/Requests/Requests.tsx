@@ -1,6 +1,5 @@
 import React from 'react'
-
-import { RequestsMain } from './style'
+import styled from 'styled-components'
 
 interface Requests {
 	id: string
@@ -37,3 +36,12 @@ export const Requests = ({ list, handleClick, target }: Props): JSX.Element => {
 		</RequestsMain>
 	)
 }
+
+const RequestsMain = styled.div`
+	li {
+		> div {
+			display: flex;
+			justify-content: space-between;
+		}
+	}
+`
