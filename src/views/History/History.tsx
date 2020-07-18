@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-
-import { HistoryContainer } from './style'
 import { useLazyQuery } from '@apollo/react-hooks'
+import styled from 'styled-components'
+
 import { FETCH_HISTORY } from '../../query/podcast_query'
 // import { Favorite } from '../models/models'
 import { FavoriteItem } from '../../components/Favorite/FavoriteItem'
@@ -34,3 +34,8 @@ export const History = (): JSX.Element => {
 		</HistoryContainer>
 	)
 }
+
+const HistoryContainer = styled.div`
+	display: flex;
+	padding: 0 0.5rem;
+`

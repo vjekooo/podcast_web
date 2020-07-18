@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
 import { Home } from './views/Home/Home'
 import { Search } from './views/Search/Search'
 import { Podcast } from './components/Podcast/Podcast'
@@ -24,7 +25,7 @@ export const Router = (): JSX.Element => {
 				<Route path="/account" element={<Account />} />
 				<Route path="/friends" element={<Friends />} />
 				<Route path="/history" element={<History />} />
-				{/* <Route element={(): JSX.Element => <div>404</div>} /> */}
+				<Route element={<div>404</div>} />
 			</Routes>
 		</BrowserRouter>
 	)

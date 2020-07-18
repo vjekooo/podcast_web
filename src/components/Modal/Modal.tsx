@@ -1,6 +1,6 @@
 import React from 'react'
-import { ModalStyle } from './style'
 import { ApolloError } from 'apollo-boost'
+import styled from 'styled-components'
 
 interface Props {
 	setModalStatus: (status: boolean) => void
@@ -19,3 +19,8 @@ export const Modal: React.FC<Props> = ({ setModalStatus, value }) => {
 		</ModalStyle>
 	)
 }
+
+const ModalStyle = styled.div`
+	width: 90%;
+	height: 50%;
+`

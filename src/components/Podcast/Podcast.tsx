@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
+import styled from 'styled-components'
 
 import { PlayerContext } from '../../UseContext'
 
@@ -8,16 +9,6 @@ import { EpisodeView } from '../Episode/Episode'
 
 import { Episode } from '../../models/models'
 import { SUBSCRIBE, GET_PODCASTS, UNSUBSCRIBE, FETCH_PODCASTS_EPISODES } from '../../query/podcast_query'
-
-import {
-	InfoStyle,
-	ListStyle,
-	ListItemStyle,
-	ListItemTitleStyle,
-	ListItemTimeStyle,
-	PodcastContainer
-	// SearchStyle
-} from './style'
 
 import { stripHtmlFromString, calculateTime } from '../../helpers'
 import { PlayIcon, Star } from '../../svgs'
@@ -84,7 +75,7 @@ export const Podcast = (): JSX.Element => {
 	const checkIfPodcastSubscribed = (): void => {
 		const currentPodcast = podcast?.fetchPodcastEpisodes
 		if (currentPodcast) {
-			const value = podcasts.podcasts.find((cast: PodcastState) => cast.url === currentPodcast.url)
+			const value = podcasts?.podcasts.find((cast: PodcastState) => cast.url === currentPodcast.url)
 			if (value) {
 				setIsSubscribed(true)
 			} else {
@@ -121,7 +112,7 @@ export const Podcast = (): JSX.Element => {
 
 	return (
 		<PodcastContainer>
-			<InfoStyle>
+			<PodcastInfo>
 				<div className="info-header">
 					<img src={podcast?.fetchPodcastEpisodes.image} />
 					<div>
@@ -144,7 +135,7 @@ export const Podcast = (): JSX.Element => {
 				<div>
 					<p>{stripHtmlFromString(podcast?.fetchPodcastEpisodes.description)}</p>
 				</div>
-			</InfoStyle>
+			</PodcastInfo>
 			{/* <SearchStyle>
 				<input
 					type="text"
@@ -154,17 +145,17 @@ export const Podcast = (): JSX.Element => {
 				/>
 			</SearchStyle> */}
 			{isEpisodeVisible && currentEpisode && <EpisodeView currentEpisode={currentEpisode} onClick={handleEpisode} />}
-			<ListStyle>
+			<List>
 				<ul>
 					{podcast?.fetchPodcastEpisodes.episodes.map(
 						(item: Episode, index: number): JSX.Element => {
 							const episodeWithImage = item
 							episodeWithImage.image = podcast?.fetchPodcastEpisodes.image
 							return (
-								<ListItemStyle key={index}>
+								<ListItem key={index}>
 									<div onClick={(): void => handleClickOnPodcast(episodeWithImage)}>
-										<ListItemTitleStyle>{item.title}</ListItemTitleStyle>
-										<ListItemTimeStyle>{calculateTime(item.duration)}</ListItemTimeStyle>
+										<ListItemTitle>{item.title}</ListItemTitle>
+										<ListItemTime>{calculateTime(item.duration)}</ListItemTime>
 									</div>
 									<div>
 										<span
@@ -180,14 +171,69 @@ export const Podcast = (): JSX.Element => {
 											<PlayIcon width="20px" fill={theme === 'light' ? '#000' : '#fff'} />
 										</span>
 									</div>
-								</ListItemStyle>
+								</ListItem>
 							)
 						}
 					)}
 				</ul>
-			</ListStyle>
+			</List>
 			{loading && <Loading />}
 			{isModalActive && <Modal setModalStatus={setModalStatus} value={subscribeError || unsubscribeError} />}
 		</PodcastContainer>
 	)
 }
+
+const PodcastContainer = styled.div`
+	padding: 0 0.5rem;
+`
+
+const PodcastInfo = styled.div`
+	padding-top: 1rem;
+	img {
+		width: 150px;
+		height: 150px;
+		margin-right: 1rem;
+	}
+	.info-header {
+		display: flex;
+	}
+	h3 {
+		margin-top: 0;
+	}
+	.kill-button {
+		opacity: 0.5;
+		pointer-events: none;
+	}
+`
+
+const List = styled.div`
+	ul {
+		list-style-type: none;
+		padding-left: 0;
+	}
+`
+
+const ListItem = styled.li`
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 0.5rem;
+	div:first-child {
+		display: flex;
+		flex-direction: column;
+		width: 90%;
+	}
+	div:last-child {
+		display: flex;
+		align-items: center;
+	}
+	button {
+		border-radius: 0;
+		border-image: none;
+	}
+`
+
+const ListItemTitle = styled.span``
+
+const ListItemTime = styled.span`
+	font-size: 0.7rem;
+`

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
+import styled from 'styled-components'
+
 import {
 	REQUEST_FRIEND,
 	HANDLE_REQUEST,
@@ -8,8 +10,6 @@ import {
 	FETCH_REQUESTOR
 } from '../../query/friends_query'
 import { FETCH_USERS } from '../../query/user_query'
-
-import { FriendsContainer, SearchDropdown, SearchPosition } from './style'
 import { Requests } from '../../components/Requests/Requests'
 
 interface User {
@@ -110,3 +110,43 @@ export const Friends = (): JSX.Element => {
 		</FriendsContainer>
 	)
 }
+
+const FriendsContainer = styled.div`
+	padding: 2rem 0.5rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	input {
+		width: 100%;
+		height: 30px;
+		padding: 0.5rem;
+	}
+	> div {
+		width: 100%;
+		margin-bottom: 2rem;
+	}
+`
+
+const SearchPosition = styled.div`
+	position: relative;
+`
+
+const SearchDropdown = styled.div`
+	display: flex;
+	position: absolute;
+	top: 10px;
+	width: 100%;
+	min-height: 400px;
+	background-color: white;
+	z-index: 1;
+	opacity: 0.9;
+	ul {
+		width: 100%;
+	}
+	li {
+		margin-bottom: 1rem;
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+	}
+`
