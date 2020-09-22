@@ -1,3 +1,5 @@
+import { Token } from './models/models'
+
 export const calculateTime = (value: number | string): string => {
 	if (typeof value === 'string' && value.indexOf(':') > -1) {
 		return value
@@ -35,7 +37,7 @@ export const parseJwt = (token: string): string => {
 	return JSON.parse(jsonPayload)
 }
 
-export const tokenExpiresIn = (token: any): number => {
+export const tokenExpiresIn = (token: Token): number => {
 	const iatTime = token.iat * 1000
 	const expTime = token.exp * 1000
 
@@ -52,23 +54,29 @@ interface TokenResponse {
 	accessToken: string
 }
 
-export const refreshToken = (): Promise<TokenResponse> => {
+export const fetcher = (url: string): Promise<Response> => {
+	return window
+		.fetch(url, {
+			method: 'POST',
+			credentials: 'include'
+		})
+		.then(async (response) => {
+			if (response.ok) {
+				return response
+			} else {
+				return Promise.reject(response)
+			}
+		})
+}
+
+export const refreshToken = async (): Promise<TokenResponse> => {
 	const URL = process.env.NODE_ENV === 'development' ? process.env.REFRESH_DEV : process.env.REFRESH_PROD
-
-	return new Promise((resolve, reject) => {
-		const data = window
-			.fetch(`${URL}`, {
-				method: 'POST',
-				credentials: 'include'
-			})
-			.then((res) => res.json())
-			.then((data) => data)
-			.catch((err) => console.log(err))
-
-		if (!data) {
-			reject(new Error('Whoops'))
-		}
-
-		resolve(data)
-	})
+	if (!URL) {
+		throw new Error('Error getting refresh token')
+	}
+	const data = await fetcher(URL)
+	if (!data) {
+		throw new Error('Error getting refresh token')
+	}
+	return data.json()
 }
