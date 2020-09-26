@@ -27,3 +27,8 @@ export interface Favorite {
 export interface LooseObject {
 	[key: string]: string
 }
+
+export interface Token {
+	iat: number
+	exp: number
+}
