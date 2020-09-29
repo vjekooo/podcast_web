@@ -9,6 +9,7 @@
 		"build:analyze": "yarn build -- --env.presets analyze",
 		"lint": "eslint --fix --ext .tsx,.ts .",
 		"test": "jest --config ./jest.config.json",
+		"test-ci": "test --env=jsdom --coverage --testResultsProcessor=jest-teamcity-reporter",
 		"clean": "rm -rf ./dist"
 	},
 	"author": "Vjeko",
