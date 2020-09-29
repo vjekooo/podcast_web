@@ -1,0 +1,7 @@
+{
+	"testMatch": ["**/__tests__/**/*.+(ts|tsx|js)"],
+	"transform": {
+		"^.+\\.(ts|tsx)$": "ts-jest"
+	},
+	"testResultsProcessor": "jest-teamcity-reporter"
+}
