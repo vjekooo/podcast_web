@@ -11,7 +11,6 @@ import { PlayerContext } from './UseContext'
 import { refreshToken } from './helpers'
 import { Episode } from './models/models'
 import { USER_SETTINGS, SET_THEME } from './query/user_query'
-import useTimeout from './hooks/useTimeout'
 
 const GlobalStyle = createGlobalStyle`	
 	* {
@@ -70,16 +69,17 @@ const App = (): JSX.Element => {
 	const [loadUser, { data: userTheme }] = useLazyQuery(USER_SETTINGS)
 	const [setTheme] = useMutation(SET_THEME)
 
-	useTimeout(
-		() =>
+	useEffect(() => {
+		const interval = setInterval(() => {
 			refreshToken().then((data) => {
 				if (data?.accessToken) {
 					setAccessToken(data.accessToken)
 					setUser(data.accessToken)
 				}
-			}),
-		780000
-	)
+			})
+		}, 780000)
+		return () => clearInterval(interval)
+	}, [])
 
 	const handleUser = (value: string): void => {
 		setUser(value)

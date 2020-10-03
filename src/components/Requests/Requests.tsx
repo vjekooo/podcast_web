@@ -16,9 +16,9 @@ interface Props {
 export const Requests = ({ list, handleClick, target }: Props): JSX.Element => {
 	return (
 		<RequestsMain>
-			{list?.map((item: any, index: number) => {
-				return (
-					<ul>
+			<ul>
+				{list?.map((item: any, index: number) => {
+					return (
 						<li key={index}>
 							<div>
 								<span>{item[target]}</span>
@@ -30,9 +30,9 @@ export const Requests = ({ list, handleClick, target }: Props): JSX.Element => {
 								)}
 							</div>
 						</li>
-					</ul>
-				)
-			})}
+					)
+				})}
+			</ul>
 		</RequestsMain>
 	)
 }
