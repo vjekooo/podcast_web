@@ -70,7 +70,7 @@ export const fetcher = (url: string): Promise<Response> => {
 }
 
 export const refreshToken = async (): Promise<TokenResponse> => {
-	const URL = process.env.NODE_ENV === 'development' ? process.env.REFRESH_DEV : process.env.REFRESH_PROD
+	const URL = process.env.REFRESH_URL
 	if (!URL) {
 		throw new Error('Error getting refresh token')
 	}
