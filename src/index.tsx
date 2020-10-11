@@ -6,7 +6,7 @@ import { ApolloProvider } from '@apollo/react-hooks'
 import App from './App'
 import { getAccessToken } from './accessToken'
 
-const uri = process.env.NODE_ENV === 'development' ? process.env.URI_DEV : process.env.URI_PROD
+const uri = process.env.GQ_ENDPOINT
 
 const client = new ApolloClient({
 	uri: uri,

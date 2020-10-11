@@ -97,8 +97,8 @@ export const Login = (): JSX.Element => {
 						/>
 						{errors?.password && <div className="text-error">{errors?.password}</div>}
 					</div>
-					{loginError && <div className="text-error">{loginError}</div>}
-					{registerError && <div className="text-error">{registerError}</div>}
+					{loginError && <div className="text-error">{loginError.message}</div>}
+					{registerError && <div className="text-error">{registerError.message}</div>}
 					<Button disabled={isSubmitting || Boolean(Object.keys(errors).length)}>Login</Button>
 				</Form>
 			</div>
