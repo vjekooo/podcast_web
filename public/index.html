@@ -7,10 +7,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 		<!-- THIS WILL KILL ZOOMING -->
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<% if (htmlWebpackPlugin.options.dockerVersion) { %>
-		<meta name="build-id" content="<%= htmlWebpackPlugin.options.dockerVersion %>" />
-		<% } %>
-
 		<title><%= htmlWebpackPlugin.options.title %></title>
 	</head>
 	<body>

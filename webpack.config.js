@@ -89,8 +89,7 @@ module.exports = ({ mode, presets } = { mode: 'production', presets: [] }) => {
 				}),
 				new HtmlWebpackPlugin({
 					title: 'Podcast',
-					dockerVersion: process.env.DOCKER_VERSION,
-					meta: { 'build-id': process.env.DOCKER_VERSION, environment: process.env.NODE_ENV, test: 'Test' },
+					meta: { 'build-id': process.env.DOCKER_VERSION },
 					template: 'public/index.html',
 					favicon: 'public/favicon.ico'
 				}),
