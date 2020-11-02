@@ -88,10 +88,9 @@ module.exports = ({ mode, presets } = { mode: 'production', presets: [] }) => {
 					path: './.env'
 				}),
 				new HtmlWebpackPlugin({
-					title: 'Podcast',
+					meta: { title: 'Podcast', 'build-id': process.env.docker_version, environment: process.env.NODE_ENV },
 					template: 'public/index.html',
-					favicon: 'public/favicon.ico',
-					meta: { 'build-id': process.env.docker_version, environment: process.env.NODE_ENV }
+					favicon: 'public/favicon.ico'
 				}),
 				new webpack.ProgressPlugin()
 			]
