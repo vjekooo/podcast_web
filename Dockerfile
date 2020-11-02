@@ -1,6 +1,12 @@
 
 FROM node:12-alpine as build
 
+# Build args
+ARG VERSION
+
+# Environment vars
+ENV DOCKER_VERSION=$VERSION
+
 RUN npm config set scripts-prepend-node-path true
 
 RUN mkdir /app
