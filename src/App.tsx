@@ -82,7 +82,7 @@ const App = (): JSX.Element => {
 	}, [])
 
 	const handleUser = (value: string): void => {
-		setUser(value)
+		setUser(value
 	}
 
 	const changeTheme = (): void => {
