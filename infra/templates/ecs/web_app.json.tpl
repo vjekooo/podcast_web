@@ -1,7 +1,7 @@
 [
   {
     "name": "myapp",
-    "image": "${app_image}",
+    "image": "${web_image}",
     "cpu": ${fargate_cpu},
     "memory": ${fargate_memory},
     "networkMode": "awsvpc",
