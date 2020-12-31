@@ -1,11 +1,26 @@
-# network.tf
-
 # Fetch AZs in the current region
 data "aws_availability_zones" "available" {
 }
 
 resource "aws_vpc" "main" {
   cidr_block = "172.17.0.0/16"
+  enable_dns_support = true
+  enable_dns_hostnames = true
+
+  tags = merge(
+    local.common_tags,
+    map("Name", "${local.prefix}-vpc")
+  )
+}
+
+# Internet Gateway for the public subnet
+resource "aws_internet_gateway" "main" {
+  vpc_id = aws_vpc.main.id
+
+   tags = merge(
+    local.common_tags,
+    map("Name", "${local.prefix}-main")
+  )
 }
 
 # Create var.az_count private subnets, each in a different AZ
@@ -14,6 +29,11 @@ resource "aws_subnet" "private" {
   cidr_block        = cidrsubnet(aws_vpc.main.cidr_block, 8, count.index)
   availability_zone = data.aws_availability_zones.available.names[count.index]
   vpc_id            = aws_vpc.main.id
+
+  tags = merge(
+    local.common_tags,
+    map("Name", "${local.prefix}-private-${count.index}")
+  )
 }
 
 # Create var.az_count public subnets, each in a different AZ
@@ -23,25 +43,26 @@ resource "aws_subnet" "public" {
   availability_zone       = data.aws_availability_zones.available.names[count.index]
   vpc_id                  = aws_vpc.main.id
   map_public_ip_on_launch = true
+
+  tags = merge(
+    local.common_tags,
+    map("Name", "${local.prefix}-public-${count.index}")
+  )
 }
 
-# Internet Gateway for the public subnet
-resource "aws_internet_gateway" "gw" {
-  vpc_id = aws_vpc.main.id
-}
 
 # Route the public subnet traffic through the IGW
 resource "aws_route" "internet_access" {
   route_table_id         = aws_vpc.main.main_route_table_id
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = aws_internet_gateway.gw.id
+  gateway_id             = aws_internet_gateway.main.id
 }
 
 # Create a NAT gateway with an Elastic IP for each private subnet to get internet connectivity
 resource "aws_eip" "gw" {
   count      = var.az_count
   vpc        = true
-  depends_on = [aws_internet_gateway.gw]
+  depends_on = [aws_internet_gateway.main]
 }
 
 resource "aws_nat_gateway" "gw" {
@@ -59,6 +80,11 @@ resource "aws_route_table" "private" {
     cidr_block     = "0.0.0.0/0"
     nat_gateway_id = element(aws_nat_gateway.gw.*.id, count.index)
   }
+
+   tags = merge(
+    local.common_tags,
+    map("Name", "${local.prefix}-private")
+  )
 }
 
 # Explicitly associate the newly created route tables to the private subnets (so they don't default to the main route table)
